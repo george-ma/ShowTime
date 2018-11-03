@@ -21,6 +21,9 @@ export class GridComponent implements OnInit {
     }
     this.shows.push(show1);
     this.shows.push(show1);
+    this.shows.push(show1);
+    this.shows.push(show1);
+    this.shows.push(show1);
 
   }
 

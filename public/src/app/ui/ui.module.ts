@@ -5,12 +5,14 @@ import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule      
   ],
   declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent],
   exports: [LayoutComponent]

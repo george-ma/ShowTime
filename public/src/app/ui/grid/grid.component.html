@@ -1,8 +1,23 @@
-<div *ngFor="let show of shows">
 
-  <div class="container">
-    <div class="card-deck mt-5">
-      <div class="card" style="width: 18rem;">
+<div class="row justify-content-md-center">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Search" >
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+	</div>
+
+<div class="row justify-content-md-center card-deck">
+  <div *ngFor="let show of shows">
+    <div class="col-sm col-md col-lg-3">
+      <div class="card">
         <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">{{ show.title }}</h5>
@@ -11,23 +26,7 @@
         </div>
       </div>
 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{ show.title }}</h5>
-          <p class="card-text"> {{ show.description }} </p>
-          <a href="#" class="btn btn-primary">{{ show.link }}</a>
-        </div>
-      </div>
+    </div> <!-- //end col -->
 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{ show.title }}</h5>
-          <p class="card-text"> {{ show.description }} </p>
-          <a href="#" class="btn btn-primary">{{ show.link }}</a>
-        </div>
-      </div>
-    </div> <!-- //end card deck -->
-  </div> <!-- //end container div -->
+  </div>
 </div>

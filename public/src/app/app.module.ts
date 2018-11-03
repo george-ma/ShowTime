@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 
 @NgModule({
-  declarations: [
+  declarations: [ // Component, Directive, or Pipe
     AppComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     UiModule

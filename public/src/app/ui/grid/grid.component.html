@@ -1,10 +1,33 @@
 <div *ngFor="let show of shows">
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{ show.title }}</h5>
-      <p class="card-text"> {{ show.description }} </p>
-      <a href="#" class="btn btn-primary">{{ show.link }}</a>
-    </div>
-  </div>
+
+  <div class="container">
+    <div class="card-deck mt-5">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ show.title }}</h5>
+          <p class="card-text"> {{ show.description }} </p>
+          <a href="#" class="btn btn-primary">{{ show.link }}</a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ show.title }}</h5>
+          <p class="card-text"> {{ show.description }} </p>
+          <a href="#" class="btn btn-primary">{{ show.link }}</a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ show.title }}</h5>
+          <p class="card-text"> {{ show.description }} </p>
+          <a href="#" class="btn btn-primary">{{ show.link }}</a>
+        </div>
+      </div>
+    </div> <!-- //end card deck -->
+  </div> <!-- //end container div -->
 </div>

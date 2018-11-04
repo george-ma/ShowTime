@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
     let sohail = {
       email: 'soahil@gmail.com',
       username: 'sohail',
-      password: 'hellosohail',
-      is_admin: true
+      password: 'sohail',
+      is_admin: false
     }
     this.dummyUsers.push(george);
     this.dummyUsers.push(sohail);
@@ -43,8 +43,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/grid'] );
       }
     }
-
-    console.log(this.user);
   }
 
 }

@@ -7,7 +7,7 @@
         </div>
         <!--end of col-->
         <div class="col">
-          <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+          <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search For a show">
         </div>
         <!--end of col-->
         <div class="col-auto">
@@ -18,16 +18,36 @@
     </form>
   </div>
   <!--end of col-->
+  <div class="col-12 col-md-1 col-lg-2" *ngIf="getCheckUser()" >
+    <div class="col-auto">
+      <button class="btn btn-lg btn-success" type="submit">Add New Show</button>
+    </div>
+  </div>
 </div>
 
 <div class="row justify-content-md-center card-deck">
-  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows">
-    <div class="card">
+  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows; ">
+    <div class="card" >
       <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ show.title }}</h5>
         <p class="card-text"> {{ show.description }} </p>
         <a href="#" class="btn btn-primary">{{ show.link }}</a>
+      </div>
+    </div> <!-- //end card -->
+  </div> <!-- //end col -->
+</div>
+
+<div class="row justify-content-md-center card-deck " *ngIf="getUser() && user.is_admin">
+  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of unapprovedShows; ">
+    <div class="card" >
+      <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ show.title }}</h5>
+        <p class="card-text"> {{ show.description }} </p>
+        <a href="#" class="btn btn-primary">{{ show.link }}</a>
+        <a href="#" class="btn btn-success" >approve</a>
+        <a href="#" class="btn btn-danger" >reject</a>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

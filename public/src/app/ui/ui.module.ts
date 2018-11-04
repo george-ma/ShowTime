@@ -4,7 +4,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 import { LoginComponent } from './login/login.component';
-import { RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 
 
@@ -12,7 +12,7 @@ import { FormsModule }   from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule      
+    FormsModule,
   ],
   declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent],
   exports: [LayoutComponent]

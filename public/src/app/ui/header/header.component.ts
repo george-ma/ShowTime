@@ -8,9 +8,28 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  user: any = {}
+
   constructor(public router: Router) { }
 
   ngOnInit() {
+
+
   }
+
+  getCheckUser() {
+    return sessionStorage.getItem('currentUser') != null;
+  }
+
+  setUser(){
+    if(sessionStorage.getItem('currentUser') != null){
+      this.user = JSON.parse(sessionStorage.getItem('currentUser'));
+      return true;
+    }
+    console.log(this.user);
+    return false;
+
+  }
+
 
 }

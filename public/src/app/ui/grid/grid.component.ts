@@ -40,11 +40,11 @@ export class GridComponent implements OnInit {
     this.shows.push(show2);
     this.shows.push(show1);
     this.shows.push(show2);
+
     if(sessionStorage.getItem('shows') == null){
       this.gridService.addShow(this.shows);
     }
     this.getShows();
-
   }
 
   getCheckUser() {
@@ -90,7 +90,6 @@ export class GridComponent implements OnInit {
     this.my_shows = false;
     this.unapproved_shows = true;
   }
-
 
 }
 

@@ -38,7 +38,7 @@ export class GridComponent implements OnInit {
     this.shows.push(show2);
     if(sessionStorage.getItem('shows') == null)){
       this.gridService.addShow(this.shows);
-    } else{
+    }else {
       this.getShows();
     }
 

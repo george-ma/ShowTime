@@ -12,6 +12,9 @@
       <a class="nav-item nav-link" *ngIf="getCheckUser() && setUser()">
         {{user.username}}
       </a>
+      <a class="nav-item nav-link" *ngIf="getCheckUser()" (click)="logOut()">
+        Log out
+      </a>
       <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="register">
         Register
       </a>

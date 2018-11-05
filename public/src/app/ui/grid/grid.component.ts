@@ -21,25 +21,41 @@ export class GridComponent implements OnInit {
 
   ngOnInit() {
     let show1 = {
+      id: 1,
       title: "DareDevil",
-      description: "Season 3",
-      link: "link",
+      description: "Season 1",
+      link: "out",
       img: "assets/dd.jpg",
       approved: true
-
+    }
+    let show4 = {
+      id: 4,
+      title: "DareDevil",
+      description: "Season 2",
+      link: "in",
+      img: "assets/dd.jpg",
+      approved: true
     }
     let show2 = {
+      id: 2,
       title: "DareDevil",
       description: "Season 3",
-      link: "hnnn",
+      link: "left",
       img: "assets/dd.jpg",
       approved: false
-
+    }
+    let show3 = {
+      id: 3,
+      title: "DareDevil",
+      description: "Season 4",
+      link: "right",
+      img: "assets/dd.jpg",
+      approved: false
     }
     this.shows.push(show1);
     this.shows.push(show2);
-    this.shows.push(show1);
-    this.shows.push(show2);
+    this.shows.push(show3);
+    this.shows.push(show4);
 
     if(sessionStorage.getItem('shows') == null){
       this.gridService.addShow(this.shows);
@@ -91,9 +107,31 @@ export class GridComponent implements OnInit {
     this.unapproved_shows = true;
   }
 
+  approve(id){
+    let i = 0;
+    for( i; i < this.unapprovedShows.length; i++ ){
+      if(this.unapprovedShows[i].id == id){
+        break;
+      }
+    }
+    this.shows.push(this.unapprovedShows[i]);
+    this.unapprovedShows.splice(i, 1);
+  }
+
+  reject(id){
+    let i = 0;
+    for( i; i < this.unapprovedShows.length; i++ ){
+      if(this.unapprovedShows[i].id == id){
+        break;
+      }
+    }
+    this.unapprovedShows.splice(i, 1);
+  }
+
 }
 
 export class Show {
+  id: number;
   title: string;
   description: string;
   link: string;

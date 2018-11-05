@@ -28,7 +28,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ show.title }}</h5>
         <p class="card-text"> {{ show.description }} </p>
-        <a href="#" class="btn btn-primary">{{ show.link }}</a>
+        <button href="#" class="btn btn-primary">{{ show.link }}</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -41,9 +41,9 @@
       <div class="card-body">
         <h5 class="card-title">{{ show.title }}</h5>
         <p class="card-text"> {{ show.description }} </p>
-        <a href="#" class="btn btn-primary">{{ show.link }}</a>
-        <a href="#" class="btn btn-success" >approve</a>
-        <a href="#" class="btn btn-danger" >reject</a>
+        <button href="#" class="btn btn-primary">{{ show.link }}</button>
+        <button class="btn btn-success" (click)="approve(show.id)" >approve</button>
+        <button class="btn btn-danger" (click)="reject(show.id)" >reject</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

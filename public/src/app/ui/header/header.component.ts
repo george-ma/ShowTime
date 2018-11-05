@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   logOut() {
     sessionStorage.removeItem('currentUser');
     this.user = null;
+    this.router.navigate(['/grid'] );
   }
 
 }

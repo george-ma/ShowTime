@@ -1,31 +1,27 @@
-<div class="row justify-content-center">
-  <div class="col-12 col-md-10 col-lg-8">
-    <form class="card card-sm">
-      <div class="card-body row no-gutters align-items-center">
-        <div class="col-auto">
-          <i class="fa fa-search h4 text-body"></i>
-        </div>
-        <!--end of col-->
-        <div class="col">
-          <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search For a show">
-        </div>
-        <!--end of col-->
-        <div class="col-auto">
-          <button class="btn btn-lg btn-success" type="submit">Search</button>
-        </div>
-        <!--end of col-->
-      </div>
-    </form>
-  </div>
-  <!--end of col-->
-  <div class="col-12 col-md-1 col-lg-2" *ngIf="getCheckUser()" >
-    <div class="col-auto">
-      <button class="btn btn-lg btn-success" type="submit">Add New Show</button>
-    </div>
-  </div>
-</div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{'active': all===true}" (click)="selectAll()">All</a>
+  </li>
+  <li class="nav-item" *ngIf="getCheckUser()">
+    <a class="nav-link" [ngClass]="{'active': my_shows===true}" (click)="selectMy()" >My Shows</a>
+  </li>
+  <li class="nav-item" *ngIf="getUser() && user.is_admin">
+    <a class="nav-link"  [ngClass]="{'active': unapproved_shows===true}" (click)="selectUn()">Unapproved Shows</a>
+  </li>
+  <li class="nav-item justify-content-end">
+    <input class="form-control form-control-sm form-control-borderless" type="search" placeholder="Search For a show">
+  </li>
+  <li class="nav-item justify-content-end">
+    <button class="btn btn-sm btn-info" type="submit">Search</button>
+  </li>
+  <li class="nav-item justify-content-end" *ngIf="getCheckUser()">
+    <button class="btn btn-sm btn-primary" type="submit">+</button>
+  </li>
 
-<div class="row justify-content-md-center card-deck">
+</ul>
+<br>
+
+<div class="row justify-content-md-center card-deck" *ngIf="all">
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows; ">
     <div class="card" >
       <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
@@ -38,7 +34,7 @@
   </div> <!-- //end col -->
 </div>
 
-<div class="row justify-content-md-center card-deck " *ngIf="getUser() && user.is_admin">
+<div class="row justify-content-md-center card-deck " *ngIf="unapproved_shows">
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of unapprovedShows; ">
     <div class="card" >
       <img class="card-img-top" src="{{show.img}}" alt="Card image cap">

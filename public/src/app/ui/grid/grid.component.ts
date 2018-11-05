@@ -13,6 +13,10 @@ export class GridComponent implements OnInit {
   error: boolean = false;
   user: any = {};
 
+  all: boolean = true;
+  my_shows: boolean = false;
+  unapproved_shows: boolean = false;
+
   constructor(private gridService: GridService) { }
 
   ngOnInit() {
@@ -36,12 +40,11 @@ export class GridComponent implements OnInit {
     this.shows.push(show2);
     this.shows.push(show1);
     this.shows.push(show2);
-    if(sessionStorage.getItem('shows') == null) {
+
+    if(sessionStorage.getItem('shows') == null){
       this.gridService.addShow(this.shows);
-    } else {
-      this.getShows();
     }
-    
+    this.getShows();
   }
 
   getCheckUser() {
@@ -68,6 +71,24 @@ export class GridComponent implements OnInit {
         this.unapprovedShows.push(show);
       }
     }
+  }
+
+  selectAll(){
+    this.all = true;
+    this.my_shows = false;
+    this.unapproved_shows = false;
+  }
+
+  selectMy(){
+    this.all = false;
+    this.my_shows = true;
+    this.unapproved_shows = false;
+  }
+
+  selectUn(){
+    this.all = false;
+    this.my_shows = false;
+    this.unapproved_shows = true;
   }
 
 }

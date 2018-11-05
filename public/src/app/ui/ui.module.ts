@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 
@@ -14,7 +15,7 @@ import { FormsModule }   from '@angular/forms';
     RouterModule,
     FormsModule,
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent],
   exports: [LayoutComponent]
 })
 export class UiModule { }

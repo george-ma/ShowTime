@@ -28,8 +28,11 @@ export class HeaderComponent implements OnInit {
     }
     console.log(this.user);
     return false;
-
   }
 
+  logOut() {
+    sessionStorage.removeItem('currentUser');
+    this.user = null;
+  }
 
 }

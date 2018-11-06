@@ -5,6 +5,7 @@
       <a class="nav-item nav-link" routerLink="grid">Home</a>
       <a class="nav-item nav-link" routerLink="login">Login</a>
       <a class="nav-item nav-link" routerLink="grid">User</a>
+      <a *ngIf="setUser() && user.is_admin" class="nav-item nav-link" routerLink="adminuserlist">User List</a>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">

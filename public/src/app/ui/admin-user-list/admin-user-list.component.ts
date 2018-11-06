@@ -105,6 +105,21 @@ export class AdminUserListComponent implements OnInit {
     this.loadDummyUsers();
   }
 
+  promoteUser(user) {
+    // TODO
+    console.log(`TODO: promote ${user.username} to admin`)
+  }
+
+  banUser(user) {
+    // TODO
+    console.log(`TODO: ban ${user.username}`)
+  }
+
+  unbanUser(user) {
+    // TODO
+    console.log(`TODO: unban ${user.username}`)
+  }
+
 }
 
 export class User {

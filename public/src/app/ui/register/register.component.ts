@@ -13,15 +13,28 @@ export class RegisterComponent implements OnInit {
   user: any = {};
   okay: string;
   error: boolean = false;
+  dummyUsers: Array<User> = [];
 
   constructor(public router: Router, private registerService: RegisterService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  getUsers(){
+    this.dummyUsers = JSON.parse(sessionStorage.getItem('users'));
+  }
 
   registerUser() {
     this.user.is_admin = false;
+    this.user.is_banned = false;
+    this.user.my_shows = [];
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    this.registerService.addUser(this.user).subscribe((response)=>{
+    this.dummyUsers.push(this.user);
+    sessionStorage.setItem('users', JSON.stringify(this.dummyUsers));
+    this.router.navigate(['/grid']);
+
+    /*this.registerService.addUser(this.user).subscribe((response)=>{
         this.error = false;
         console.log(response);
       },
@@ -32,5 +45,15 @@ export class RegisterComponent implements OnInit {
 
     );
     this.router.navigate(['/grid']);
+    */
   }
+}
+
+export class User {
+  email: string;
+  username: string;
+  password: string;
+  is_admin: boolean;
+  is_banned: boolean;
+  my_shows: Array<number>;
 }

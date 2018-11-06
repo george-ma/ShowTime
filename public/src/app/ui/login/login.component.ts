@@ -18,22 +18,11 @@ export class LoginComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit() {
-    let george = {
-      email: 'george@gmail.com',
-      username: 'george',
-      password: 'hellogeorge',
-      is_admin: true
+    this.getUsers();
+  }
 
-    }
-    let sohail = {
-      email: 'soahil@gmail.com',
-      username: 'sohail',
-      password: 'sohail',
-      is_admin: false
-    }
-    this.dummyUsers.push(george);
-    this.dummyUsers.push(sohail);
-
+  getUsers(){
+    this.dummyUsers = JSON.parse(sessionStorage.getItem('users'));
   }
 
   loginUser(){
@@ -52,4 +41,6 @@ export class User {
   username: string;
   password: string;
   is_admin: boolean;
+  is_banned: boolean;
+  my_shows: Array<number>;
 }

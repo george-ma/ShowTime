@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
+import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component';
 
 @NgModule({
   declarations: [ // Component, Directive, or Pipe
-    AppComponent
+    AppComponent, AdminUserListComponent
   ],
   imports: [ 
     BrowserModule,

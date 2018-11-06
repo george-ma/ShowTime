@@ -3,6 +3,7 @@
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="grid">Home</a>
+      <a *ngIf="setUser() && user.is_admin" class="nav-item nav-link" routerLink="adminuserlist">User List</a>
       <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="login">Login</a>
       <a class="nav-item nav-link" *ngIf="getCheckUser()" routerLink="account">User</a>
     </div>

@@ -14,10 +14,18 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.user.bio = "hello I am a dummy user and this is my bio";
+    if (!this.user.bio) {
+      this.user.bio = "hello I am a dummy user and this is my bio";
+    }
+    if (!this.user.profilePic) {
+      this.user.profilePic = "../../assets/profilepic.png";
+    }
   }
 
   updateUserInfo() {
+    if (this.updateUser.profilePic) {
+      this.user.profilePic = this.updateUser.profilePic;
+    }
     if (this.updateUser.username) {
       this.user.username = this.updateUser.username;
     }
@@ -29,5 +37,5 @@ export class AccountComponent implements OnInit {
     }
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
   }
-  
+
 }

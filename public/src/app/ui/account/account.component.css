@@ -17,5 +17,8 @@
 #profile-pic {
   width: 270px;
   height: 270px;
-  padding: 20px;
+  padding: 10px;
+  border-radius: 50%;
+	border-style: solid;
+	border-color: white;
 }

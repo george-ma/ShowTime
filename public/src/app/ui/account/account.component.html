@@ -1,0 +1,44 @@
+<div class="row justify-content-center align-items-center">
+
+  <div id="account-info">
+    <div id="profile-pic">
+      profie pic
+    </div>
+    <br>
+    <div>
+      <h2>{{user.username}}</h2>
+    </div>
+    <br>
+    <div>
+      {{user.bio}}
+    </div>
+  </div>
+
+  <div id="change-account-info">
+    <h2>Account Settings</h2>
+    <br>
+
+    <form (ngSubmit)="updateUserInfo()" #f="ngForm">
+      <div class="form-group">
+        <label class="font-weight-bold" for="username"> Change username </label>
+        <input type="text" class="form-control" name="username" placeholder="New username" [(ngModel)]="updateUser.username" #username="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label class="font-weight-bold" for="password"> Change password </label>
+        <input type="password" class="form-control" name="password" placeholder="New password" [(ngModel)]="updateUser.password" #password="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label class="font-weight-bold" for="bio"> Change bio </label>
+        <textarea id="bio-form" type="text" class="form-control" name="bio" [(ngModel)]="updateUser.bio" #password="ngModel"></textarea>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary shadow">Confirm changes</button>
+        <button type="button" class="btn btn-primary shadow">Discard changes</button>
+      </div>
+    </form>
+  </div>
+
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GridService } from './grid.service';
+import { Show } from '../models/show';
 
 @Component({
   selector: 'app-grid',
@@ -127,14 +128,4 @@ export class GridComponent implements OnInit {
     }
     this.unapprovedShows.splice(i, 1);
   }
-
-}
-
-export class Show {
-  id: number;
-  title: string;
-  description: string;
-  link: string;
-  img: string;
-  approved: boolean;
 }

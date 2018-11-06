@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Show } from '../models/show';
 
@@ -10,9 +11,8 @@ import { Show } from '../models/show';
 })
 export class ShowFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GridService } from './grid.service';
 import { Show } from '../models/show';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grid',
@@ -18,7 +19,7 @@ export class GridComponent implements OnInit {
   my_shows: boolean = false;
   unapproved_shows: boolean = false;
 
-  constructor(private gridService: GridService) { }
+  constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
     let show1 = {

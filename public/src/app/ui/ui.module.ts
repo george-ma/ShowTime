@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
+import { ShowFormComponent } from './show-form/show-form.component';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { FormsModule }   from '@angular/forms';
     RouterModule,
     FormsModule,
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent],
   exports: [LayoutComponent]
 })
 export class UiModule { }

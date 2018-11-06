@@ -29,5 +29,5 @@ export class AccountComponent implements OnInit {
     }
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
   }
-
+  
 }

@@ -13,8 +13,7 @@ export class HeaderComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit() {
-
-
+    this.setUser();
   }
 
   getCheckUser() {
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       return true;
     }
-    console.log(this.user);
     return false;
   }
 

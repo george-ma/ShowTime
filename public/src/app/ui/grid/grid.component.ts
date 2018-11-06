@@ -12,6 +12,7 @@ export class GridComponent implements OnInit {
 
   shows: Array<Show>=[];
   unapprovedShows:  Array<Show>=[];
+  sessionShows: Array<Show>=[];
   error: boolean = false;
   user: any = {};
 
@@ -22,46 +23,7 @@ export class GridComponent implements OnInit {
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
-    let show1 = {
-      id: 1,
-      title: "DareDevil",
-      description: "Season 1",
-      link: "out",
-      img: "assets/dd.jpg",
-      approved: true
-    }
-    let show4 = {
-      id: 4,
-      title: "DareDevil",
-      description: "Season 2",
-      link: "in",
-      img: "assets/dd.jpg",
-      approved: true
-    }
-    let show2 = {
-      id: 2,
-      title: "DareDevil",
-      description: "Season 3",
-      link: "left",
-      img: "assets/dd.jpg",
-      approved: false
-    }
-    let show3 = {
-      id: 3,
-      title: "DareDevil",
-      description: "Season 4",
-      link: "right",
-      img: "assets/dd.jpg",
-      approved: false
-    }
-    this.shows.push(show1);
-    this.shows.push(show2);
-    this.shows.push(show3);
-    this.shows.push(show4);
 
-    if(sessionStorage.getItem('shows') == null){
-      this.gridService.addShow(this.shows);
-    }
     this.getShows();
   }
 
@@ -116,8 +78,10 @@ export class GridComponent implements OnInit {
         break;
       }
     }
+    this.unapprovedShows[i].approved = true;
     this.shows.push(this.unapprovedShows[i]);
     this.unapprovedShows.splice(i, 1);
+    this.updateSessionShows()
   }
 
   reject(id){
@@ -128,5 +92,19 @@ export class GridComponent implements OnInit {
       }
     }
     this.unapprovedShows.splice(i, 1);
+    this.updateSessionShows()
+  }
+
+  updateSessionShows(){
+    this.sessionShows = [];
+    for( let show of this.unapprovedShows){
+      this.sessionShows.push(show);
+    }
+
+    for( let show2 of this.shows){
+      this.sessionShows.push(show2);
+    }
+    sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
+    this.getShows();
   }
 }

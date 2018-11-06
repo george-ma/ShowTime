@@ -4,6 +4,7 @@ import { LoginComponent } from './ui/login/login.component';
 import { GridComponent } from './ui/grid/grid.component';
 import { RegisterComponent } from './ui/register/register.component';
 import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component'
+import { AccountComponent } from './ui/account/account.component';
 
 const routes: Routes = [
   { path: '', component: GridComponent},
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'adminuserlist', component: AdminUserListComponent},
+  { path: 'account', component: AccountComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "nimda",
+    "database": "showtime",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "admin",
+    "password": "nimda",
+    "database": "showtime",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}

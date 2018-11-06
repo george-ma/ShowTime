@@ -5,15 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [ // Component, Directive, or Pipe
     AppComponent, AdminUserListComponent
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     AppRoutingModule,
-    UiModule
+    UiModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

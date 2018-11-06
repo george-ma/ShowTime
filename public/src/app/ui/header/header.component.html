@@ -3,8 +3,8 @@
   <div class="navbar-expand mr-auto">
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="grid">Home</a>
-      <a class="nav-item nav-link" routerLink="login">Login</a>
-      <a class="nav-item nav-link" routerLink="grid">User</a>
+      <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="login">Login</a>
+      <a class="nav-item nav-link" *ngIf="getCheckUser()" routerLink="account">User</a>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">
@@ -12,7 +12,7 @@
       <a class="nav-item nav-link" *ngIf="getCheckUser() && setUser()">
         {{user.username}}
       </a>
-      <a class="nav-item nav-link" *ngIf="getCheckUser()" (click)="logOut()">
+      <a class="nav-item nav-link" *ngIf="getCheckUser()" (click)="logOut()" routerLink="grid">
         Log out
       </a>
       <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="register">

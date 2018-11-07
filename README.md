@@ -27,7 +27,7 @@ cd public
 npm install
 ```
 
-Build and open the package
+Build and open the project
 ```shell
 ng serve --open
 ```

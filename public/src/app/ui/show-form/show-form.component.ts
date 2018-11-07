@@ -17,7 +17,7 @@ export class ShowFormComponent{
     constructor(public router: Router) {}
 
     shows: Array<Show> = []
-    model = new Show(42, '','',false,'','')
+    model = new Show(42, '','',false,'assets/noImage.jpg','')
 
     submitted = false;
 

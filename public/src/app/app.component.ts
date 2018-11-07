@@ -119,34 +119,34 @@ export class AppComponent {
     this.shows = [
       {
         id: 1,
-        title: "DareDevil",
+        title: "WestWorld",
         description: "Season 1",
-        link: "out",
-        img: "assets/dd.jpg",
-        approved: true
-      },
-      {
-        id: 4,
-        title: "DareDevil",
-        description: "Season 2",
-        link: "in",
-        img: "assets/dd.jpg",
+        link: "urlLink",
+        img: "assets/ww.jpg",
         approved: true
       },
       {
         id: 2,
-        title: "DareDevil",
-        description: "Season 3",
-        link: "left",
-        img: "assets/dd.jpg",
-        approved: false
+        title: "Riverdale",
+        description: "Season 2",
+        link: "urlLink",
+        img: "assets/rd.jpg",
+        approved: true
       },
       {
         id: 3,
-        title: "DareDevil",
+        title: "Silicon Valley",
+        description: "Season 3",
+        link: "urlLink",
+        img: "assets/sv.jpg",
+        approved: false
+      },
+      {
+        id: 4,
+        title: "Better Call Saul",
         description: "Season 4",
-        link: "right",
-        img: "assets/dd.jpg",
+        link: "urlLink",
+        img: "assets/bcs.jpg",
         approved: false
       }
     ]
@@ -155,12 +155,12 @@ export class AppComponent {
 
 
   ngOnInit() {
-    if(sessionStorage.getItem('setUpData') == null){
-      this.loadDummyUsers()
-      sessionStorage.setItem('users', JSON.stringify(this.users));
-      this.loadDummyShows()
-      sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    }
+    // if(sessionStorage.getItem('setUpData') == null){
+    this.loadDummyUsers()
+    sessionStorage.setItem('users', JSON.stringify(this.users));
+    this.loadDummyShows()
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    // }
     sessionStorage.setItem('setUpData', JSON.stringify(true));
 
   }

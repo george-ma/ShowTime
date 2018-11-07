@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MyShow } from '../models/my_show';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -42,12 +44,4 @@ export class AdminUserListComponent implements OnInit {
     sessionStorage.setItem('users', JSON.stringify(this.users));
   }
 
-}
-
-export class User {
-  email: string;
-  username: string;
-  password: string;
-  is_admin: boolean;
-  is_banned: boolean;
 }

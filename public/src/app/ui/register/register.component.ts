@@ -3,6 +3,9 @@ import { FormsModule }   from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from './register.service';
 
+import { MyShow } from '../models/my_show';
+import { User } from '../models/user';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -59,13 +62,4 @@ export class RegisterComponent implements OnInit {
     }
     return true;
   }
-}
-
-export class User {
-  email: string;
-  username: string;
-  password: string;
-  is_admin: boolean;
-  is_banned: boolean;
-  my_shows: Array<number>;
 }

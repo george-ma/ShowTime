@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Show } from './ui/models/show';
+import { MyShow } from './ui/models/my_show';
+import { User } from './ui/models/user';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +22,14 @@ export class AppComponent {
           "password": "hellogeorge",
           "is_admin": false,
           "is_banned": true,
-          "my_shows": [1]
+          "my_shows": [
+            {
+              "id": 1,
+              "review": "string",
+              "rating": 5,
+              "status": 2,
+            }
+          ]
       },
       {
           "email": "nick@gmail.com",
@@ -36,7 +45,14 @@ export class AppComponent {
           "password": "hellobob",
           "is_admin": true,
           "is_banned": true,
-          "my_shows": [4]
+          "my_shows": [
+            {
+              "id": 2,
+              "review": "string",
+              "rating": 5,
+              "status": 2,
+            }
+          ]
       },
       {
           "email": "sam@gmail.com",
@@ -167,11 +183,11 @@ export class AppComponent {
   }
 }
 
-export class User {
-  email: string;
-  username: string;
-  password: string;
-  is_admin: boolean;
-  is_banned: boolean;
-  my_shows: Array<number>;
-}
+
+/*
+Completed = 1
+Planning = 2
+Current = 3
+Dropped = 4
+Paused = 5
+*/

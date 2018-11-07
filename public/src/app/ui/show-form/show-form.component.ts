@@ -3,6 +3,8 @@ import { FormsModule }   from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Show } from '../models/show';
+import { container } from '@angular/core/src/render3';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-show-form',
@@ -31,6 +33,10 @@ export class ShowFormComponent{
         this.shows.push(this.model);
         sessionStorage.setItem('shows', JSON.stringify(this.shows));
         this.router.navigate(['/grid']);
+    }
+
+    ngOnInit() {
+
     }
 }
 

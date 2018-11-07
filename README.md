@@ -2,6 +2,9 @@
 
 ## Get started
 
+### Platform & tools
+You need to install Node.js and then the development tools. Node.js comes with a package manager called npm for installing NodeJS applications and libraries.
+
 ### Install Angular Globally
 
 ```shell

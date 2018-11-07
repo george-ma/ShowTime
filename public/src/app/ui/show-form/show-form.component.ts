@@ -27,7 +27,8 @@ export class ShowFormComponent{
   years = [30];
   date={};
 
-  airingChecked = true;
+  airingChecked = false;
+  intervalChecked = false;
 
   submitted = false;
 
@@ -51,9 +52,15 @@ export class ShowFormComponent{
 
       airDate.setSeconds(0);
 
-      airDate.setMilliseconds(0);
+      airDate.setMilliseconds(0); 
 
-      this.model.airDate = airDate;
+      // NaN if date is invalid, which would fail this
+      if(airDate.getTime() === airDate.getTime()) {
+        this.model.airDate = airDate;
+      }
+      else {
+        this.model.airDate = undefined;
+      }
     }
     else {
       this.model.airDate = undefined;

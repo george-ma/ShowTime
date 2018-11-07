@@ -13,8 +13,10 @@ export class GridComponent implements OnInit {
   shows: Array<Show>=[];
   unapprovedShows:  Array<Show>=[];
   sessionShows: Array<Show>=[];
+  myShows: Array<Show>=[];
   error: boolean = false;
   user: any = {};
+  allUsers: Array<User> = [];
 
   all: boolean = true;
   my_shows: boolean = false;
@@ -25,6 +27,7 @@ export class GridComponent implements OnInit {
   ngOnInit() {
 
     this.getShows();
+    this.getUser();
   }
 
   getCheckUser() {
@@ -35,7 +38,6 @@ export class GridComponent implements OnInit {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       return true;
     }
-    console.log(this.user);
     return false;
 
   }
@@ -43,14 +45,29 @@ export class GridComponent implements OnInit {
   getShows(){
     let data = this.gridService.getShows()
     this.shows = [];
+    this.myShows = [];
     this.unapprovedShows = [];
+    this.getUser();
     for( let show of data){
       if(show.approved == true){
-        this.shows.push(show);
+        if( this.getCheckUser() && this.InMyShows(show.id) ){
+          this.myShows.push(show);
+        } else{
+          this.shows.push(show);
+        }
       } else{
         this.unapprovedShows.push(show);
       }
     }
+  }
+
+  InMyShows(id){
+    for ( let my_show of this.user.my_shows){
+      if(my_show == id){
+        return true;
+      }
+    }
+    return false;
   }
 
   selectAll(){
@@ -95,16 +112,60 @@ export class GridComponent implements OnInit {
     this.updateSessionShows()
   }
 
+  addToMyShows(id){
+    this.user.my_shows.push(id);
+    this.updateSessionMyShows();
+  }
+
+  RemoveFromMyShows(id){
+    let i = 0;
+    for( i; i < this.user.my_shows.length; i++ ){
+      if(this.user.my_shows[i] == id){
+        break;
+      }
+    }
+    this.user.my_shows.splice(i, 1);
+    console.log(this.user.my_shows);
+    this.updateSessionMyShows();
+  }
+
+  updateSessionMyShows(){
+    this.allUsers = []
+    this.allUsers = JSON.parse(sessionStorage.getItem('users'));
+    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+    let i = 0;
+    for( i; i < this.allUsers.length; i++ ){
+      if(this.allUsers[i].username == this.user.username){
+         this.allUsers[i].my_shows = this.user.my_shows;
+      }
+    }
+    sessionStorage.setItem('users', JSON.stringify(this.allUsers));
+    this.getShows();
+  }
+
   updateSessionShows(){
     this.sessionShows = [];
     for( let show of this.unapprovedShows){
       this.sessionShows.push(show);
     }
 
-    for( let show2 of this.shows){
-      this.sessionShows.push(show2);
+    for( let show of this.shows){
+      this.sessionShows.push(show);
+    }
+
+    for( let show of this.myShows){
+      this.sessionShows.push(show);
     }
     sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
     this.getShows();
   }
+}
+
+export class User {
+  email: string;
+  username: string;
+  password: string;
+  is_admin: boolean;
+  is_banned: boolean;
+  my_shows: Array<number>;
 }

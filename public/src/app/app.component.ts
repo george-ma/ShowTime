@@ -20,7 +20,7 @@ export class AppComponent {
           "password": "hellogeorge",
           "is_admin": false,
           "is_banned": true,
-          "my_shows": []
+          "my_shows": [1]
       },
       {
           "email": "nick@gmail.com",
@@ -36,7 +36,7 @@ export class AppComponent {
           "password": "hellobob",
           "is_admin": true,
           "is_banned": true,
-          "my_shows": []
+          "my_shows": [4]
       },
       {
           "email": "sam@gmail.com",

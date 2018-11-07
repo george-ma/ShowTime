@@ -1,5 +1,4 @@
 export class Show {
-    static numShows : number = 0;
 
     constructor (
         public id: number,
@@ -10,7 +9,5 @@ export class Show {
         public link?: string,
         public airDate?: Date,
         public airInterval?: number        
-    ) {
-        Show.numShows++;
-    }
+    ) { }
 }

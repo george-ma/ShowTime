@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GridService } from './grid.service';
 import { Show } from '../models/show';
+import { MyShow } from '../models/my_show';
+import { User } from '../models/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -63,7 +65,7 @@ export class GridComponent implements OnInit {
 
   InMyShows(id){
     for ( let my_show of this.user.my_shows){
-      if(my_show == id){
+      if(my_show.id == id){
         return true;
       }
     }
@@ -113,19 +115,18 @@ export class GridComponent implements OnInit {
   }
 
   addToMyShows(id){
-    this.user.my_shows.push(id);
+    this.user.my_shows.push(new MyShow(id));
     this.updateSessionMyShows();
   }
 
   RemoveFromMyShows(id){
     let i = 0;
     for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i] == id){
+      if(this.user.my_shows[i].id == id){
         break;
       }
     }
     this.user.my_shows.splice(i, 1);
-    console.log(this.user.my_shows);
     this.updateSessionMyShows();
   }
 
@@ -159,13 +160,4 @@ export class GridComponent implements OnInit {
     sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
     this.getShows();
   }
-}
-
-export class User {
-  email: string;
-  username: string;
-  password: string;
-  is_admin: boolean;
-  is_banned: boolean;
-  my_shows: Array<number>;
 }

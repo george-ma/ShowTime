@@ -11,6 +11,7 @@ import { ShowFormComponent } from './show-form/show-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { AccountComponent } from './account/account.component';
+import { ShowComponent } from './show/show.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { AccountComponent } from './account/account.component';
     RouterModule,
     FormsModule,
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent, ShowComponent],
   exports: [LayoutComponent]
 })
 export class UiModule { }

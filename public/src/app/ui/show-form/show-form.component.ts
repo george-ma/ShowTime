@@ -18,8 +18,11 @@ export class ShowFormComponent{
 
   constructor(public router: Router) {}
 
-  shows: Array<Show> = []
-  model = new Show(42, '','',false,'assets/noImage.jpg','')
+    shows: Array<Show> = []
+    
+    numShows = parseInt(sessionStorage.getItem("numShows"));
+    
+    model = new Show(this.numShows+1, '','',false,'assets/noImage.jpg','')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [24];
@@ -58,12 +61,10 @@ export class ShowFormComponent{
       if(airDate.getTime() === airDate.getTime()) {
         this.model.airDate = airDate;
       }
+
       else {
         this.model.airDate = undefined;
       }
-    }
-    else {
-      this.model.airDate = undefined;
     }
   }
 
@@ -71,10 +72,10 @@ export class ShowFormComponent{
     this.setAirDate();
 
     this.shows = JSON.parse(sessionStorage.getItem('shows'));
-    console.log(this.model)
-    this.shows.push(this.model);
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    this.router.navigate(['/grid']);
+      this.shows.push(this.model);
+      sessionStorage.setItem('shows', JSON.stringify(this.shows));
+      sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
+      this.router.navigate(['/grid']);
   }
 
   ngOnInit() {

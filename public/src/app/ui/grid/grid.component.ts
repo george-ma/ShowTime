@@ -161,12 +161,3 @@ export class GridComponent implements OnInit {
     this.getShows();
   }
 }
-
-export class User {
-  email: string;
-  username: string;
-  password: string;
-  is_admin: boolean;
-  is_banned: boolean;
-  my_shows: Array<number>;
-}

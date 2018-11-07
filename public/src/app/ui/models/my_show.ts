@@ -3,6 +3,6 @@ export class MyShow {
       public id: number,
       public review?: string,
       public rating?: number,
-      public status?: number,
+      public status?: number
   ) { }
 }

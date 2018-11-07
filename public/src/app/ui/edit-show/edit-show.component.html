@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+  <h1>{{show.title}}</h1>
+</div>
+
+<div class="row justify-content-center">
+  <div id="edit-show">
+    <form (ngSubmit)="submitEdits()" #f="ngForm">
+      <div class="form-group">
+        <label class="font-weight-bold" for="title"> Change title </label>
+        <input type="text" class="form-control" name="title"
+        [(ngModel)]="updateShow.title" #description="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label class="font-weight-bold" for="profilePic"> Change display picture </label>
+        <br>
+        <input type="file" name="show-image" [(ngModel)]="updateShow.image" #username="ngModel" accept="image/*">
+      </div>
+
+      <div class="form-group">
+        <label class="font-weight-bold" for="description"> Change description </label>
+        <textarea id="show-description" type="text" class="form-control" name="description" [(ngModel)]="updateShow.description" #description="ngModel">
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="font-weight-bold" for="link"> Change URL link </label>
+        <input type="text" class="form-control" name="link" [(ngModel)]="updateShow.link" #description="ngModel">
+      </div>
+
+      <div>
+        <button type="submit" *ngIf="getCheckAdmin()" class="btn btn-primary shadow">Submit changes</button>
+        <button type="submit" *ngIf="!getCheckAdmin()" class="btn btn-primary shadow">Submit changes for review</button>
+        <button type="button" (click)="resetEdits()" class="btn btn-primary shadow">Discard changes</button>
+      </div>
+    </form>
+  </div>
+</div>

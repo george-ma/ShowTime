@@ -7,11 +7,11 @@
 
         <div class="form-group">
           <label class="font-weight-bold" for="username"> Username </label>
-          <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username" #username="ngModel">
+          <input type="text" class="form-control" name="username" placeholder="Username" required [(ngModel)]="user.username" #username="ngModel">
         </div>
         <div class="form-group">
           <label class="font-weight-bold"> Password </label>
-          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password" #password="ngModel">
+          <input type="password" class="form-control" name="password" placeholder="Password" required [(ngModel)]="user.password" #password="ngModel">
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary shadow">LOGIN</button>

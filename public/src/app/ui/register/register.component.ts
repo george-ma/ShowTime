@@ -26,14 +26,17 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser() {
-    this.user.is_admin = false;
-    this.user.is_banned = false;
-    this.user.my_shows = [];
-    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    this.dummyUsers.push(this.user);
-    sessionStorage.setItem('users', JSON.stringify(this.dummyUsers));
-    this.router.navigate(['/grid']);
-
+    if(this.validatedUsername(this.user.username)){
+      this.user.is_admin = false;
+      this.user.is_banned = false;
+      this.user.my_shows = [];
+      sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+      this.dummyUsers.push(this.user);
+      sessionStorage.setItem('users', JSON.stringify(this.dummyUsers));
+      this.router.navigate(['/grid']);
+    } else{
+      this.error = true;
+    }
     /*this.registerService.addUser(this.user).subscribe((response)=>{
         this.error = false;
         console.log(response);
@@ -46,6 +49,15 @@ export class RegisterComponent implements OnInit {
     );
     this.router.navigate(['/grid']);
     */
+  }
+
+  validatedUsername(username){
+    for(let user of this.dummyUsers){
+      if(username == user.username){
+        return false;
+      }
+    }
+    return true;
   }
 }
 

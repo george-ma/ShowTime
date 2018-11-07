@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
 
   dummyUsers: Array<User> = [];
 
+  error: boolean = false;
+
   constructor(public router: Router) { }
 
   ngOnInit() {
@@ -29,7 +31,10 @@ export class LoginComponent implements OnInit {
     for (let curUser of this.dummyUsers){
       if (this.user.username == curUser.username && this.user.password == curUser.password){
         sessionStorage.setItem('currentUser', JSON.stringify(curUser));
+        this.error = false;
         this.router.navigate(['/grid'] );
+      }else {
+        this.error = true;
       }
     }
   }

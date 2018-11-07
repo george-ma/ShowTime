@@ -26,6 +26,11 @@
       </div>
 
       <div class="form-group">
+        <label class="font-weight-bold" for="email"> Change email </label>
+        <input type="text" class="form-control" name="email" placeholder="New email" [(ngModel)]="updateUser.email" #username="ngModel">
+      </div>
+
+      <div class="form-group">
         <label class="font-weight-bold" for="username"> Change username </label>
         <input type="text" class="form-control" name="username" placeholder="New username" [(ngModel)]="updateUser.username" #username="ngModel">
       </div>

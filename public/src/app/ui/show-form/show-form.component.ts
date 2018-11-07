@@ -9,10 +9,28 @@ import { Show } from '../models/show';
   templateUrl: './show-form.component.html',
   styleUrls: ['./show-form.component.css']
 })
-export class ShowFormComponent implements OnInit {
 
-  constructor(public router: Router) { }
+// add to global list as unapproved if regular, approved if admin
+// editing id , client side approve reject
+export class ShowFormComponent{
 
-  ngOnInit() { }
+    constructor(public router: Router) {}
 
+    shows: Array<Show> = []
+    model = new Show(42, '','',false,'','')
+
+    submitted = false;
+
+    onSubmit() { this.submitted = true; }  
+
+    // TODO: Remove this when we're done
+    get diagnostic() { return JSON.stringify(this.model); }
+
+    addNewShow() {
+        this.shows = JSON.parse(sessionStorage.getItem('shows'));
+        this.shows.push(this.model);
+        sessionStorage.setItem('shows', JSON.stringify(this.shows));
+        this.router.navigate(['/grid']);
+    }
 }
+

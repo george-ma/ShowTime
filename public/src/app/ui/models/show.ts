@@ -1,4 +1,6 @@
 export class Show {
+    static numShows : number = 0;
+
     constructor (
         public id: number,
         public title: string,
@@ -6,5 +8,7 @@ export class Show {
         public approved: boolean,
         public img?: string,
         public link?: string
-    ) {}
+    ) {
+        Show.numShows++;
+    }
 }

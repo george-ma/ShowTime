@@ -17,17 +17,14 @@ export class ShowFormComponent{
     constructor(public router: Router) {}
 
     shows: Array<Show> = []
-    
+
     numShows = parseInt(sessionStorage.getItem("numShows"));
-    
-    model = new Show(this.numShows+1, '','',false,'assets/noImage.jpg','')
+
+    model = new Show(this.numShows+1, '', '', false, 'assets/noImage.jpg', '')
 
     submitted = false;
 
-    onSubmit() { this.submitted = true; }  
-
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.model); }
+    onSubmit() { this.submitted = true; }
 
     addNewShow() {
         this.shows = JSON.parse(sessionStorage.getItem('shows'));
@@ -37,4 +34,3 @@ export class ShowFormComponent{
         this.router.navigate(['/grid']);
     }
 }
-

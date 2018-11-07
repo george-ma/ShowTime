@@ -1,4 +1,4 @@
-# ShowTime Community Driven TV Guide
+# 📺 ShowTime Community Driven TV Guide 📺
 
 ## Get started
 

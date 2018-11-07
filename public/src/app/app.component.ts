@@ -159,9 +159,10 @@ export class AppComponent {
     this.loadDummyUsers()
     sessionStorage.setItem('users', JSON.stringify(this.users));
     this.loadDummyShows()
+    sessionStorage.setItem('numShows', JSON.stringify(this.shows.length))
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
     // }
-    sessionStorage.setItem('setUpData', JSON.stringify(true));
+    // sessionStorage.setItem('setUpData', JSON.stringify(true));
 
   }
 }

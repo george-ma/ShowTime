@@ -17,7 +17,10 @@ export class ShowFormComponent{
     constructor(public router: Router) {}
 
     shows: Array<Show> = []
-    model = new Show(42, '','',false,'assets/noImage.jpg','')
+    
+    numShows = parseInt(sessionStorage.getItem("numShows"));
+    
+    model = new Show(this.numShows+1, '','',false,'assets/noImage.jpg','')
 
     submitted = false;
 
@@ -30,6 +33,7 @@ export class ShowFormComponent{
         this.shows = JSON.parse(sessionStorage.getItem('shows'));
         this.shows.push(this.model);
         sessionStorage.setItem('shows', JSON.stringify(this.shows));
+        sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
         this.router.navigate(['/grid']);
     }
 }

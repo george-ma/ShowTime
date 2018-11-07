@@ -17,7 +17,8 @@ npm install -g @angular/cli
 git clone https://github.com/csc309-fall-2018/team17.git
 ```
 
-### Install npm packages
+## Build project (automatically opens)
+
 
 Install the `npm` packages described in the `package.json`:
 
@@ -26,8 +27,7 @@ cd public
 npm install
 ```
 
-## Build project (automatically opens)
-
+Build and open the package
 ```shell
 ng serve --open
 ```

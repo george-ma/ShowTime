@@ -35,8 +35,8 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary" routerLink="editShow/{{show.id}}">Edit</button>
-        <button class="btn btn-outline-primary float-right" (click)="addToMyShows(show.id)">Add To My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show.id}}">Edit</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="addToMyShows(show.id)">Add To My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -51,8 +51,8 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary" routerLink="editShow/{{show.id}}">Edit</button>
-        <button class="btn btn-outline-primary float-right" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show.id}}">Edit</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -70,7 +70,7 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary text-primary d-block w-75 mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -85,8 +85,8 @@
         <p class="card-text"> {{ show.description }} </p>
       </div>
       <div class="card-footer">
-        <button class="btn btn-outline-success" (click)="approve(show.id)">approve</button>
-        <button class="btn btn-outline-danger float-right" (click)="reject(show.id)">reject</button>
+        <button class="btn btn-outline-success d-block btn-block mx-auto" (click)="approve(show.id)">Approve</button>
+        <button class="btn btn-outline-danger d-block btn-block mx-auto" (click)="reject(show.id)">Reject</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

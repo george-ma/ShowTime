@@ -23,6 +23,7 @@ export class EditShowComponent implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
     this.show = this.getShow(this.route.snapshot.paramMap.get('id'));
 
+    this.updateShow.id = this.show.id;
     this.updateShow.title = this.show.title;
     this.updateShow.img = this.show.img;
     this.updateShow.description = this.show.description;
@@ -31,7 +32,7 @@ export class EditShowComponent implements OnInit {
 
   getShow(id) {
     let data = JSON.parse(sessionStorage.getItem('shows'))
-    for(let show of data) {
+    for (let show of data) {
       if (show.id == id) {
         return show;
       }
@@ -43,9 +44,20 @@ export class EditShowComponent implements OnInit {
   }
 
   submitEdits() {
-    this.shows.push(this.updateShow);
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    if (this.getCheckAdmin()) {
+      this.updateShow.approved = true;
+      for (let i = 0; i < this.shows.length; i++) {
+        if (this.shows[i].id == this.show.id) {
+          this.shows[i] = this.updateShow;
+          break;
+        }
+      }
 
+    } else {
+      this.shows.push(this.updateShow);
+    }
+
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
     this.router.navigate(['/grid']);
   }
 

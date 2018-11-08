@@ -13,7 +13,8 @@
        <button href="#" class="btn btn-primary">{{ show.link }}</button>
      </div>
      <div class="card-body" *ngIf="getCheckUser()">
-       <button class="btn btn-primary" (click)="addToMyShows(show.id)">Add To My Shows</button>
+       <button class="btn btn-primary" *ngIf="!inMyShows" (click)="updateMyShows()">Add To My Shows</button>
+       <button class="btn btn-primary" *ngIf="inMyShows" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
      </div>
    </div> <!-- //end card -->
    <br>
@@ -72,8 +73,9 @@
               Paused
            </button>
            <div class="text-right">
-             <button type="submit" class="btn btn-primary shadow">Submit</button>
+             <button type="submit" class="btn btn-primary shadow">Save</button>
            </div>
+            <p class="alert alert-success text-center" *ngIf="updatedTimeout"> <strong>Saved Your Response</strong> </p>
         </div>
       </form>
     </div>

@@ -15,6 +15,7 @@ export class ShowComponent implements OnInit {
   user: any = {};
   myShow: any = {};
   inMyShows: boolean = false;
+  updatedTimeout: boolean = false;
 
 
   constructor( private route: ActivatedRoute, private router: Router) { }
@@ -53,6 +54,7 @@ export class ShowComponent implements OnInit {
         return
       }
     }
+    this.myShow = {};
     this.inMyShows = false;
   }
 
@@ -79,6 +81,17 @@ export class ShowComponent implements OnInit {
     this.updateSessionMyShows();
   }
 
+  RemoveFromMyShows(id){
+    let i = 0;
+    for( i; i < this.user.my_shows.length; i++ ){
+      if(this.user.my_shows[i].id == id){
+        break;
+      }
+    }
+    this.user.my_shows.splice(i, 1);
+    this.updateSessionMyShows();
+  }
+
   updateSessionMyShows(){
     let allUsers = []
     allUsers = JSON.parse(sessionStorage.getItem('users'));
@@ -90,6 +103,10 @@ export class ShowComponent implements OnInit {
       }
     }
     sessionStorage.setItem('users', JSON.stringify(allUsers));
+    this.updatedTimeout = true;
+    setTimeout(() => {
+        this.updatedTimeout = false;
+    }, 2000);
     this.getUser();
   }
 

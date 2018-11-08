@@ -1,7 +1,15 @@
-import { Component } from '@angular/core';
-import { Show } from './ui/models/show';
-import { MyShow } from './ui/models/my_show';
-import { User } from './ui/models/user';
+import {
+  Component
+} from '@angular/core';
+import {
+  Show
+} from './ui/models/show';
+import {
+  MyShow
+} from './ui/models/my_show';
+import {
+  User
+} from './ui/models/user';
 
 @Component({
   selector: 'app-root',
@@ -10,128 +18,221 @@ import { User } from './ui/models/user';
 })
 export class AppComponent {
 
-  users: Array<User> = [];
+  users: Array < User > = [];
 
   loadDummyUsers() {
-    this.users = [
+    this.users = [{
+        "email": "george@gmail.com",
+        "username": "george",
+        "password": "hellogeorge",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [{
+            "id": 1,
+            "review": "string",
+            "rating": 5,
+            "status": 2, /* Completed = 1
+                            Planning = 2
+                            Current = 3
+                            Dropped = 4
+                            Paused = 5
+                         */
+          },
+          {
+            "id": 2,
+            "review": "string",
+            "rating": 2,
+            "status": 5,
+          }
+        ]
+      },
       {
-          "email": "george@gmail.com",
-          "username": "george",
-          "password": "hellogeorge",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": [
+        "email": "nick@gmail.com",
+        "username": "nick",
+        "password": "hellonick",
+        "is_admin": false,
+        "is_banned": false,
+        "my_shows": [{
+          "id": 1,
+          "review": "string",
+          "rating": 4,
+          "status": 2,
+        }]
+      },
+      {
+        "email": "bob@gmail.com",
+        "username": "bob",
+        "password": "hellobob",
+        "is_admin": true,
+        "is_banned": true,
+        "my_shows": [{
+            "id": 2,
+            "review": "string",
+            "rating": 5,
+            "status": 1,
+          },
+          {
+            "id": 1,
+            "review": "string",
+            "rating": 4,
+            "status": 1,
+          }
+        ]
+      },
+      {
+        "email": "sam@gmail.com",
+        "username": "sam",
+        "password": "hellosam",
+        "is_admin": false,
+        "is_banned": false,
+        "my_shows": [{
+          "id": 2,
+          "review": "string",
+          "rating": 5,
+          "status": 1,
+        }]
+      },
+      {
+        "email": "tom@gmail.com",
+        "username": "tom",
+        "password": "hellotom",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [{
+          "id": 1,
+          "review": "string",
+          "rating": 5,
+          "status": 1,
+        }]
+      },
+      {
+        "email": "tim@gmail.com",
+        "username": "tim",
+        "password": "hellotim",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [{
+          "id": 1,
+          "review": "string",
+          "rating": 5,
+          "status": 4,
+        }]
+      },
+      {
+        "email": "harry@gmail.com",
+        "username": "harry",
+        "password": "helloharry",
+        "is_admin": false,
+        "is_banned": false,
+        "my_shows": [
             {
-              "id": 1,
-              "review": "string",
-              "rating": 5,
-              "status": 2,
-            }
-          ]
+            "id": 2,
+            "review": "string",
+            "rating": 4,
+            "status": 3,
+          },
+          {
+            "id": 1,
+            "review": "string",
+            "rating": 5,
+            "status": 1,
+          }
+        ]
       },
       {
-          "email": "nick@gmail.com",
-          "username": "nick",
-          "password": "hellonick",
-          "is_admin": false,
-          "is_banned": false,
-          "my_shows": []
-      },
-      {
-          "email": "bob@gmail.com",
-          "username": "bob",
-          "password": "hellobob",
-          "is_admin": true,
-          "is_banned": true,
-          "my_shows": [
+        "email": "peter@gmail.com",
+        "username": "peter",
+        "password": "hellopeter",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [
             {
-              "id": 2,
-              "review": "string",
-              "rating": 5,
-              "status": 2,
+            "id": 1,
+            "review": "string",
+            "rating": 1,
+            "status": 5,
+            },
+            {
+            "id": 2,
+            "review": "string",
+            "rating": 1,
+            "status": 3,
             }
-          ]
+        ]
       },
       {
-          "email": "sam@gmail.com",
-          "username": "sam",
-          "password": "hellosam",
-          "is_admin": false,
-          "is_banned": false,
-          "my_shows": []
+        "email": "rick@gmail.com",
+        "username": "rick",
+        "password": "hellorick",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [
+            {
+            "id": 1,
+            "review": "string",
+            "rating": 3,
+            "status": 5,
+            },
+            {
+            "id": 2,
+            "review": "string",
+            "rating": 1,
+            "status": 3,
+            }
+        ]
       },
       {
-          "email": "tom@gmail.com",
-          "username": "tom",
-          "password": "hellotom",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
+        "email": "jimmy@gmail.com",
+        "username": "jimmy",
+        "password": "hellojimmy",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [
+            {
+            "id": 2,
+            "review": "string",
+            "rating": 5,
+            "status": 1,
+            }
+        ]
       },
       {
-          "email": "tim@gmail.com",
-          "username": "tim",
-          "password": "hellotim",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
+        "email": "mike@gmail.com",
+        "username": "mike",
+        "password": "hellomike",
+        "is_admin": false,
+        "is_banned": true,
+        "my_shows": [
+            {
+            "id": 1,
+            "review": "string",
+            "rating": 4,
+            "status": 4,
+            }
+        ]
       },
       {
-          "email": "harry@gmail.com",
-          "username": "harry",
-          "password": "helloharry",
-          "is_admin": false,
-          "is_banned": false,
-          "my_shows": []
-      },
-      {
-          "email": "peter@gmail.com",
-          "username": "peter",
-          "password": "hellopeter",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
-      },
-      {
-          "email": "rick@gmail.com",
-          "username": "rick",
-          "password": "hellorick",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
-      },
-      {
-          "email": "jimmy@gmail.com",
-          "username": "jimmy",
-          "password": "hellojimmy",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
-      },
-      {
-          "email": "mike@gmail.com",
-          "username": "mike",
-          "password": "hellomike",
-          "is_admin": false,
-          "is_banned": true,
-          "my_shows": []
-      },
-      {
-          "email": "jane@gmail.com",
-          "username": "jane",
-          "password": "hellojane",
-          "is_admin": true,
-          "is_banned": true,
-          "my_shows": []
+        "email": "jane@gmail.com",
+        "username": "jane",
+        "password": "hellojane",
+        "is_admin": true,
+        "is_banned": true,
+        "my_shows": [
+            {
+            "id": 1,
+            "review": "string",
+            "rating": 5,
+            "status": 2,
+            }
+        ]
       }
     ]
   }
 
-  shows: Array<Show> = [];
+  shows: Array < Show > = [];
 
   loadDummyShows() {
-    this.shows = [
-      {
+    this.shows = [{
         id: 1,
         title: "WestWorld",
         description: "Season 1",
@@ -180,12 +281,3 @@ export class AppComponent {
 
   }
 }
-
-
-/*
-Completed = 1
-Planning = 2
-Current = 3
-Dropped = 4
-Paused = 5
-*/

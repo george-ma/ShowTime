@@ -23,11 +23,7 @@ export class EditShowComponent implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
     this.show = this.getShow(this.route.snapshot.paramMap.get('id'));
 
-    this.updateShow.id = this.show.id;
-    this.updateShow.title = this.show.title;
-    this.updateShow.img = this.show.img;
-    this.updateShow.description = this.show.description;
-    this.updateShow.link = this.show.link;
+    this.copyShowAttributes(this.updateShow, this.show);
   }
 
   getShow(id) {
@@ -48,7 +44,7 @@ export class EditShowComponent implements OnInit {
       this.updateShow.approved = true;
       for (let i = 0; i < this.shows.length; i++) {
         if (this.shows[i].id == this.show.id) {
-          this.shows[i] = this.updateShow;
+          this.copyShowAttributes(this.shows[i], this.updateShow);
           break;
         }
       }
@@ -62,9 +58,14 @@ export class EditShowComponent implements OnInit {
   }
 
   resetEdits() {
-    this.updateShow.title = this.show.title;
-    this.updateShow.img = this.show.img;
-    this.updateShow.description = this.show.description;
-    this.updateShow.link = this.show.link;
+    this.copyShowAttributes(this.updateShow, this.show);
+  }
+
+  copyShowAttributes(show, showToCopy) {
+    show.id = showToCopy.id;
+    show.title = showToCopy.title;
+    show.img = showToCopy.img;
+    show.description = showToCopy.description;
+    show.link = showToCopy.link;
   }
 }

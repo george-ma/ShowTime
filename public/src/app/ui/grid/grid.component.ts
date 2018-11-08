@@ -67,20 +67,20 @@ export class GridComponent implements OnInit {
     if(show.airDate != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
-  
+
       let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
-  
+
       // int is number of ms in a day
       let intervalTime = 86400000 * show.airInterval;
-  
+
       let remaining = timeSinceAir % intervalTime;
       console.log(remaining)
-      
+
       let seconds = Math.floor((remaining / 1000) % 60);
       let minutes = Math.floor((remaining / (60000)) % 60);
       let hours = Math.floor((remaining / (3600000)) % 24);
       let days = Math.floor(remaining / (86400000));
-  
+
       return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining`
     }
   }
@@ -124,20 +124,27 @@ export class GridComponent implements OnInit {
 
     let j = 0;
     let foundShow = false;
-    for (j; j < this.shows.length; j++) {
-      if (this.shows[j].id == id) {
-        this.shows[j] = this.unapprovedShows[i];
+    for (let curShow of this.shows) {
+      if (curShow.id == id && curShow.approved == true) {
+        this.copyShowAttributes(curShow, this.unapprovedShows[i]);
         foundShow = true;
         break;
       }
     }
-    
+
     if (!foundShow) {
       this.shows.push(this.unapprovedShows[i]);
     }
 
     this.unapprovedShows.splice(i, 1);
     this.updateSessionShows()
+  }
+
+  copyShowAttributes(show, showToCopy) {
+    show.title = showToCopy.title;
+    show.img = showToCopy.img;
+    show.description = showToCopy.description;
+    show.link = showToCopy.link;
   }
 
   reject(id){

@@ -13,12 +13,14 @@ import { HttpModule } from '@angular/http';
 import { AccountComponent } from './account/account.component';
 import { ShowComponent } from './show/show.component';
 import { EditShowComponent } from './edit-show/edit-show.component';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    CountdownModule
   ],
   declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent],
   exports: [LayoutComponent]

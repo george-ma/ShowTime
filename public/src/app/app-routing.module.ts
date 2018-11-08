@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'grid/show/:id', component: ShowComponent},
   { path: 'show/:id', component: ShowComponent},
   { path: 'editShow/:id', component: EditShowComponent},
-  { path: 'grid/editShow/:id', component: EditShowComponent}
+  { path: 'grid/editShow/:id', component: EditShowComponent},
+  { path: 'grid/show/:id/editShow', component: EditShowComponent}
 ];
 
 @NgModule({

@@ -64,8 +64,8 @@ export class GridComponent implements OnInit {
     }
   }
 
-  getTimeRemaining(show: Show) {
-    if(show.airDate != undefined) {
+  getNextEpisode(show: Show) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -73,16 +73,41 @@ export class GridComponent implements OnInit {
 
       // int is number of ms in a day
       let intervalTime = 86400000 * show.airInterval;
+      let nextEpisode;
 
-      let remaining = timeSinceAir % intervalTime;
-      console.log(remaining)
+      if(airDate > current) {
+        nextEpisode = 1;
+      }
+      else {
+        nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+      }
 
-      let seconds = Math.floor((remaining / 1000) % 60);
-      let minutes = Math.floor((remaining / (60000)) % 60);
-      let hours = Math.floor((remaining / (3600000)) % 24);
-      let days = Math.floor(remaining / (86400000));
+      return nextEpisode;
+    }
+  }
 
-      return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining`
+  getTimeRemaining(show: Show) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
+      let airDate = new Date(show.airDate);
+      let current = new Date();
+
+      let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
+
+      // int is number of ms in a day
+      let intervalTime = 86400000 * show.airInterval;
+      let remaining;
+
+      if(airDate > current) {
+        remaining = timeSinceAir;
+      }
+      else {
+        let nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+        let timeFromFirstAir = (nextEpisode - 1) * intervalTime;
+        remaining = (airDate.getTime() + timeFromFirstAir) - current.getTime();
+      }
+
+      let remainingInSeconds = Math.floor(remaining / 1000);
+      return remainingInSeconds;
     }
   }
 
@@ -125,9 +150,9 @@ export class GridComponent implements OnInit {
 
     let j = 0;
     let foundShow = false;
-    for (j; j < this.shows.length; j++) {
-      if (this.shows[j].id == id) {
-        this.shows[j] = this.unapprovedShows[i];
+    for (let curShow of this.shows) {
+      if (curShow.id == id && curShow.approved == true) {
+        this.copyShowAttributes(curShow, this.unapprovedShows[i]);
         foundShow = true;
         break;
       }
@@ -139,6 +164,20 @@ export class GridComponent implements OnInit {
 
     this.unapprovedShows.splice(i, 1);
     this.updateSessionShows()
+  }
+
+  copyShowAttributes(show, showToCopy) {
+    show.title = showToCopy.title;
+    show.img = showToCopy.img;
+    show.description = showToCopy.description;
+    show.link = showToCopy.link;
+
+    if (showToCopy.airDate) {
+      show.airDate = showToCopy.airDate;
+    }
+    if (showToCopy.airInterval) {
+      show.airInterval = showToCopy.airInterval;
+    }
   }
 
   reject(id){

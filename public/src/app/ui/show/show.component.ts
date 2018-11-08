@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { Show } from '../models/show';
+import { MyShow } from '../models/my_show';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-show',
@@ -16,13 +18,21 @@ export class ShowComponent implements OnInit {
   myShow: any = {};
   inMyShows: boolean = false;
   updatedTimeout: boolean = false;
+  ratingData: Array<MyShow> = [];
+  reviews: Array<string> = [];
+  rating: number = 0;
+  numberOfRatings: number =0;
+  status: Array<number> =[];
+  show_reviews: boolean = false;
 
 
-  constructor( private route: ActivatedRoute, private router: Router) { }
+
+  constructor( public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
     this.getShow(this.route.snapshot.paramMap.get('id'));
     this.getUser()
+    this.getRatingData()
   }
 
   getShow(id){
@@ -108,8 +118,48 @@ export class ShowComponent implements OnInit {
         this.updatedTimeout = false;
     }, 2000);
     this.getUser();
+    this.getRatingData()
   }
 
+  getRatingData(){
+    this.ratingData = [];
+    this.reviews = [];
+    let allUsers = [];
+    let numberOfRatings = 0;
+    let sumofRatings = 0;
+    let status = [0, 0, 0, 0, 0];
+    allUsers = JSON.parse(sessionStorage.getItem('users'));
+    for( let i =0; i < allUsers.length; i++ ){
+      for(let j =0; j < allUsers[i].my_shows.length; j++){
+        if(allUsers[i].my_shows[j].id == this.show.id){
+            this.ratingData.push(allUsers[i].my_shows[j]);
+            if(allUsers[i].my_shows[j].review != undefined){
+              this.reviews.push(`${allUsers[i].username} : ${allUsers[i].my_shows[j].review}`);
+            }
+            if(allUsers[i].my_shows[j].rating != undefined){
+              numberOfRatings = numberOfRatings +1;
+              sumofRatings = sumofRatings + allUsers[i].my_shows[j].rating;
+            }
+            if(allUsers[i].my_shows[j].status != undefined || allUsers[i].my_shows[j].status != 0){
+             status[allUsers[i].my_shows[j].status -1 ] = status[allUsers[i].my_shows[j].status -1 ] +1
+            }
+
+        }
+      }
+    }
+    this.numberOfRatings = numberOfRatings;
+    this.status = status;
+    this.rating = sumofRatings / numberOfRatings;
+  }
+
+  showReviews(){
+    if(this.show_reviews){
+      this.show_reviews = false;
+    } else{
+      this.show_reviews = true;
+    }
+
+  }
 
 
 }

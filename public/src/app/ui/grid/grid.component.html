@@ -3,10 +3,10 @@
     <a class="nav-link" [ngClass]="{'active': all===true}" (click)="selectAll()">All</a>
   </li>
   <li class="nav-item" *ngIf="getCheckUser()">
-    <a class="nav-link" [ngClass]="{'active': my_shows===true}" (click)="selectMy()" >My Shows</a>
+    <a class="nav-link" [ngClass]="{'active': my_shows===true}" (click)="selectMy()">My Shows</a>
   </li>
   <li class="nav-item" *ngIf="getUser() && user.is_admin">
-    <a class="nav-link"  [ngClass]="{'active': unapproved_shows===true}" (click)="selectUn()">Unapproved Shows</a>
+    <a class="nav-link" [ngClass]="{'active': unapproved_shows===true}" (click)="selectUn()">Unapproved Shows</a>
   </li>
   <li class="nav-item justify-content-end">
     <input class="form-control form-control-sm form-control-borderless" type="search" [(ngModel)]="search" placeholder="Search For a show">
@@ -15,45 +15,44 @@
     <button class="btn btn-sm btn-info" (click)="getRegxShows()" type="submit">Search</button>
   </li>
   <li class="nav-item justify-content-end" *ngIf="getCheckUser()">
-    <button class="btn btn-sm btn-primary" routerLink="/addNewShow" >Add New Show</button>
+    <button class="btn btn-sm btn-primary" routerLink="/addNewShow">Add New Show</button>
   </li>
-
 </ul>
 <br>
 
 <div class="row justify-content-md-center card-deck" *ngIf="all">
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows; ">
-    <div class="card" >
+    <div class="card">
+      <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show.id}}">
-      <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ show.title }}</h5>
-        <p class="card-text"> {{ show.description }} </p>
-        <button href="#" class="btn btn-primary">{{ show.link }}</button>
-        <p>{{getTimeRemaining(show)}}</p>
-      </div>
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text"> {{ show.description }} </p>
+          <div *ngIf="show.airDate != undefined && show.airInterval != undefined">
+            <span>Episode {{getNextEpisode(show)}} in </span>
+            <countdown [config]="{leftTime:getTimeRemaining(show)}"> $!d! days, $!h! hours and $!m! minutes</countdown>
+          </div>
+        </div>
       </a>
-      <div class="card-body" *ngIf="getCheckUser()">
-        <button class="btn btn-primary" (click)="addToMyShows(show.id)">Add To My Shows</button>
-        <br>
-        <button class="btn btn-primary" routerLink="editShow/{{show.id}}">Edit</button>
+      <div class="card-footer" *ngIf="getCheckUser()">
+        <button class="btn btn-outline-primary" routerLink="editShow/{{show.id}}">Edit</button>
+        <button class="btn btn-outline-primary float-right" (click)="addToMyShows(show.id)">Add To My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
+
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
-    <div class="card" >
+    <div class="card">
+      <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show.id}}">
-      <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ show.title }}</h5>
-        <p class="card-text"> {{ show.description }} </p>
-        <button href="#" class="btn btn-primary">{{ show.link }}</button>
-      </div>
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text"> {{ show.description }} </p>
+        </div>
       </a>
-      <div class="card-body" *ngIf="getCheckUser()">
-        <button class="btn btn-primary" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
-        <br>
-        <button class="btn btn-primary" routerLink="editShow/{{show.id}}">Edit</button>
+      <div class="card-footer" *ngIf="getCheckUser()">
+        <button class="btn btn-outline-primary" routerLink="editShow/{{show.id}}">Edit</button>
+        <button class="btn btn-outline-primary float-right" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -61,32 +60,33 @@
 
 <div class="row justify-content-md-center card-deck" *ngIf="my_shows">
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
-    <div class="card" >
+    <div class="card">
+      <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show.id}}">
-      <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ show.title }}</h5>
-        <p class="card-text"> {{ show.description }} </p>
-        <button href="#" class="btn btn-primary">{{ show.link }}</button>
-      </div>
+        <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
+        <div class="card-body">
+          <!-- <h5 class="card-title">{{ show.title }}</h5> -->
+          <p class="card-text"> {{ show.description }} </p>
+        </div>
       </a>
-      <div class="card-body" *ngIf="getCheckUser()">
-        <button class="btn btn-primary" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+      <div class="card-footer" *ngIf="getCheckUser()">
+        <button class="btn btn-outline-primary text-primary d-block w-75 mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
-</div>
+</div> <!-- end row -->
 
 <div class="row justify-content-md-center card-deck " *ngIf="unapproved_shows">
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of unapprovedShows; ">
-    <div class="card" >
+    <div class="card">
+      <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
       <div class="card-body">
-        <h5 class="card-title">{{ show.title }}</h5>
         <p class="card-text"> {{ show.description }} </p>
-        <button href="#" class="btn btn-primary">{{ show.link }}</button>
-        <button class="btn btn-success" (click)="approve(show.id)" >approve</button>
-        <button class="btn btn-danger" (click)="reject(show.id)" >reject</button>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-outline-success" (click)="approve(show.id)">approve</button>
+        <button class="btn btn-outline-danger float-right" (click)="reject(show.id)">reject</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

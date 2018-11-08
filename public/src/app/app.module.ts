@@ -7,6 +7,7 @@ import { UiModule } from './ui/ui.module';
 import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   declarations: [ // Component, Directive, or Pipe
@@ -18,6 +19,7 @@ import { HttpModule } from '@angular/http';
     UiModule,
     HttpClientModule,
     HttpModule,
+    CountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,10 +9,10 @@
     <a class="nav-link"  [ngClass]="{'active': unapproved_shows===true}" (click)="selectUn()">Unapproved Shows</a>
   </li>
   <li class="nav-item justify-content-end">
-    <input class="form-control form-control-sm form-control-borderless" type="search" placeholder="Search For a show">
+    <input class="form-control form-control-sm form-control-borderless" type="search" [(ngModel)]="search" placeholder="Search For a show">
   </li>
   <li class="nav-item justify-content-end">
-    <button class="btn btn-sm btn-info" type="submit">Search</button>
+    <button class="btn btn-sm btn-info" (click)="getRegxShows()" type="submit">Search</button>
   </li>
   <li class="nav-item justify-content-end" *ngIf="getCheckUser()">
     <button class="btn btn-sm btn-primary" routerLink="/addNewShow" >Add New Show</button>

@@ -23,6 +23,7 @@ export class GridComponent implements OnInit {
   all: boolean = true;
   my_shows: boolean = false;
   unapproved_shows: boolean = false;
+  search: string ='';
 
   constructor(private gridService: GridService, public router: Router) { }
 
@@ -67,20 +68,20 @@ export class GridComponent implements OnInit {
     if(show.airDate != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
-  
+
       let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
-  
+
       // int is number of ms in a day
       let intervalTime = 86400000 * show.airInterval;
-  
+
       let remaining = timeSinceAir % intervalTime;
       console.log(remaining)
-      
+
       let seconds = Math.floor((remaining / 1000) % 60);
       let minutes = Math.floor((remaining / (60000)) % 60);
       let hours = Math.floor((remaining / (3600000)) % 24);
       let days = Math.floor(remaining / (86400000));
-  
+
       return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining`
     }
   }
@@ -131,7 +132,7 @@ export class GridComponent implements OnInit {
         break;
       }
     }
-    
+
     if (!foundShow) {
       this.shows.push(this.unapprovedShows[i]);
     }
@@ -196,5 +197,27 @@ export class GridComponent implements OnInit {
     }
     sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
     this.getShows();
+  }
+  getRegxShows(){
+    let reg = RegExp(`^${this.search}`, 'i');
+    reg.ignoreCase;
+    let data:Array<Show> = this.gridService.getShows()
+    this.shows = [];
+    this.myShows = [];
+    this.unapprovedShows = [];
+    this.getUser();
+    for( let show of data){
+      if(show.approved == true && reg.test(show.title)){
+        if( this.getCheckUser() && this.InMyShows(show.id) ){
+          this.myShows.push(show);
+        } else{
+          this.shows.push(show);
+        }
+      } else{
+        if(reg.test(show.title)){
+          this.unapprovedShows.push(show);
+        }
+      }
+    }
   }
 }

@@ -4,7 +4,7 @@
 
 <div class="row justify-content-center">
   <div id="edit-show">
-    <form (ngSubmit)="submitEdits()" #f="ngForm">
+    <form (ngSubmit)="f.form.valid && submitEdits()" #f="ngForm">
       <div class="form-group">
         <label class="font-weight-bold" for="title"> Change title </label>
         <input type="text" class="form-control" name="title"

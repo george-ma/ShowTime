@@ -11,15 +11,17 @@ import { Show } from '../models/show';
 })
 export class EditShowComponent implements OnInit {
 
-  user: any = {};
-  show: any = {};
-  updateShow: any = {};
+  user: any = {}
+  show: Show
+  shows: Array<Show> = []
+  updateShow = new Show(-1, '', '', false, 'assets/noImage.jpg', '')
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.shows = JSON.parse(sessionStorage.getItem('shows'));
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.getShow(this.route.snapshot.paramMap.get('id'));
+    this.show = this.getShow(this.route.snapshot.paramMap.get('id'));
 
     this.updateShow.title = this.show.title;
     this.updateShow.img = this.show.img;
@@ -31,7 +33,7 @@ export class EditShowComponent implements OnInit {
     let data = JSON.parse(sessionStorage.getItem('shows'))
     for(let show of data) {
       if (show.id == id) {
-        this.show = show;
+        return show;
       }
     }
   }
@@ -41,7 +43,10 @@ export class EditShowComponent implements OnInit {
   }
 
   submitEdits() {
+    this.shows.push(this.updateShow);
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
 
+    this.router.navigate(['/grid']);
   }
 
   resetEdits() {

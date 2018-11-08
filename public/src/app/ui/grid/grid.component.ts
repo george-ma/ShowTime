@@ -64,7 +64,7 @@ export class GridComponent implements OnInit {
   }
 
   getTimeRemaining(show: Show) {
-    if(show.airDate != undefined) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 

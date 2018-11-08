@@ -10,8 +10,6 @@ import { User } from './ui/models/user';
 })
 export class AppComponent {
 
-  title = 'ShowTime';
-
   users: Array<User> = [];
 
   loadDummyUsers() {

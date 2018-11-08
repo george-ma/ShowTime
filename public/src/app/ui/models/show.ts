@@ -8,6 +8,6 @@ export class Show {
         public img?: string,
         public link?: string,
         public airDate?: Date,
-        public airInterval?: number        
+        public airInterval?: number,
     ) { }
 }

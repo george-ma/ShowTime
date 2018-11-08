@@ -25,9 +25,9 @@ export class ShowFormComponent{
     model = new Show(this.numShows+1, '','',false,'assets/noImage.jpg','')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  hours = [24];
-  days = [31];
-  years = [30];
+  hours = [];
+  days = [];
+  years = [];
   date={};
 
   airingChecked = false;
@@ -72,10 +72,13 @@ export class ShowFormComponent{
     this.setAirDate();
 
     this.shows = JSON.parse(sessionStorage.getItem('shows'));
-      this.shows.push(this.model);
-      sessionStorage.setItem('shows', JSON.stringify(this.shows));
-      sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
-      this.router.navigate(['/grid']);
+    this.shows.push(this.model);
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
+
+    console.log(this.model)
+
+    this.router.navigate(['/grid']);
   }
 
   ngOnInit() {

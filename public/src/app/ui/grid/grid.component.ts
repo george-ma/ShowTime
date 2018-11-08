@@ -148,18 +148,40 @@ export class GridComponent implements OnInit {
 
     this.unapprovedShows[i].approved = true;
 
-    let j = 0;
+    let modifiedShow = null;
     let foundShow = false;
-    for (let curShow of this.shows) {
+    for (let curShow of this.gridService.getShows()) {
       if (curShow.id == id && curShow.approved == true) {
-        this.copyShowAttributes(curShow, this.unapprovedShows[i]);
+        modifiedShow = this.copyShowAttributes(curShow, this.unapprovedShows[i]);
         foundShow = true;
         break;
       }
     }
 
     if (!foundShow) {
-      this.shows.push(this.unapprovedShows[i]);
+        this.shows.push(this.unapprovedShows[i]);
+    } else { // show was modified. code from updateSessionShows()
+        this.getShows();
+        this.sessionShows = [];
+        for( let show of this.unapprovedShows){
+            this.sessionShows.push(show);
+        }
+    
+        for( let show of this.shows){
+            if (show.id == modifiedShow.id) {
+                show.description = modifiedShow.description;
+                this.sessionShows.push(show);
+            }
+            this.sessionShows.push(show);
+        }
+    
+        for( let show of this.myShows){
+            if (show.id == modifiedShow.id) {
+                show.description = modifiedShow.description;
+                this.sessionShows.push(show);
+            }
+            this.sessionShows.push(show);
+        }
     }
 
     this.unapprovedShows.splice(i, 1);
@@ -178,6 +200,7 @@ export class GridComponent implements OnInit {
     if (showToCopy.airInterval) {
       show.airInterval = showToCopy.airInterval;
     }
+    return show;
   }
 
   reject(id){

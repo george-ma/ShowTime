@@ -8,17 +8,41 @@
  <div class="col-lg-6">
    <div class=" row card" >
      <div class="card-body">
-       <h5 class="card-title">{{ show.title }}</h5>
+       <h4 class="card-title">{{ show.title }}</h4>
        <p class="card-text"> {{ show.description }} </p>
        <button href="#" class="btn btn-primary">{{ show.link }}</button>
      </div>
+     <div class="card-body">
+       <h5 class="card-title">Rating: {{ rating }} / 5</h5>
+       <p class="card-text"> number of ratings: {{ numberOfRatings }} </p>
+       <button class="btn btn-outline-success">Completed: {{ status[0] }}</button>
+       <button class="btn btn-outline-primary">Planning: {{ status[1] }}</button>
+       <button class="btn btn-outline-info">Current: {{ status[2] }}</button>
+       <button class="btn btn-outline-warning">Dropped: {{ status[3] }}</button>
+       <button class="btn btn-outline-danger">Paused: {{ status[4] }}</button>
+
+     </div>
      <div class="card-body" *ngIf="getCheckUser()">
-       <button class="btn btn-primary" *ngIf="!inMyShows" (click)="updateMyShows()">Add To My Shows</button>
-       <button class="btn btn-primary" *ngIf="inMyShows" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+       <button class="btn btn-primary " routerLink="editShow">Edit</button>
+       <button class="btn btn-success" *ngIf="!inMyShows" (click)="updateMyShows()">Add To My Shows</button>
+       <button class="btn btn-danger" *ngIf="inMyShows" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+
      </div>
    </div> <!-- //end card -->
    <br>
-   <div class="row card" *ngIf="getCheckUser()"> <!-- REVIEW:  -->
+   <div class="row card">
+     <div class="card-body">
+       <h5 class="card-title">Reviews: <button class="btn btn-sm btn-outline-primary float-right" (click)="showReviews()">+</button></h5>
+     </div>
+
+     <div class="card-body" *ngIf="show_reviews">
+       <ul class="list-group list-group-flush" *ngFor="let review of reviews; ">
+         <li class="list-group-item">{{review}}</li>
+       </ul>
+     </div>
+   </div>
+   <br>
+   <div class="row card" *ngIf="getCheckUser()"> <!-- <!-- REVIEW:  -->
      <br>
     <div class="col-sm-12">
       <h5 class="card-title">My Feedback</h5>

@@ -77,8 +77,6 @@ export class ShowFormComponent{
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
     sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
 
-    console.log(this.model)
-
     this.router.navigate(['/grid']);
   }
 

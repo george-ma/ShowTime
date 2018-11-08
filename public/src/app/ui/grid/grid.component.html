@@ -28,7 +28,10 @@
         <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text"> {{ show.description }} </p>
-          <p>{{getTimeRemaining(show)}}</p>
+          <div *ngIf="show.airDate != undefined && show.airInterval != undefined">
+            <span>Episode {{getNextEpisode(show)}} in </span>
+            <countdown [config]="{leftTime:getTimeRemaining(show)}"> $!d! days, $!h! hours and $!m! minutes</countdown>
+          </div>
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">

@@ -63,25 +63,50 @@ export class GridComponent implements OnInit {
     }
   }
 
-  getTimeRemaining(show: Show) {
+  getNextEpisode(show: Show) {
     if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
-
+  
       let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
 
       // int is number of ms in a day
       let intervalTime = 86400000 * show.airInterval;
+      let nextEpisode;
+  
+      if(airDate > current) {
+        nextEpisode = 1;
+      }
+      else {
+        nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+      }
+      
+      return nextEpisode;
+    }
+  }
 
-      let remaining = timeSinceAir % intervalTime;
-      console.log(remaining)
+  getTimeRemaining(show: Show) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
+      let airDate = new Date(show.airDate);
+      let current = new Date();
+  
+      let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
 
-      let seconds = Math.floor((remaining / 1000) % 60);
-      let minutes = Math.floor((remaining / (60000)) % 60);
-      let hours = Math.floor((remaining / (3600000)) % 24);
-      let days = Math.floor(remaining / (86400000));
-
-      return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining`
+      // int is number of ms in a day
+      let intervalTime = 86400000 * show.airInterval;
+      let remaining;
+  
+      if(airDate > current) {
+        remaining = timeSinceAir;
+      }
+      else {
+        let nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+        let timeFromFirstAir = (nextEpisode - 1) * intervalTime;
+        remaining = (airDate.getTime() + timeFromFirstAir) - current.getTime();
+      }
+      
+      let remainingInSeconds = Math.floor(remaining / 1000);
+      return remainingInSeconds;
     }
   }
 

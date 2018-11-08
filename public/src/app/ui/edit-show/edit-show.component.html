@@ -31,7 +31,7 @@
       <div>
         <button type="submit" *ngIf="getCheckAdmin()" class="btn btn-primary shadow">Submit changes</button>
         <button type="submit" *ngIf="!getCheckAdmin()" class="btn btn-primary shadow">Submit changes for review</button>
-        <button type="button" (click)="resetEdits()" class="btn btn-primary shadow">Discard changes</button>
+        <button type="button" routerLink="/grid" (click)="resetEdits()" class="btn btn-primary shadow">Discard changes</button>
       </div>
     </form>
   </div>

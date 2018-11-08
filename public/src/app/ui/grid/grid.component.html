@@ -35,6 +35,8 @@
       </a>
       <div class="card-body" *ngIf="getCheckUser()">
         <button class="btn btn-primary" (click)="addToMyShows(show.id)">Add To My Shows</button>
+        <br>
+        <button class="btn btn-primary" routerLink="editShow/{{show.id}}">Edit</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -50,6 +52,8 @@
       </a>
       <div class="card-body" *ngIf="getCheckUser()">
         <button class="btn btn-primary" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <br>
+        <button class="btn btn-primary" routerLink="editShow/{{show.id}}">Edit</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { AccountComponent } from './account/account.component';
 import { ShowComponent } from './show/show.component';
+import { EditShowComponent } from './edit-show/edit-show.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ShowComponent } from './show/show.component';
     RouterModule,
     FormsModule,
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent, ShowComponent],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent],
   exports: [LayoutComponent]
 })
 export class UiModule { }

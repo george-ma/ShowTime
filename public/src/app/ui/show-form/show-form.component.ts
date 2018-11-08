@@ -18,11 +18,11 @@ export class ShowFormComponent{
 
   constructor(public router: Router) {}
 
-    shows: Array<Show> = []
-    
-    numShows = parseInt(sessionStorage.getItem("numShows"));
-    
-    model = new Show(this.numShows+1, '','',false,'assets/noImage.jpg','')
+  shows: Array<Show> = []
+
+  numShows = parseInt(sessionStorage.getItem("numShows"));
+
+  model = new Show(this.numShows+1, '', '', false, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];
@@ -104,5 +104,3 @@ export class ShowFormComponent{
     this.date["year"] = currentYear;    
   }
 }
-
-

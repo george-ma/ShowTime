@@ -114,13 +114,28 @@ export class GridComponent implements OnInit {
 
   approve(id){
     let i = 0;
-    for( i; i < this.unapprovedShows.length; i++ ){
-      if(this.unapprovedShows[i].id == id){
+    for (i; i < this.unapprovedShows.length; i++) {
+      if (this.unapprovedShows[i].id == id) {
         break;
       }
     }
+
     this.unapprovedShows[i].approved = true;
-    this.shows.push(this.unapprovedShows[i]);
+
+    let j = 0;
+    let foundShow = false;
+    for (j; j < this.shows.length; j++) {
+      if (this.shows[j].id == id) {
+        this.shows[j] = this.unapprovedShows[i];
+        foundShow = true;
+        break;
+      }
+    }
+    
+    if (!foundShow) {
+      this.shows.push(this.unapprovedShows[i]);
+    }
+
     this.unapprovedShows.splice(i, 1);
     this.updateSessionShows()
   }

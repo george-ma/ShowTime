@@ -64,7 +64,7 @@ export class GridComponent implements OnInit {
   }
 
   getTimeRemaining(show: Show) {
-    if(show.airDate != undefined) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -145,6 +145,13 @@ export class GridComponent implements OnInit {
     show.img = showToCopy.img;
     show.description = showToCopy.description;
     show.link = showToCopy.link;
+
+    if (showToCopy.airDate) {
+      show.airDate = showToCopy.airDate;
+    }
+    if (showToCopy.airInterval) {
+      show.airInterval = showToCopy.airInterval;
+    }
   }
 
   reject(id){

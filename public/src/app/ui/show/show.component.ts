@@ -149,7 +149,7 @@ export class ShowComponent implements OnInit {
     }
     this.numberOfRatings = numberOfRatings;
     this.status = status;
-    this.rating = sumofRatings / numberOfRatings;
+    this.rating = +(sumofRatings / numberOfRatings).toFixed(2);
   }
 
   showReviews(){

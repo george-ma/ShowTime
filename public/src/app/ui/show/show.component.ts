@@ -14,6 +14,8 @@ export class ShowComponent implements OnInit {
   show: any = {};
   user: any = {};
   myShow: any = {};
+  inMyShows: boolean = false;
+  updatedTimeout: boolean = false;
 
 
   constructor( private route: ActivatedRoute, private router: Router) { }
@@ -48,8 +50,12 @@ export class ShowComponent implements OnInit {
     for(let my_show of this.user.my_shows){
       if(my_show.id == this.show.id){
         this.myShow = my_show;
+        this.inMyShows = true
+        return
       }
     }
+    this.myShow = {};
+    this.inMyShows = false;
   }
 
   setRating(stars){
@@ -59,6 +65,51 @@ export class ShowComponent implements OnInit {
   setStatus(status){
     this.myShow.status = status;
   }
+
+  updateMyShows(){
+    if(this.inMyShows){
+      let i = 0;
+      for( i; i < this.user.my_shows.length; i++ ){
+        if(this.user.my_shows[i].id == this.show.id){
+            this.user.my_shows[i] = this.myShow;
+        }
+      }
+    } else{
+      this.myShow.id = this.show.id;
+      this.user.my_shows.push(this.myShow);
+    }
+    this.updateSessionMyShows();
+  }
+
+  RemoveFromMyShows(id){
+    let i = 0;
+    for( i; i < this.user.my_shows.length; i++ ){
+      if(this.user.my_shows[i].id == id){
+        break;
+      }
+    }
+    this.user.my_shows.splice(i, 1);
+    this.updateSessionMyShows();
+  }
+
+  updateSessionMyShows(){
+    let allUsers = []
+    allUsers = JSON.parse(sessionStorage.getItem('users'));
+    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+    let i = 0;
+    for( i; i < allUsers.length; i++ ){
+      if(allUsers[i].username == this.user.username){
+         allUsers[i].my_shows = this.user.my_shows;
+      }
+    }
+    sessionStorage.setItem('users', JSON.stringify(allUsers));
+    this.updatedTimeout = true;
+    setTimeout(() => {
+        this.updatedTimeout = false;
+    }, 2000);
+    this.getUser();
+  }
+
 
 
 }

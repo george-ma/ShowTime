@@ -21,8 +21,9 @@ export class ShowFormComponent{
   shows: Array<Show> = []
 
   numShows = parseInt(sessionStorage.getItem("numShows"));
+  currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-  model = new Show(this.numShows+1, '', '', false, 'assets/noImage.jpg', '')
+  model = new Show(this.numShows+1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];

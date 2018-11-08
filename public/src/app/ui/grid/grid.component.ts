@@ -145,6 +145,13 @@ export class GridComponent implements OnInit {
     show.img = showToCopy.img;
     show.description = showToCopy.description;
     show.link = showToCopy.link;
+
+    if (showToCopy.airDate) {
+      show.airDate = showToCopy.airDate;
+    }
+    if (showToCopy.airInterval) {
+      show.airInterval = showToCopy.airInterval;
+    }
   }
 
   reject(id){

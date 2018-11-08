@@ -28,6 +28,36 @@
         <input type="text" class="form-control" name="link" [(ngModel)]="updateShow.link" #description="ngModel">
       </div>
 
+      <div class="form-group">
+        <input type="checkbox" aria-label="Airing Date" id="checkboxAiringDate" [(ngModel)]="airingChecked" name="airingChecked">
+        <label for="link">Airing Date</label>
+
+        <div *ngIf="airingChecked" class="d-flex flex-row">
+          <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
+              <option *ngFor="let hour of hours">{{hour}}</option>
+            </select>
+
+          <select class="form-control p-2" id="daySelect" [(ngModel)]="date.day" name="day">
+              <option *ngFor="let day of days">{{day}}</option>
+            </select>
+
+            <select class="form-control p-2" id="monthSelect" [(ngModel)]="date.month" name="month">
+              <option *ngFor="let month of months">{{month}}</option>
+            </select>
+
+            <select class="form-control p-2" id="yearSelect" [(ngModel)]="date.year" name="year">
+              <option *ngFor="let year of years">{{year}}</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
+        <label for="interval">Airing Interval (Days)</label>
+        <input *ngIf="intervalChecked" type="number" class="form-control" id="interval"
+          [(ngModel)]="updateShow.airInterval" name="airInterval">
+      </div>
+
       <div>
         <button type="submit" *ngIf="getCheckAdmin()" class="btn btn-primary shadow">Submit changes</button>
         <button type="submit" *ngIf="!getCheckAdmin()" class="btn btn-primary shadow">Submit changes for review</button>

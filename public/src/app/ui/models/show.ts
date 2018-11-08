@@ -6,6 +6,8 @@ export class Show {
         public description: string,
         public approved: boolean,
         public img?: string,
-        public link?: string
+        public link?: string,
+        public airDate?: Date,
+        public airInterval?: number,
     ) { }
 }

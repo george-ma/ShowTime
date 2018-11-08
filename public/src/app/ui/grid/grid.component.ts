@@ -45,7 +45,7 @@ export class GridComponent implements OnInit {
   }
 
   getShows(){
-    let data = this.gridService.getShows()
+    let data:Array<Show> = this.gridService.getShows()
     this.shows = [];
     this.myShows = [];
     this.unapprovedShows = [];
@@ -60,6 +60,28 @@ export class GridComponent implements OnInit {
       } else{
         this.unapprovedShows.push(show);
       }
+    }
+  }
+
+  getTimeRemaining(show: Show) {
+    if(show.airDate != undefined) {
+      let airDate = new Date(show.airDate);
+      let current = new Date();
+  
+      let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
+  
+      // int is number of ms in a day
+      let intervalTime = 86400000 * show.airInterval;
+  
+      let remaining = timeSinceAir % intervalTime;
+      console.log(remaining)
+      
+      let seconds = Math.floor((remaining / 1000) % 60);
+      let minutes = Math.floor((remaining / (60000)) % 60);
+      let hours = Math.floor((remaining / (3600000)) % 24);
+      let days = Math.floor(remaining / (86400000));
+  
+      return `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds remaining`
     }
   }
 

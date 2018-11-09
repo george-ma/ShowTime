@@ -1,3 +1,12 @@
+/**
+ * @file
+ * Component that displays the shows in the site's database.
+ * Users can get information about the shows and add shows to their
+ * personal list. Admins can accept new shows, edit existing shows,
+ * or delete them.
+ * 
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { GridService } from './grid.service';
 import { Show } from '../models/show';
@@ -28,23 +37,31 @@ export class GridComponent implements OnInit {
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
-
     this.getShows();
     this.getUser();
   }
 
+  /**
+   * Checks if there is a user logged in.
+   */
   getCheckUser() {
     return sessionStorage.getItem('currentUser') != null;
   }
+
+  /**
+   * Retrives the current user info if a user is logged in.
+   */
   getUser(){
     if(sessionStorage.getItem('currentUser') != null){
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       return true;
     }
     return false;
-
   }
 
+  /**
+   * Adds the list of shows into the correct list.
+   */
   getShows(){
     let data:Array<Show> = this.gridService.getShows()
     this.shows = [];
@@ -64,6 +81,12 @@ export class GridComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns the next episode to air of a given show.
+   * 
+   * @param {Show} show 
+   * Show we want to get info about
+   */
   getNextEpisode(show: Show) {
     if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
@@ -81,11 +104,17 @@ export class GridComponent implements OnInit {
       else {
         nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
       }
-
       return nextEpisode;
     }
   }
 
+  /**
+   * Returns the number of seconds remaining until the
+   * next episode of the given show.
+   * 
+   * @param {Show} show
+   * Show we want to get info about
+   */
   getTimeRemaining(show: Show) {
     if(show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
@@ -111,6 +140,13 @@ export class GridComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if the show with id id is in the
+   * current user's shows
+   * 
+   * @param {number} id 
+   * ID of the show we are looking for
+   */
   InMyShows(id){
     for ( let my_show of this.user.my_shows){
       if(my_show.id == id){
@@ -120,24 +156,40 @@ export class GridComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Sets the current tab to be "All Shows"
+   */
   selectAll(){
     this.all = true;
     this.my_shows = false;
     this.unapproved_shows = false;
   }
 
+  /**
+   * Sets the current tab to be "My Shows"
+   */
   selectMy(){
     this.all = false;
     this.my_shows = true;
     this.unapproved_shows = false;
   }
 
+  /**
+   * Sets the current tab to be "Unapproved Shows"
+   */
   selectUn(){
     this.all = false;
     this.my_shows = false;
     this.unapproved_shows = true;
   }
 
+  /**
+   * Sets the show with id id to be approved. Also adds
+   * the show to the right lists.
+   * 
+   * @param {number} id 
+   * ID of the show we want to approve
+   */
   approve(id){
     let i = 0;
     for (i; i < this.unapprovedShows.length; i++) {
@@ -188,6 +240,14 @@ export class GridComponent implements OnInit {
     this.updateSessionShows()
   }
 
+  /**
+   * Copies the attributes of shows to showToCopy
+   * 
+   * @param {Show} show 
+   * The show we want to push attributes to
+   * @param {Show} showToCopy 
+   * The show we want to copy attributes from
+   */
   copyShowAttributes(show, showToCopy) {
     show.title = showToCopy.title;
     show.img = showToCopy.img;
@@ -203,6 +263,12 @@ export class GridComponent implements OnInit {
     return show;
   }
 
+  /**
+   * Removes a show from the list of unapproved shows.
+   * 
+   * @param {number} id 
+   * The ID of the show we want to remove
+   */
   reject(id){
     let i = 0;
     for( i; i < this.unapprovedShows.length; i++ ){
@@ -214,11 +280,26 @@ export class GridComponent implements OnInit {
     this.updateSessionShows()
   }
 
+  /**
+   * Adds the show with ID id to the current user's shows
+   * 
+   * @param {number} id 
+   * The ID of the show we want to add to the
+   * current user's shows
+   */
   addToMyShows(id){
     this.user.my_shows.push(new MyShow(id));
     this.updateSessionMyShows();
   }
 
+  /**
+   * Removes the show with the ID id from the 
+   * current user's show
+   * 
+   * @param {number} id
+   * The ID of the show we want to remove from the
+   * current user's shows
+   */
   RemoveFromMyShows(id){
     let i = 0;
     for( i; i < this.user.my_shows.length; i++ ){
@@ -230,6 +311,10 @@ export class GridComponent implements OnInit {
     this.updateSessionMyShows();
   }
 
+  /**
+   * Updates the session storage with the local versions of
+   * the user and users data.
+   */
   updateSessionMyShows(){
     this.allUsers = []
     this.allUsers = JSON.parse(sessionStorage.getItem('users'));
@@ -244,6 +329,9 @@ export class GridComponent implements OnInit {
     this.getShows();
   }
 
+  /**
+   * Updates the session storage with the local lists of shows
+   */
   updateSessionShows(){
     this.sessionShows = [];
     for( let show of this.unapprovedShows){
@@ -260,6 +348,11 @@ export class GridComponent implements OnInit {
     sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
     this.getShows();
   }
+
+  /**
+   * Removes all shows that don't match a search query from
+   * the local lists of shows.
+   */
   getRegxShows(){
     let reg = RegExp(`^${this.search}`, 'i');
     reg.ignoreCase;

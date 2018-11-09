@@ -12,8 +12,11 @@ import { $ } from 'protractor';
   styleUrls: ['./show-form.component.css']
 })
 
-// add to global list as unapproved if regular, approved if admin
-// editing id , client side approve reject
+/**
+ * Component that manages the "Add New Show" form
+ * Form consisting of a title, description, image (not currently working),
+ * link, and airing date/interval
+ */
 export class ShowFormComponent{
 
   constructor(public router: Router) {}
@@ -23,6 +26,7 @@ export class ShowFormComponent{
   numShows = parseInt(sessionStorage.getItem("numShows"));
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
+  // Corresponding ngModel for the HTML of this component
   model = new Show(this.numShows+1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -35,10 +39,52 @@ export class ShowFormComponent{
   intervalChecked = false;
   popup = false;
 
+  /**
+   * Initializes the form information
+   */
+  ngOnInit() {
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+    for(let i  = 0; i < 24; i++) {
+      this.hours[i] = i;
+    }
 
+    for(let i = 1; i <= 31; i++) {
+      this.days[i] = i;
+    }
+
+    for(let i = 0; i < 30; i++) {
+      this.years[i] = (currentYear - 15) + i;
+    }
+
+    this.date["hour"] = this.hours[currentDate.getHours()];
+    this.date["day"] = currentDate.getDate();
+    this.date["month"] = this.months[currentDate.getMonth()];
+    this.date["year"] = currentYear;
+  }
+
+  /**
+   * Adds the newly-added show to the sessionStorage, and increments numShows
+   * Displays a successful notification when submitted
+   */
+  addNewShow() {
+    this.setAirDate();
+
+    this.shows = JSON.parse(sessionStorage.getItem('shows'));
+    this.shows.push(this.model);
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
+
+    this.popup = true;
+    setTimeout(() => {
+        this.router.navigate(['/grid']);
+    }, 2000);
+  }
+
+    /**
+   * Sets the date object once submit is clicked.
+   */
   setAirDate() {
     if(this.airingChecked) {
       let airDate = new Date();
@@ -67,40 +113,4 @@ export class ShowFormComponent{
     }
   }
 
-  addNewShow() {
-    this.setAirDate();
-
-    this.shows = JSON.parse(sessionStorage.getItem('shows'));
-    this.shows.push(this.model);
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
-
-    this.popup = true;
-    setTimeout(() => {
-        this.router.navigate(['/grid']);
-    }, 2000);
-  }
-
-  ngOnInit() {
-    let currentDate = new Date();
-    let currentYear = currentDate.getFullYear();
-
-    for(let i  = 0; i < 24; i++) {
-      this.hours[i] = i;
-    }
-
-    for(let i = 1; i <= 31; i++) {
-      this.days[i] = i;
-    }
-
-    for(let i = 0; i < 30; i++) {
-      this.years[i] = (currentYear - 15) + i;
-    }
-
-    // TODO: hour doesn't fill properly
-    this.date["hour"] = this.hours[currentDate.getHours()];
-    this.date["day"] = currentDate.getDate();
-    this.date["month"] = this.months[currentDate.getMonth()];
-    this.date["year"] = currentYear;
-  }
 }

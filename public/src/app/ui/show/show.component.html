@@ -8,11 +8,15 @@
  <div class="col-lg-6">
    <div class=" row card" >
      <div class="card-body">
-       <h4 class="card-title">{{ show.title }}</h4>
-       <p class="card-text"> {{ show.description }} </p>
-       <a href={{show.link}}>
+        <h4 class="card-title">{{ show.title }}</h4>
+        <p class="card-text"> {{ show.description }} </p>
+        <div *ngIf="show.airDate != undefined && show.airInterval != undefined">
+          <span>Episode {{getNextEpisode(show)}} in </span>
+          <countdown [config]="{leftTime:getTimeRemaining(show)}"> $!d! days, $!h! hours and $!m! minutes</countdown>
+        </div>
+        <a href={{show.link}}>
         <button href="#" class="btn btn-primary">{{ show.link }}</button>
-       </a>
+        </a>
      </div>
      <div class="card-body">
        <h5 class="card-title">Rating: {{ rating }} / 5</h5>

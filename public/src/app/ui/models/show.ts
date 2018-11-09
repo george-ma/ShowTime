@@ -7,7 +7,7 @@ export class Show {
         public approved: boolean,
         public img?: string,
         public link?: string,
-        public airDate?: Date,
+        public airDate?: string,
         public airInterval?: number,
     ) { }
 }

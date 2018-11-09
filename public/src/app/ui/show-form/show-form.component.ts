@@ -12,8 +12,11 @@ import { $ } from 'protractor';
   styleUrls: ['./show-form.component.css']
 })
 
-// add to global list as unapproved if regular, approved if admin
-// editing id , client side approve reject
+/**
+ * Component that manages the "Add New Show" form
+ * Form consisting of a title, description, image (not currently working),
+ * link, and airing date/interval
+ */
 export class ShowFormComponent{
 
   constructor(public router: Router) {}
@@ -23,6 +26,7 @@ export class ShowFormComponent{
   numShows = parseInt(sessionStorage.getItem("numShows"));
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
+  // Corresponding ngModel for the HTML of this component
   model = new Show(this.numShows+1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -33,53 +37,11 @@ export class ShowFormComponent{
 
   airingChecked = false;
   intervalChecked = false;
+  popup = false;
 
-  submitted = false;
-
-  onSubmit() { this.submitted = true; }  
-
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
-
-  setAirDate() {
-    if(this.airingChecked) {
-      let airDate = new Date();
-      airDate.setFullYear(this.date["year"]);
-
-      airDate.setMonth(this.months.indexOf(this.date["month"]));
-
-      airDate.setDate(this.date["day"]);
-
-      airDate.setHours(this.date["hour"]);
-
-      airDate.setMinutes(0);
-
-      airDate.setSeconds(0);
-
-      airDate.setMilliseconds(0); 
-
-      // NaN if date is invalid, which would fail this
-      if(airDate.getTime() === airDate.getTime()) {
-        this.model.airDate = airDate;
-      }
-
-      else {
-        this.model.airDate = undefined;
-      }
-    }
-  }
-
-  addNewShow() {
-    this.setAirDate();
-
-    this.shows = JSON.parse(sessionStorage.getItem('shows'));
-    this.shows.push(this.model);
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
-
-    this.router.navigate(['/grid']);
-  }
-
+  /**
+   * Initializes the form information
+   */
   ngOnInit() {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
@@ -96,10 +58,59 @@ export class ShowFormComponent{
       this.years[i] = (currentYear - 15) + i;
     }
 
-    // TODO: hour doesn't fill properly
     this.date["hour"] = this.hours[currentDate.getHours()];
     this.date["day"] = currentDate.getDate();
     this.date["month"] = this.months[currentDate.getMonth()];
-    this.date["year"] = currentYear;    
+    this.date["year"] = currentYear;
   }
+
+  /**
+   * Adds the newly-added show to the sessionStorage, and increments numShows
+   * Displays a successful notification when submitted
+   */
+  addNewShow() {
+    this.setAirDate();
+
+    this.shows = JSON.parse(sessionStorage.getItem('shows'));
+    this.shows.push(this.model);
+    sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
+
+    this.popup = true;
+    setTimeout(() => {
+        this.router.navigate(['/grid']);
+    }, 2000);
+  }
+
+    /**
+   * Sets the date object once submit is clicked.
+   */
+  setAirDate() {
+    if(this.airingChecked) {
+      let airDate = new Date();
+      airDate.setFullYear(this.date["year"]);
+
+      airDate.setMonth(this.months.indexOf(this.date["month"]));
+
+      airDate.setDate(this.date["day"]);
+
+      airDate.setHours(this.date["hour"]);
+
+      airDate.setMinutes(0);
+
+      airDate.setSeconds(0);
+
+      airDate.setMilliseconds(0);
+
+      // NaN if date is invalid, which would fail this
+      if(airDate.getTime() === airDate.getTime()) {
+        this.model.airDate = airDate.toISOString();
+      }
+
+      else {
+        this.model.airDate = undefined;
+      }
+    }
+  }
+
 }

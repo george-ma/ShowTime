@@ -24,6 +24,7 @@ export class EditShowComponent implements OnInit {
 
   airingChecked = false;
   intervalChecked = false;
+  popup = false;
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -77,7 +78,7 @@ export class EditShowComponent implements OnInit {
 
       // NaN if date is invalid, which would fail this
       if (airDate.getTime() === airDate.getTime()) {
-        this.updateShow.airDate = airDate;
+        this.updateShow.airDate = airDate.toISOString();
 
       } else {
         this.updateShow.airDate = undefined;
@@ -106,7 +107,10 @@ export class EditShowComponent implements OnInit {
     }
 
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    this.router.navigate(['/grid']);
+    this.popup = true;
+    setTimeout(() => {
+        this.router.navigate(['/grid']);
+    }, 2000);
   }
 
   resetEdits() {

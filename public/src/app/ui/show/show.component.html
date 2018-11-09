@@ -10,16 +10,18 @@
      <div class="card-body">
        <h4 class="card-title">{{ show.title }}</h4>
        <p class="card-text"> {{ show.description }} </p>
-       <button href="#" class="btn btn-primary">{{ show.link }}</button>
+       <a href={{show.link}}>
+        <button href="#" class="btn btn-primary">{{ show.link }}</button>
+       </a>
      </div>
      <div class="card-body">
        <h5 class="card-title">Rating: {{ rating }} / 5</h5>
        <p class="card-text"> number of ratings: {{ numberOfRatings }} </p>
-       <button class="btn btn-outline-success">Completed: {{ status[0] }}</button>
-       <button class="btn btn-outline-primary">Planning: {{ status[1] }}</button>
-       <button class="btn btn-outline-info">Current: {{ status[2] }}</button>
-       <button class="btn btn-outline-warning">Dropped: {{ status[3] }}</button>
-       <button class="btn btn-outline-danger">Paused: {{ status[4] }}</button>
+       <button class="btn btn-outline-success disabled">Completed: {{ status[0] }}</button>
+       <button class="btn btn-outline-primary disabled">Planning: {{ status[1] }}</button>
+       <button class="btn btn-outline-info disabled">Current: {{ status[2] }}</button>
+       <button class="btn btn-outline-warning disabled">Dropped: {{ status[3] }}</button>
+       <button class="btn btn-outline-danger disabled">Paused: {{ status[4] }}</button>
 
      </div>
      <div class="card-body" *ngIf="getCheckUser()">
@@ -32,7 +34,7 @@
    <br>
    <div class="row card">
      <div class="card-body">
-       <h5 class="card-title">Reviews: <button class="btn btn-sm btn-outline-primary float-right" (click)="showReviews()">+</button></h5>
+       <h5 class="card-title">Reviews: <button class="btn btn-sm btn-primary float-right" (click)="showReviews()">+</button></h5>
      </div>
 
      <div class="card-body" *ngIf="show_reviews">
@@ -42,7 +44,7 @@
      </div>
    </div>
    <br>
-   <div class="row card" *ngIf="getCheckUser()"> <!-- <!-- REVIEW:  -->
+   <div class="row card" *ngIf="getCheckUser()"> <!-- REVIEW:  -->
      <br>
     <div class="col-sm-12">
       <h5 class="card-title">My Feedback</h5>

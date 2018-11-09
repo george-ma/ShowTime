@@ -16,6 +16,7 @@ import { User } from '../models/user';
 })
 export class AdminUserListComponent implements OnInit {
 
+  // list of users
   users: Array<User> = []
 
   constructor() { }

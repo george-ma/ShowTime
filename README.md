@@ -71,7 +71,7 @@ ng serve --open
 
 1. You can edit a show by hitting `edit`, and likewise, `add a show` by hitting the button next to the search bar.
    - As a **regular user**, any submitted edits or new shows will place the show in an **Unapproved Show tab**, only viewable by **admins**
-2. Log out of `nick` and access a **admin account** such as:
+2. Log out of `nick` and access an **admin account** such as:
    - Username: `bob`
    - Password: `hellobob`
 

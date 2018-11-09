@@ -236,7 +236,7 @@ export class AppComponent {
         id: 1,
         title: "WestWorld",
         description: "Season 1",
-        link: "urlLink",
+        link: "https://www.hbo.com/westworld",
         img: "assets/ww.jpg",
         approved: true
       },
@@ -244,7 +244,7 @@ export class AppComponent {
         id: 2,
         title: "Riverdale",
         description: "Season 2",
-        link: "urlLink",
+        link: "https://www.imdb.com/title/tt5420376/",
         img: "assets/rd.jpg",
         approved: true
       },
@@ -252,7 +252,7 @@ export class AppComponent {
         id: 3,
         title: "Silicon Valley",
         description: "Season 3",
-        link: "urlLink",
+        link: "https://www.hbo.com/silicon-valley",
         img: "assets/sv.jpg",
         approved: false
       },
@@ -260,7 +260,7 @@ export class AppComponent {
         id: 4,
         title: "Better Call Saul",
         description: "Season 4",
-        link: "urlLink",
+        link: "https://www.amc.com/shows/better-call-saul",
         img: "assets/bcs.jpg",
         approved: false
       }

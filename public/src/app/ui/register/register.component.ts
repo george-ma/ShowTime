@@ -13,9 +13,13 @@ import { User } from '../models/user';
 })
 export class RegisterComponent implements OnInit {
 
+  // user object to bind to from
   user: any = {};
-  okay: string;
+  
+  //boolean for registration errors
   error: boolean = false;
+
+  // list of all users
   dummyUsers: Array<User> = [];
 
   constructor(public router: Router, private registerService: RegisterService) { }
@@ -24,12 +28,15 @@ export class RegisterComponent implements OnInit {
     this.getUsers();
   }
 
+  // gets all users
   getUsers(){
     this.dummyUsers = JSON.parse(sessionStorage.getItem('users'));
   }
 
+  // takes the submit user credtentials and validates them and
+  // added the new created user to the global user list
   registerUser() {
-    if(this.validatedUsername(this.user.username)){
+    if(this.validateUsername(this.user.username) && this.validateEmail(this.user.email)){
       this.user.is_admin = false;
       this.user.is_banned = false;
       this.user.my_shows = [];
@@ -54,9 +61,20 @@ export class RegisterComponent implements OnInit {
     */
   }
 
-  validatedUsername(username){
+  // checks if a username is already being used
+  validateUsername(username){
     for(let user of this.dummyUsers){
       if(username == user.username){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // checks if a email is already being used
+  validateEmail(email){
+    for(let user of this.dummyUsers){
+      if(email == user.email){
         return false;
       }
     }

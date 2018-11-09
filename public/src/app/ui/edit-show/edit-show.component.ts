@@ -11,9 +11,12 @@ import { Show } from '../models/show';
 })
 export class EditShowComponent implements OnInit {
 
+  // Global Variables that will store data from the sessionStorage on ngInit()
   user: any = {}
   show: Show
   shows: Array<Show> = []
+  
+  // Corresponding model for the html
   updateShow = new Show(-1, '', '', false, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -28,6 +31,9 @@ export class EditShowComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
+  /**
+   * Initializes the airing date form information and the global variables
+   */
   ngOnInit() {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
@@ -55,6 +61,11 @@ export class EditShowComponent implements OnInit {
     this.copyShowAttributes(this.updateShow, this.show);
   }
 
+  /**
+   * Returns the corresponding show stored in the sessionStorage for 
+   * the passed in id
+   * @param id - id of the currently edited show
+   */
   getShow(id) {
     let data = JSON.parse(sessionStorage.getItem('shows'))
     for (let show of data) {
@@ -63,7 +74,9 @@ export class EditShowComponent implements OnInit {
       }
     }
   }
-
+  /**
+   * Sets the airing-date for the corresponding show
+   */
   setAirDate() {
     if (this.airingChecked) {
       let airDate = new Date();
@@ -86,13 +99,22 @@ export class EditShowComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns whether the session storage current user is an admin
+   */
   getCheckAdmin() {
     return this.user.is_admin;
   }
 
+  /**
+   * Corresponding function for the on-click of the "submit" button
+   * Sets the air date of the currently edited show and updates the show
+   * information in the sessionStorage
+   */
   submitEdits() {
     this.setAirDate();
 
+    // Automatically edits the show if the user is an admin
     if (this.getCheckAdmin()) {
       this.updateShow.approved = true;
       for (let i = 0; i < this.shows.length; i++) {
@@ -101,22 +123,31 @@ export class EditShowComponent implements OnInit {
           break;
         }
       }
-
+    
+    // Otherwise, push to the unapproved shows if a regular user
     } else {
       this.shows.push(this.updateShow);
     }
 
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
+    
+    // Creates successful notification and redirects user to the grid
     this.popup = true;
     setTimeout(() => {
         this.router.navigate(['/grid']);
     }, 2000);
   }
 
+  /**
+   * Corresponding action for the 'discard changes' button
+   */
   resetEdits() {
     this.copyShowAttributes(this.updateShow, this.show);
   }
 
+  /**
+   * Helper function that copies the attributes of showToCopy to show
+   */
   copyShowAttributes(show, showToCopy) {
     show.id = showToCopy.id;
     show.title = showToCopy.title;

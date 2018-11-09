@@ -4,7 +4,7 @@
  * Users can get information about the shows and add shows to their
  * personal list. Admins can accept new shows, edit existing shows,
  * or delete them.
- * 
+ *
  */
 
 import { Component, OnInit } from '@angular/core';
@@ -21,17 +21,27 @@ import { Router } from '@angular/router';
 })
 export class GridComponent implements OnInit {
 
+  //list of all shows (that are approved)
   shows: Array<Show>=[];
+  //list of all unapproved shows
   unapprovedShows:  Array<Show>=[];
+  // list of all shows in the session storage
   sessionShows: Array<Show>=[];
+  // list of all shows that the current user follows and (that are approved)
   myShows: Array<Show>=[];
+  // boolean for form errors
   error: boolean = false;
+  // user object to bind current user
   user: any = {};
+  // arry to bind all users from session storage
   allUsers: Array<User> = [];
-
+  // toggle for all shows tab
   all: boolean = true;
+  // toggle for my shows tab
   my_shows: boolean = false;
+  // toggle for unapproved shows tab
   unapproved_shows: boolean = false;
+  // string to bind search input
   search: string ='';
 
   constructor(private gridService: GridService, public router: Router) { }
@@ -83,8 +93,8 @@ export class GridComponent implements OnInit {
 
   /**
    * Returns the next episode to air of a given show.
-   * 
-   * @param {Show} show 
+   *
+   * @param {Show} show
    * Show we want to get info about
    */
   getNextEpisode(show: Show) {
@@ -111,7 +121,7 @@ export class GridComponent implements OnInit {
   /**
    * Returns the number of seconds remaining until the
    * next episode of the given show.
-   * 
+   *
    * @param {Show} show
    * Show we want to get info about
    */
@@ -143,8 +153,8 @@ export class GridComponent implements OnInit {
   /**
    * Checks if the show with id id is in the
    * current user's shows
-   * 
-   * @param {number} id 
+   *
+   * @param {number} id
    * ID of the show we are looking for
    */
   InMyShows(id){
@@ -186,8 +196,8 @@ export class GridComponent implements OnInit {
   /**
    * Sets the show with id id to be approved. Also adds
    * the show to the right lists.
-   * 
-   * @param {number} id 
+   *
+   * @param {number} id
    * ID of the show we want to approve
    */
   approve(id){
@@ -218,7 +228,7 @@ export class GridComponent implements OnInit {
         for( let show of this.unapprovedShows){
             this.sessionShows.push(show);
         }
-    
+
         for( let show of this.shows){
             if (show.id == modifiedShow.id) {
                 show.description = modifiedShow.description;
@@ -226,7 +236,7 @@ export class GridComponent implements OnInit {
             }
             this.sessionShows.push(show);
         }
-    
+
         for( let show of this.myShows){
             if (show.id == modifiedShow.id) {
                 show.description = modifiedShow.description;
@@ -242,10 +252,10 @@ export class GridComponent implements OnInit {
 
   /**
    * Copies the attributes of shows to showToCopy
-   * 
-   * @param {Show} show 
+   *
+   * @param {Show} show
    * The show we want to push attributes to
-   * @param {Show} showToCopy 
+   * @param {Show} showToCopy
    * The show we want to copy attributes from
    */
   copyShowAttributes(show, showToCopy) {
@@ -265,8 +275,8 @@ export class GridComponent implements OnInit {
 
   /**
    * Removes a show from the list of unapproved shows.
-   * 
-   * @param {number} id 
+   *
+   * @param {number} id
    * The ID of the show we want to remove
    */
   reject(id){
@@ -282,8 +292,8 @@ export class GridComponent implements OnInit {
 
   /**
    * Adds the show with ID id to the current user's shows
-   * 
-   * @param {number} id 
+   *
+   * @param {number} id
    * The ID of the show we want to add to the
    * current user's shows
    */
@@ -293,9 +303,9 @@ export class GridComponent implements OnInit {
   }
 
   /**
-   * Removes the show with the ID id from the 
+   * Removes the show with the ID id from the
    * current user's show
-   * 
+   *
    * @param {number} id
    * The ID of the show we want to remove from the
    * current user's shows

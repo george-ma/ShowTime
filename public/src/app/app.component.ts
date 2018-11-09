@@ -238,7 +238,9 @@ export class AppComponent {
         description: "Season 1",
         link: "urlLink",
         img: "assets/ww.jpg",
-        approved: true
+        approved: true,
+        airDate: "2018-11-20T01:00:00.000Z",
+        airInterval: 7
       },
       {
         id: 2,
@@ -246,7 +248,9 @@ export class AppComponent {
         description: "Season 2",
         link: "urlLink",
         img: "assets/rd.jpg",
-        approved: true
+        approved: true,
+        airDate: "2018-10-09T00:00:00.000Z",
+        airInterval: 7
       },
       {
         id: 3,
@@ -254,7 +258,9 @@ export class AppComponent {
         description: "Season 3",
         link: "urlLink",
         img: "assets/sv.jpg",
-        approved: false
+        approved: false,
+        airDate: "2018-10-09T00:00:00.000Z",
+        airInterval: 7
       },
       {
         id: 4,
@@ -262,7 +268,9 @@ export class AppComponent {
         description: "Season 4",
         link: "urlLink",
         img: "assets/bcs.jpg",
-        approved: false
+        approved: false,
+        airDate: "2018-12-09T00:00:00.000Z",
+        airInterval: 7
       }
     ]
   }

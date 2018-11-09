@@ -2,7 +2,7 @@
  * @file
  * Component that allows admins to see all registered users,
  * and gives them the ability to modify their accounts.
- * 
+ *
  */
 
 import { Component, OnInit } from '@angular/core';
@@ -27,8 +27,8 @@ export class AdminUserListComponent implements OnInit {
 
   /**
    * Promotes the input user to be an admin.
-   * 
-   * @param {User} user 
+   *
+   * @param {User} user
    *  User to promote to admin
    */
   promoteUser(user) {
@@ -39,8 +39,8 @@ export class AdminUserListComponent implements OnInit {
 
   /**
    * Bans the input user.
-   * 
-   * @param {User} user 
+   *
+   * @param {User} user
    *  User to ban
    */
   banUser(user) {
@@ -51,8 +51,8 @@ export class AdminUserListComponent implements OnInit {
 
   /**
    * Unbans the input user
-   * 
-   * @param {User} user 
+   *
+   * @param {User} user
    *  User to unban
    */
   unbanUser(user) {
@@ -66,7 +66,7 @@ export class AdminUserListComponent implements OnInit {
    * in this.users
    */
   fetchUsers() {
-    this.users =  JSON.parse(sessionStorage.getItem('users'));
+    this.users = JSON.parse(sessionStorage.getItem('users'));
   }
 
   /**

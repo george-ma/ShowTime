@@ -10,18 +10,18 @@ import { AccountComponent } from './ui/account/account.component';
 import { EditShowComponent } from './ui/edit-show/edit-show.component';
 
 const routes: Routes = [
-  { path: '', component: GridComponent},
-  { path: 'grid', component: GridComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'addNewShow', component: ShowFormComponent},
-  { path: 'adminuserlist', component: AdminUserListComponent},
-  { path: 'account', component: AccountComponent},
-  { path: 'grid/show/:id', component: ShowComponent},
-  { path: 'show/:id', component: ShowComponent},
-  { path: 'editShow/:id', component: EditShowComponent},
-  { path: 'grid/editShow/:id', component: EditShowComponent},
-  { path: 'grid/show/:id/editShow', component: EditShowComponent}
+  { path: '', component: GridComponent },
+  { path: 'grid', component: GridComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'addNewShow', component: ShowFormComponent },
+  { path: 'adminuserlist', component: AdminUserListComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'grid/show/:id', component: ShowComponent },
+  { path: 'show/:id', component: ShowComponent },
+  { path: 'editShow/:id', component: EditShowComponent },
+  { path: 'grid/editShow/:id', component: EditShowComponent },
+  { path: 'grid/show/:id/editShow', component: EditShowComponent }
 ];
 
 @NgModule({

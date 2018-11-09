@@ -21,13 +21,13 @@ export class ShowComponent implements OnInit {
   ratingData: Array<MyShow> = [];
   reviews: Array<string> = [];
   rating: number = 0;
-  numberOfRatings: number =0;
-  status: Array<number> =[];
+  numberOfRatings: number = 0;
+  status: Array<number> = [];
   show_reviews: boolean = false;
 
 
 
-  constructor( public route: ActivatedRoute, public router: Router) { }
+  constructor(public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
     this.getShow(this.route.snapshot.paramMap.get('id'));
@@ -35,14 +35,14 @@ export class ShowComponent implements OnInit {
     this.getRatingData()
   }
 
-   /**
-   * Returns the next episode to air of a given show.
-   *
-   * @param {Show} show
-   * Show we want to get info about
-   */
+  /**
+  * Returns the next episode to air of a given show.
+  *
+  * @param {Show} show
+  * Show we want to get info about
+  */
   getNextEpisode(show: Show) {
-    if(show.airDate != undefined && show.airInterval != undefined) {
+    if (show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -52,7 +52,7 @@ export class ShowComponent implements OnInit {
       let intervalTime = 86400000 * show.airInterval;
       let nextEpisode;
 
-      if(airDate > current) {
+      if (airDate > current) {
         nextEpisode = 1;
       }
       else {
@@ -70,7 +70,7 @@ export class ShowComponent implements OnInit {
    * Show we want to get info about
    */
   getTimeRemaining(show: Show) {
-    if(show.airDate != undefined && show.airInterval != undefined) {
+    if (show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -80,7 +80,7 @@ export class ShowComponent implements OnInit {
       let intervalTime = 86400000 * show.airInterval;
       let remaining;
 
-      if(airDate > current) {
+      if (airDate > current) {
         remaining = timeSinceAir;
       }
       else {
@@ -99,10 +99,10 @@ export class ShowComponent implements OnInit {
    *
    * @param {number} id
    */
-  getShow(id){
+  getShow(id) {
     let data = JSON.parse(sessionStorage.getItem('shows'))
-    for( let show of data){
-      if(show.id == id){
+    for (let show of data) {
+      if (show.id == id) {
         this.show = show;
       }
     }
@@ -120,8 +120,8 @@ export class ShowComponent implements OnInit {
    * Returns true if this is successful ('currentUser' exists in session
    * storage) and false otherwise.
    */
-  getUser(){
-    if(sessionStorage.getItem('currentUser') != null){
+  getUser() {
+    if (sessionStorage.getItem('currentUser') != null) {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       this.setMyShow();
       return true;
@@ -132,9 +132,9 @@ export class ShowComponent implements OnInit {
   /**
    * Checks whether this.show is in the user's list of shows.
    */
-  setMyShow(){
-    for(let my_show of this.user.my_shows){
-      if(my_show.id == this.show.id){
+  setMyShow() {
+    for (let my_show of this.user.my_shows) {
+      if (my_show.id == this.show.id) {
         this.myShow = my_show;
         this.inMyShows = true
         return
@@ -149,7 +149,7 @@ export class ShowComponent implements OnInit {
    *
    * @param {number} stars
    */
-  setRating(stars){
+  setRating(stars) {
     this.myShow.rating = stars;
   }
 
@@ -158,22 +158,22 @@ export class ShowComponent implements OnInit {
    *
    * @param {String} status
    */
-  setStatus(status){
+  setStatus(status) {
     this.myShow.status = status;
   }
 
   /**
    * Adds show to user's list of shows and updates session storage
    */
-  updateMyShows(){
-    if(this.inMyShows){
+  updateMyShows() {
+    if (this.inMyShows) {
       let i = 0;
-      for( i; i < this.user.my_shows.length; i++ ){
-        if(this.user.my_shows[i].id == this.show.id){
-            this.user.my_shows[i] = this.myShow;
+      for (i; i < this.user.my_shows.length; i++) {
+        if (this.user.my_shows[i].id == this.show.id) {
+          this.user.my_shows[i] = this.myShow;
         }
       }
-    } else{
+    } else {
       this.myShow.id = this.show.id;
       this.user.my_shows.push(this.myShow);
     }
@@ -183,10 +183,10 @@ export class ShowComponent implements OnInit {
   /**
    * Removes show from user's list of shows and updates session storage
    */
-  RemoveFromMyShows(id){
+  RemoveFromMyShows(id) {
     let i = 0;
-    for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i].id == id){
+    for (i; i < this.user.my_shows.length; i++) {
+      if (this.user.my_shows[i].id == id) {
         break;
       }
     }
@@ -197,29 +197,29 @@ export class ShowComponent implements OnInit {
   /**
    * Updates session storage with the current user's list of shows
    */
-  updateSessionMyShows(){
+  updateSessionMyShows() {
     let allUsers = []
     allUsers = JSON.parse(sessionStorage.getItem('users'));
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
     let i = 0;
-    for( i; i < allUsers.length; i++ ){
-      if(allUsers[i].username == this.user.username){
-         allUsers[i].my_shows = this.user.my_shows;
+    for (i; i < allUsers.length; i++) {
+      if (allUsers[i].username == this.user.username) {
+        allUsers[i].my_shows = this.user.my_shows;
       }
     }
     sessionStorage.setItem('users', JSON.stringify(allUsers));
     this.updatedTimeout = true;
     setTimeout(() => {
-        this.updatedTimeout = false;
+      this.updatedTimeout = false;
     }, 2000);
     this.getUser();
     this.getRatingData()
   }
 
   /**
-   * Retrieves number of ratings, status, and average rating of show
+   * Retrieves number of ratings, status, reviews and average rating of show
    */
-  getRatingData(){
+  getRatingData() {
     this.ratingData = [];
     this.reviews = [];
     let allUsers = [];
@@ -228,21 +228,21 @@ export class ShowComponent implements OnInit {
     let status = [0, 0, 0, 0, 0];
     allUsers = JSON.parse(sessionStorage.getItem('users'));
 
-    for( let i =0; i < allUsers.length; i++ ){
-      for(let j =0; j < allUsers[i].my_shows.length; j++){
+    for (let i = 0; i < allUsers.length; i++) {
+      for (let j = 0; j < allUsers[i].my_shows.length; j++) {
 
-        if(allUsers[i].my_shows[j].id == this.show.id){
-            this.ratingData.push(allUsers[i].my_shows[j]);
-            if(allUsers[i].my_shows[j].review != undefined){
-              this.reviews.push(`${allUsers[i].username} : ${allUsers[i].my_shows[j].review}`);
-            }
-            if(allUsers[i].my_shows[j].rating != undefined){
-              numberOfRatings = numberOfRatings +1;
-              sumofRatings = sumofRatings + allUsers[i].my_shows[j].rating;
-            }
-            if(allUsers[i].my_shows[j].status != undefined || allUsers[i].my_shows[j].status != 0){
-             status[allUsers[i].my_shows[j].status -1 ] = status[allUsers[i].my_shows[j].status -1 ] +1
-            }
+        if (allUsers[i].my_shows[j].id == this.show.id) {
+          this.ratingData.push(allUsers[i].my_shows[j]);
+          if (allUsers[i].my_shows[j].review != undefined) {
+            this.reviews.push(`${allUsers[i].username} : ${allUsers[i].my_shows[j].review}`);
+          }
+          if (allUsers[i].my_shows[j].rating != undefined) {
+            numberOfRatings = numberOfRatings + 1;
+            sumofRatings = sumofRatings + allUsers[i].my_shows[j].rating;
+          }
+          if (allUsers[i].my_shows[j].status != undefined || allUsers[i].my_shows[j].status != 0) {
+            status[allUsers[i].my_shows[j].status - 1] = status[allUsers[i].my_shows[j].status - 1] + 1
+          }
         }
 
       }
@@ -253,12 +253,12 @@ export class ShowComponent implements OnInit {
   }
 
   /**
-   * Checks whether this show has reviews
+   * toggles dsiplaying the show reviews
    */
-  showReviews(){
-    if(this.show_reviews){
+  showReviews() {
+    if (this.show_reviews) {
       this.show_reviews = false;
-    } else{
+    } else {
       this.show_reviews = true;
     }
   }

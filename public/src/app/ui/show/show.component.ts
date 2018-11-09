@@ -35,6 +35,65 @@ export class ShowComponent implements OnInit {
     this.getRatingData()
   }
 
+   /**
+   * Returns the next episode to air of a given show.
+   * 
+   * @param {Show} show 
+   * Show we want to get info about
+   */
+  getNextEpisode(show: Show) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
+      let airDate = new Date(show.airDate);
+      let current = new Date();
+
+      let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
+
+      // int is number of ms in a day
+      let intervalTime = 86400000 * show.airInterval;
+      let nextEpisode;
+
+      if(airDate > current) {
+        nextEpisode = 1;
+      }
+      else {
+        nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+      }
+      return nextEpisode;
+    }
+  }
+
+  /**
+   * Returns the number of seconds remaining until the
+   * next episode of the given show.
+   * 
+   * @param {Show} show
+   * Show we want to get info about
+   */
+  getTimeRemaining(show: Show) {
+    if(show.airDate != undefined && show.airInterval != undefined) {
+      let airDate = new Date(show.airDate);
+      let current = new Date();
+
+      let timeSinceAir = Math.abs(current.getTime() - airDate.getTime());
+
+      // int is number of ms in a day
+      let intervalTime = 86400000 * show.airInterval;
+      let remaining;
+
+      if(airDate > current) {
+        remaining = timeSinceAir;
+      }
+      else {
+        let nextEpisode = Math.ceil(timeSinceAir / intervalTime) + 1
+        let timeFromFirstAir = (nextEpisode - 1) * intervalTime;
+        remaining = (airDate.getTime() + timeFromFirstAir) - current.getTime();
+      }
+
+      let remainingInSeconds = Math.floor(remaining / 1000);
+      return remainingInSeconds;
+    }
+  }
+
   getShow(id){
     let data = JSON.parse(sessionStorage.getItem('shows'))
     for( let show of data){

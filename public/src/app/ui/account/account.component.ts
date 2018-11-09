@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Displays information about the current user, and shows fields
+ * for changing them.
+ * 
+ */
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +13,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
+  // stores a local copy of the current user
   user: any = {};
+  // contains the values from the user forms.
   updateUser: any = {};
 
   constructor() { }
@@ -22,6 +30,10 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  /**
+   * Updates the list of users and the current user with
+   * the new information from the user forms.
+   */
   updateUserInfo() {
     // update user info in user list
     let users = JSON.parse(sessionStorage.getItem('users'));
@@ -59,5 +71,4 @@ export class AccountComponent implements OnInit {
     }
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
   }
-
 }

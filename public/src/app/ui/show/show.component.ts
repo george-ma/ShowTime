@@ -37,8 +37,8 @@ export class ShowComponent implements OnInit {
 
    /**
    * Returns the next episode to air of a given show.
-   * 
-   * @param {Show} show 
+   *
+   * @param {Show} show
    * Show we want to get info about
    */
   getNextEpisode(show: Show) {
@@ -65,7 +65,7 @@ export class ShowComponent implements OnInit {
   /**
    * Returns the number of seconds remaining until the
    * next episode of the given show.
-   * 
+   *
    * @param {Show} show
    * Show we want to get info about
    */
@@ -94,6 +94,11 @@ export class ShowComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns show with id specified
+   *
+   * @param {number} id
+   */
   getShow(id){
     let data = JSON.parse(sessionStorage.getItem('shows'))
     for( let show of data){
@@ -103,9 +108,18 @@ export class ShowComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns true if there is user currently logged in
+   */
   getCheckUser() {
     return sessionStorage.getItem('currentUser') != null;
   }
+
+  /**
+   * Sets this.user to 'currentUser' in session storage if it exists.
+   * Returns true if this is successful ('currentUser' exists in session
+   * storage) and false otherwise.
+   */
   getUser(){
     if(sessionStorage.getItem('currentUser') != null){
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -115,6 +129,9 @@ export class ShowComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Checks whether this.show is in the user's list of shows.
+   */
   setMyShow(){
     for(let my_show of this.user.my_shows){
       if(my_show.id == this.show.id){
@@ -127,14 +144,27 @@ export class ShowComponent implements OnInit {
     this.inMyShows = false;
   }
 
+  /**
+   * Sets rating of show to rating given
+   *
+   * @param {number} stars
+   */
   setRating(stars){
     this.myShow.rating = stars;
   }
 
+  /**
+   * Sets status of show to status given
+   *
+   * @param {String} status
+   */
   setStatus(status){
     this.myShow.status = status;
   }
 
+  /**
+   * Adds show to user's list of shows and updates session storage
+   */
   updateMyShows(){
     if(this.inMyShows){
       let i = 0;
@@ -150,6 +180,9 @@ export class ShowComponent implements OnInit {
     this.updateSessionMyShows();
   }
 
+  /**
+   * Removes show from user's list of shows and updates session storage
+   */
   RemoveFromMyShows(id){
     let i = 0;
     for( i; i < this.user.my_shows.length; i++ ){
@@ -161,6 +194,9 @@ export class ShowComponent implements OnInit {
     this.updateSessionMyShows();
   }
 
+  /**
+   * Updates session storage with the current user's list of shows
+   */
   updateSessionMyShows(){
     let allUsers = []
     allUsers = JSON.parse(sessionStorage.getItem('users'));
@@ -180,6 +216,9 @@ export class ShowComponent implements OnInit {
     this.getRatingData()
   }
 
+  /**
+   * Retrieves number of ratings, status, and average rating of show
+   */
   getRatingData(){
     this.ratingData = [];
     this.reviews = [];
@@ -188,8 +227,10 @@ export class ShowComponent implements OnInit {
     let sumofRatings = 0;
     let status = [0, 0, 0, 0, 0];
     allUsers = JSON.parse(sessionStorage.getItem('users'));
+
     for( let i =0; i < allUsers.length; i++ ){
       for(let j =0; j < allUsers[i].my_shows.length; j++){
+
         if(allUsers[i].my_shows[j].id == this.show.id){
             this.ratingData.push(allUsers[i].my_shows[j]);
             if(allUsers[i].my_shows[j].review != undefined){
@@ -202,8 +243,8 @@ export class ShowComponent implements OnInit {
             if(allUsers[i].my_shows[j].status != undefined || allUsers[i].my_shows[j].status != 0){
              status[allUsers[i].my_shows[j].status -1 ] = status[allUsers[i].my_shows[j].status -1 ] +1
             }
-
         }
+
       }
     }
     this.numberOfRatings = numberOfRatings;
@@ -211,14 +252,15 @@ export class ShowComponent implements OnInit {
     this.rating = +(sumofRatings / numberOfRatings).toFixed(2);
   }
 
+  /**
+   * Checks whether this show has reviews
+   */
   showReviews(){
     if(this.show_reviews){
       this.show_reviews = false;
     } else{
       this.show_reviews = true;
     }
-
   }
-
 
 }

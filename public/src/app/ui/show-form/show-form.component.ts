@@ -60,7 +60,7 @@ export class ShowFormComponent{
 
       // NaN if date is invalid, which would fail this
       if(airDate.getTime() === airDate.getTime()) {
-        this.model.airDate = airDate;
+        this.model.airDate = airDate.toISOString();
       }
 
       else {

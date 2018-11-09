@@ -77,7 +77,7 @@ export class EditShowComponent implements OnInit {
 
       // NaN if date is invalid, which would fail this
       if (airDate.getTime() === airDate.getTime()) {
-        this.updateShow.airDate = airDate;
+        this.updateShow.airDate = airDate.toISOString();
 
       } else {
         this.updateShow.airDate = undefined;

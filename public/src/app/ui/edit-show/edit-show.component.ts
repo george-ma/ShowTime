@@ -15,7 +15,7 @@ export class EditShowComponent implements OnInit {
   user: any = {}
   show: Show
   shows: Array<Show> = []
-  
+
   // Corresponding model for the html
   updateShow = new Show(-1, '', '', false, 'assets/noImage.jpg', '')
 
@@ -38,13 +38,13 @@ export class EditShowComponent implements OnInit {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
-    for(let i  = 0; i < 24; i++) {
+    for (let i = 0; i < 24; i++) {
       this.hours[i] = i;
     }
-    for(let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= 31; i++) {
       this.days[i] = i;
     }
-    for(let i = 0; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
       this.years[i] = (currentYear - 15) + i;
     }
 
@@ -62,7 +62,7 @@ export class EditShowComponent implements OnInit {
   }
 
   /**
-   * Returns the corresponding show stored in the sessionStorage for 
+   * Returns the corresponding show stored in the sessionStorage for
    * the passed in id
    * @param id - id of the currently edited show
    */
@@ -123,18 +123,18 @@ export class EditShowComponent implements OnInit {
           break;
         }
       }
-    
-    // Otherwise, push to the unapproved shows if a regular user
+
+      // Otherwise, push to the unapproved shows if a regular user
     } else {
       this.shows.push(this.updateShow);
     }
 
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    
+
     // Creates successful notification and redirects user to the grid
     this.popup = true;
     setTimeout(() => {
-        this.router.navigate(['/grid']);
+      this.router.navigate(['/grid']);
     }, 2000);
   }
 

@@ -22,13 +22,13 @@ import { Router } from '@angular/router';
 export class GridComponent implements OnInit {
 
   //list of all shows (that are approved)
-  shows: Array<Show>=[];
+  shows: Array<Show> = [];
   //list of all unapproved shows
-  unapprovedShows:  Array<Show>=[];
+  unapprovedShows: Array<Show> = [];
   // list of all shows in the session storage
-  sessionShows: Array<Show>=[];
+  sessionShows: Array<Show> = [];
   // list of all shows that the current user follows and (that are approved)
-  myShows: Array<Show>=[];
+  myShows: Array<Show> = [];
   // boolean for form errors
   error: boolean = false;
   // user object to bind current user
@@ -42,7 +42,7 @@ export class GridComponent implements OnInit {
   // toggle for unapproved shows tab
   unapproved_shows: boolean = false;
   // string to bind search input
-  search: string ='';
+  search: string = '';
 
   constructor(private gridService: GridService, public router: Router) { }
 
@@ -61,8 +61,8 @@ export class GridComponent implements OnInit {
   /**
    * Retrives the current user info if a user is logged in.
    */
-  getUser(){
-    if(sessionStorage.getItem('currentUser') != null){
+  getUser() {
+    if (sessionStorage.getItem('currentUser') != null) {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       return true;
     }
@@ -72,20 +72,20 @@ export class GridComponent implements OnInit {
   /**
    * Adds the list of shows into the correct list.
    */
-  getShows(){
-    let data:Array<Show> = this.gridService.getShows()
+  getShows() {
+    let data: Array<Show> = this.gridService.getShows()
     this.shows = [];
     this.myShows = [];
     this.unapprovedShows = [];
     this.getUser();
-    for( let show of data){
-      if(show.approved == true){
-        if( this.getCheckUser() && this.InMyShows(show.id) ){
+    for (let show of data) {
+      if (show.approved == true) {
+        if (this.getCheckUser() && this.InMyShows(show.id)) {
           this.myShows.push(show);
-        } else{
+        } else {
           this.shows.push(show);
         }
-      } else{
+      } else {
         this.unapprovedShows.push(show);
       }
     }
@@ -98,7 +98,7 @@ export class GridComponent implements OnInit {
    * Show we want to get info about
    */
   getNextEpisode(show: Show) {
-    if(show.airDate != undefined && show.airInterval != undefined) {
+    if (show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -108,7 +108,7 @@ export class GridComponent implements OnInit {
       let intervalTime = 86400000 * show.airInterval;
       let nextEpisode;
 
-      if(airDate > current) {
+      if (airDate > current) {
         nextEpisode = 1;
       }
       else {
@@ -126,7 +126,7 @@ export class GridComponent implements OnInit {
    * Show we want to get info about
    */
   getTimeRemaining(show: Show) {
-    if(show.airDate != undefined && show.airInterval != undefined) {
+    if (show.airDate != undefined && show.airInterval != undefined) {
       let airDate = new Date(show.airDate);
       let current = new Date();
 
@@ -136,7 +136,7 @@ export class GridComponent implements OnInit {
       let intervalTime = 86400000 * show.airInterval;
       let remaining;
 
-      if(airDate > current) {
+      if (airDate > current) {
         remaining = timeSinceAir;
       }
       else {
@@ -157,9 +157,9 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we are looking for
    */
-  InMyShows(id){
-    for ( let my_show of this.user.my_shows){
-      if(my_show.id == id){
+  InMyShows(id) {
+    for (let my_show of this.user.my_shows) {
+      if (my_show.id == id) {
         return true;
       }
     }
@@ -169,7 +169,7 @@ export class GridComponent implements OnInit {
   /**
    * Sets the current tab to be "All Shows"
    */
-  selectAll(){
+  selectAll() {
     this.all = true;
     this.my_shows = false;
     this.unapproved_shows = false;
@@ -178,7 +178,7 @@ export class GridComponent implements OnInit {
   /**
    * Sets the current tab to be "My Shows"
    */
-  selectMy(){
+  selectMy() {
     this.all = false;
     this.my_shows = true;
     this.unapproved_shows = false;
@@ -187,7 +187,7 @@ export class GridComponent implements OnInit {
   /**
    * Sets the current tab to be "Unapproved Shows"
    */
-  selectUn(){
+  selectUn() {
     this.all = false;
     this.my_shows = false;
     this.unapproved_shows = true;
@@ -200,7 +200,7 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we want to approve
    */
-  approve(id){
+  approve(id) {
     let i = 0;
     for (i; i < this.unapprovedShows.length; i++) {
       if (this.unapprovedShows[i].id == id) {
@@ -221,29 +221,29 @@ export class GridComponent implements OnInit {
     }
 
     if (!foundShow) {
-        this.shows.push(this.unapprovedShows[i]);
+      this.shows.push(this.unapprovedShows[i]);
     } else { // show was modified. code from updateSessionShows()
-        this.getShows();
-        this.sessionShows = [];
-        for( let show of this.unapprovedShows){
-            this.sessionShows.push(show);
-        }
+      this.getShows();
+      this.sessionShows = [];
+      for (let show of this.unapprovedShows) {
+        this.sessionShows.push(show);
+      }
 
-        for( let show of this.shows){
-            if (show.id == modifiedShow.id) {
-                show.description = modifiedShow.description;
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
+      for (let show of this.shows) {
+        if (show.id == modifiedShow.id) {
+          show.description = modifiedShow.description;
+          this.sessionShows.push(show);
         }
+        this.sessionShows.push(show);
+      }
 
-        for( let show of this.myShows){
-            if (show.id == modifiedShow.id) {
-                show.description = modifiedShow.description;
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
+      for (let show of this.myShows) {
+        if (show.id == modifiedShow.id) {
+          show.description = modifiedShow.description;
+          this.sessionShows.push(show);
         }
+        this.sessionShows.push(show);
+      }
     }
 
     this.unapprovedShows.splice(i, 1);
@@ -279,10 +279,10 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * The ID of the show we want to remove
    */
-  reject(id){
+  reject(id) {
     let i = 0;
-    for( i; i < this.unapprovedShows.length; i++ ){
-      if(this.unapprovedShows[i].id == id){
+    for (i; i < this.unapprovedShows.length; i++) {
+      if (this.unapprovedShows[i].id == id) {
         break;
       }
     }
@@ -297,7 +297,7 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to add to the
    * current user's shows
    */
-  addToMyShows(id){
+  addToMyShows(id) {
     this.user.my_shows.push(new MyShow(id));
     this.updateSessionMyShows();
   }
@@ -310,10 +310,10 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove from the
    * current user's shows
    */
-  RemoveFromMyShows(id){
+  RemoveFromMyShows(id) {
     let i = 0;
-    for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i].id == id){
+    for (i; i < this.user.my_shows.length; i++) {
+      if (this.user.my_shows[i].id == id) {
         break;
       }
     }
@@ -325,14 +325,14 @@ export class GridComponent implements OnInit {
    * Updates the session storage with the local versions of
    * the user and users data.
    */
-  updateSessionMyShows(){
+  updateSessionMyShows() {
     this.allUsers = []
     this.allUsers = JSON.parse(sessionStorage.getItem('users'));
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
     let i = 0;
-    for( i; i < this.allUsers.length; i++ ){
-      if(this.allUsers[i].username == this.user.username){
-         this.allUsers[i].my_shows = this.user.my_shows;
+    for (i; i < this.allUsers.length; i++) {
+      if (this.allUsers[i].username == this.user.username) {
+        this.allUsers[i].my_shows = this.user.my_shows;
       }
     }
     sessionStorage.setItem('users', JSON.stringify(this.allUsers));
@@ -342,17 +342,17 @@ export class GridComponent implements OnInit {
   /**
    * Updates the session storage with the local lists of shows
    */
-  updateSessionShows(){
+  updateSessionShows() {
     this.sessionShows = [];
-    for( let show of this.unapprovedShows){
+    for (let show of this.unapprovedShows) {
       this.sessionShows.push(show);
     }
 
-    for( let show of this.shows){
+    for (let show of this.shows) {
       this.sessionShows.push(show);
     }
 
-    for( let show of this.myShows){
+    for (let show of this.myShows) {
       this.sessionShows.push(show);
     }
     sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
@@ -363,23 +363,23 @@ export class GridComponent implements OnInit {
    * Removes all shows that don't match a search query from
    * the local lists of shows.
    */
-  getRegxShows(){
+  getRegxShows() {
     let reg = RegExp(`^${this.search}`, 'i');
     reg.ignoreCase;
-    let data:Array<Show> = this.gridService.getShows()
+    let data: Array<Show> = this.gridService.getShows()
     this.shows = [];
     this.myShows = [];
     this.unapprovedShows = [];
     this.getUser();
-    for( let show of data){
-      if(show.approved == true && reg.test(show.title)){
-        if( this.getCheckUser() && this.InMyShows(show.id) ){
+    for (let show of data) {
+      if (show.approved == true && reg.test(show.title)) {
+        if (this.getCheckUser() && this.InMyShows(show.id)) {
           this.myShows.push(show);
-        } else{
+        } else {
           this.shows.push(show);
         }
-      } else{
-        if(reg.test(show.title)){
+      } else {
+        if (reg.test(show.title)) {
           this.unapprovedShows.push(show);
         }
       }

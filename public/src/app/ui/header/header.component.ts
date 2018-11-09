@@ -20,8 +20,8 @@ export class HeaderComponent implements OnInit {
     return sessionStorage.getItem('currentUser') != null;
   }
 
-  setUser(){
-    if(sessionStorage.getItem('currentUser') != null){
+  setUser() {
+    if (sessionStorage.getItem('currentUser') != null) {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
       return true;
     }
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   logOut() {
     sessionStorage.removeItem('currentUser');
     this.user = null;
-    this.router.navigate(['/grid'] );
+    this.router.navigate(['/grid']);
   }
 
 }

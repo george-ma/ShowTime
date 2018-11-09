@@ -6,14 +6,12 @@
   <form id="new-show-form" (ngSubmit)="f.form.valid && addNewShow()" #f="ngForm">
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title"
-        required [(ngModel)]="model.title" name="title">
+      <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea type="text" class="form-control" id="description"
-        required [(ngModel)]="model.description" name="description">
+      <textarea type="text" class="form-control" id="description" required [(ngModel)]="model.description" name="description">
       </textarea>
     </div>
 
@@ -21,25 +19,24 @@
       <label for="image">Image</label>
       <br>
       <input type="file" accept="image/*" id="image">
-        <!-- required [(ngModel)]="model.img" name="image"> -->
+      <!-- required [(ngModel)]="model.img" name="image"> -->
     </div>
 
     <div class="form-group">
       <label for="link">Link</label>
-      <input type="text" class="form-control" id="link"
-        [(ngModel)]="model.link" name="link">
+      <input type="text" class="form-control" id="link" [(ngModel)]="model.link" name="link">
     </div>
 
-  <div class="form-group">
-    <input type="checkbox" aria-label="Airing Date" id="checkboxAiringDate" [(ngModel)]="airingChecked" name="airingChecked">
-    <label for="link">Airing Date</label>
+    <div class="form-group">
+      <input type="checkbox" aria-label="Airing Date" id="checkboxAiringDate" [(ngModel)]="airingChecked" name="airingChecked">
+      <label for="link">Airing Date</label>
 
-    <div *ngIf="airingChecked" class="d-flex flex-row">
-      <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
+      <div *ngIf="airingChecked" class="d-flex flex-row">
+        <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
           <option *ngFor="let hour of hours">{{hour}}</option>
         </select>
 
-      <select class="form-control p-2" id="daySelect" [(ngModel)]="date.day" name="day">
+        <select class="form-control p-2" id="daySelect" [(ngModel)]="date.day" name="day">
           <option *ngFor="let day of days">{{day}}</option>
         </select>
 
@@ -50,17 +47,16 @@
         <select class="form-control p-2" id="yearSelect" [(ngModel)]="date.year" name="year">
           <option *ngFor="let year of years">{{year}}</option>
         </select>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
-    <label for="interval">Airing Interval (Days)</label>
-    <input *ngIf="intervalChecked" type="number" class="form-control" id="interval"
-      [(ngModel)]="model.airInterval" name="airInterval">
-  </div>
+    <div class="form-group">
+      <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
+      <label for="interval">Airing Interval (Days)</label>
+      <input *ngIf="intervalChecked" type="number" class="form-control" id="interval" [(ngModel)]="model.airInterval" name="airInterval">
+    </div>
 
-  <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
-  <p class="alert alert-success text-center" *ngIf="popup"> <strong>Added Your New Show</strong> </p>
+    <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
+    <p class="alert alert-success text-center" *ngIf="popup"> <strong>Added Your New Show</strong> </p>
   </form>
-<div>
+  <div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Show } from '../models/show';
@@ -17,9 +17,9 @@ import { $ } from 'protractor';
  * Form consisting of a title, description, image (not currently working),
  * link, and airing date/interval
  */
-export class ShowFormComponent{
+export class ShowFormComponent {
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) { }
 
   shows: Array<Show> = []
 
@@ -27,13 +27,13 @@ export class ShowFormComponent{
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   // Corresponding ngModel for the HTML of this component
-  model = new Show(this.numShows+1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
+  model = new Show(this.numShows + 1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];
   days = [];
   years = [];
-  date={};
+  date = {};
 
   airingChecked = false;
   intervalChecked = false;
@@ -46,15 +46,15 @@ export class ShowFormComponent{
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
-    for(let i  = 0; i < 24; i++) {
+    for (let i = 0; i < 24; i++) {
       this.hours[i] = i;
     }
 
-    for(let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= 31; i++) {
       this.days[i] = i;
     }
 
-    for(let i = 0; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
       this.years[i] = (currentYear - 15) + i;
     }
 
@@ -74,19 +74,19 @@ export class ShowFormComponent{
     this.shows = JSON.parse(sessionStorage.getItem('shows'));
     this.shows.push(this.model);
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
+    sessionStorage.setItem('numShows', JSON.stringify(this.numShows + 1))
 
     this.popup = true;
     setTimeout(() => {
-        this.router.navigate(['/grid']);
+      this.router.navigate(['/grid']);
     }, 2000);
   }
 
-    /**
-   * Sets the date object once submit is clicked.
-   */
+  /**
+ * Sets the date object once submit is clicked.
+ */
   setAirDate() {
-    if(this.airingChecked) {
+    if (this.airingChecked) {
       let airDate = new Date();
       airDate.setFullYear(this.date["year"]);
 
@@ -103,7 +103,7 @@ export class ShowFormComponent{
       airDate.setMilliseconds(0);
 
       // NaN if date is invalid, which would fail this
-      if(airDate.getTime() === airDate.getTime()) {
+      if (airDate.getTime() === airDate.getTime()) {
         this.model.airDate = airDate.toISOString();
       }
 

@@ -15,5 +15,4 @@ export class GridService {
     return JSON.parse(sessionStorage.getItem('shows'))
   }
 
-
 }

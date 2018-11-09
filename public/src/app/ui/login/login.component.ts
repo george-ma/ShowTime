@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   dummyUsers: Array<User> = [];
 
   error: boolean = false;
+  is_banned: boolean = false;
 
   constructor(public router: Router) { }
 
@@ -32,12 +33,14 @@ export class LoginComponent implements OnInit {
 
   loginUser(){
     for (let curUser of this.dummyUsers){
-      if (this.user.username == curUser.username && this.user.password == curUser.password){
+      if ( (!curUser.is_banned) && this.user.username == curUser.username && this.user.password == curUser.password){
         sessionStorage.setItem('currentUser', JSON.stringify(curUser));
         this.error = false;
+        this.is_banned= false;
         this.router.navigate(['/grid'] );
       }else {
         this.error = true;
+        this.is_banned= curUser.is_banned;
       }
     }
   }

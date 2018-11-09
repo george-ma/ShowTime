@@ -64,7 +64,7 @@ export class AppComponent {
         "username": "bob",
         "password": "hellobob",
         "is_admin": true,
-        "is_banned": true,
+        "is_banned": false,
         "my_shows": [{
             "id": 2,
             "review": "string",
@@ -216,7 +216,7 @@ export class AppComponent {
         "username": "jane",
         "password": "hellojane",
         "is_admin": true,
-        "is_banned": true,
+        "is_banned": false,
         "my_shows": [
             {
             "id": 1,

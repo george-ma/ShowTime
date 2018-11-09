@@ -51,9 +51,15 @@ export class LoginComponent implements OnInit {
         this.error = false;
         this.is_banned= false;
         this.router.navigate(['/grid'] );
-      }else {
+        
+      } else if (curUser.is_banned && this.user.username == curUser.username) {
         this.error = true;
         this.is_banned= curUser.is_banned;
+        return;
+
+      } else {
+        this.error = true;
+        this.is_banned = false;
       }
     }
   }

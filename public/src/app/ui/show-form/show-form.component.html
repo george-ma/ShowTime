@@ -61,6 +61,7 @@
   </div>
 
   <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
-  <p class="alert alert-success text-center" *ngIf="popup"> <strong>Added Your New Show</strong> </p>
+  <p class="alert alert-success text-center" *ngIf="popup && !currentUser.is_admin"> <strong>Your show has been requested. Waiting for admin approval.</strong> </p>
+  <p class="alert alert-success text-center" *ngIf="popup && currentUser.is_admin"> <strong>Added new show</strong> </p>
   </form>
 <div>

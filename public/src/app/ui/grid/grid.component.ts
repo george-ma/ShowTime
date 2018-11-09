@@ -231,6 +231,7 @@ export class GridComponent implements OnInit {
 
         for( let show of this.shows){
             if (show.id == modifiedShow.id) {
+                this.copyShowAttributes(show, modifiedShow);
                 show.description = modifiedShow.description;
                 this.sessionShows.push(show);
             }
@@ -239,6 +240,7 @@ export class GridComponent implements OnInit {
 
         for( let show of this.myShows){
             if (show.id == modifiedShow.id) {
+                this.copyShowAttributes(show, modifiedShow);
                 show.description = modifiedShow.description;
                 this.sessionShows.push(show);
             }

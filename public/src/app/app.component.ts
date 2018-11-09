@@ -29,7 +29,7 @@ export class AppComponent {
         "is_banned": true,
         "my_shows": [{
             "id": 1,
-            "review": "string",
+            "review": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
             "rating": 5,
             "status": 2, /* Completed = 1
                             Planning = 2
@@ -40,7 +40,7 @@ export class AppComponent {
           },
           {
             "id": 2,
-            "review": "string",
+            "review": "Aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
             "rating": 2,
             "status": 5,
           }
@@ -54,7 +54,7 @@ export class AppComponent {
         "is_banned": false,
         "my_shows": [{
           "id": 1,
-          "review": "string",
+          "review": "At vero eos et accusamus et iusto odio dignissimos ducimus,",
           "rating": 4,
           "status": 2,
         }]
@@ -67,13 +67,13 @@ export class AppComponent {
         "is_banned": false,
         "my_shows": [{
             "id": 2,
-            "review": "string",
+            "review": "Et harum quidem rerum facilis est et expedita distinctio?",
             "rating": 5,
             "status": 1,
           },
           {
             "id": 1,
-            "review": "string",
+            "review": "Nam libero tempore, cum soluta nobis est eligendi optio cumque!",
             "rating": 4,
             "status": 1,
           }
@@ -87,7 +87,7 @@ export class AppComponent {
         "is_banned": false,
         "my_shows": [{
           "id": 2,
-          "review": "string",
+          "review": "Reiciendis voluptatibus maiores alias consequatur.",
           "rating": 5,
           "status": 1,
         }]
@@ -100,7 +100,7 @@ export class AppComponent {
         "is_banned": true,
         "my_shows": [{
           "id": 1,
-          "review": "string",
+          "review": "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis.",
           "rating": 5,
           "status": 1,
         }]
@@ -113,7 +113,7 @@ export class AppComponent {
         "is_banned": true,
         "my_shows": [{
           "id": 1,
-          "review": "string",
+          "review": "Wow!",
           "rating": 5,
           "status": 4,
         }]
@@ -127,13 +127,13 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 2,
-            "review": "string",
+            "review": "Sed ut perspiciatis.",
             "rating": 4,
             "status": 3,
           },
           {
             "id": 1,
-            "review": "string",
+            "review": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
             "rating": 5,
             "status": 1,
           }
@@ -148,13 +148,13 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 1,
-            "review": "string",
+            "review": "Voluptatem sequi nesciunt.",
             "rating": 1,
             "status": 5,
             },
             {
             "id": 2,
-            "review": "string",
+            "review": "Excepteur sint occaecat cupidatat non proident.",
             "rating": 1,
             "status": 3,
             }
@@ -169,13 +169,13 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 1,
-            "review": "string",
+            "review": "Voluptatem sequi nesciunt.",
             "rating": 3,
             "status": 5,
             },
             {
             "id": 2,
-            "review": "string",
+            "review": "Nemo enim ipsam voluptatem quia voluptas.",
             "rating": 1,
             "status": 3,
             }
@@ -190,7 +190,7 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 2,
-            "review": "string",
+            "review": "Ut enim ad minima veniam, quis nostrum exercitationem.",
             "rating": 5,
             "status": 1,
             }
@@ -205,7 +205,7 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 1,
-            "review": "string",
+            "review": "Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.",
             "rating": 4,
             "status": 4,
             }
@@ -220,7 +220,7 @@ export class AppComponent {
         "my_shows": [
             {
             "id": 1,
-            "review": "string",
+            "review": "Ut enim ad minima veniam, quis nostrum exercitationem.",
             "rating": 5,
             "status": 2,
             }

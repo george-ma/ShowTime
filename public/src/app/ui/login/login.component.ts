@@ -32,13 +32,18 @@ export class LoginComponent implements OnInit {
     this.getUsers();
   }
 
-  // gets all users
+  /**
+   * gets all users in the session storage
+   */
   getUsers(){
     this.dummyUsers = JSON.parse(sessionStorage.getItem('users'));
   }
 
-  // checks login credtential aginest the dummy users and checks if the user is banned.
-  // if the user is banned it doesn't allow users to login.
+  /**
+   * checks login credtentials based on the given user credtentials bound to
+   * the user object and validates them, aginest the dummy users to
+   * see if the user existing and is not banned.
+   */
   loginUser(){
     for (let curUser of this.dummyUsers){
       if ( (!curUser.is_banned) && this.user.username == curUser.username && this.user.password == curUser.password){

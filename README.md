@@ -4,9 +4,14 @@ A sample workflow that will take you through the major features of our applicati
 
 ## Get started
 
+`Note:` There exists a node folder in the project root that is not being used for this deliverable
+
+`Note:` The typescript files for each component have been documented.
+
 ### Platform & tools
 
 You need to install Node.js and then the development tools. Node.js comes with a package manager called npm for installing NodeJS applications and libraries.
+
 
 ### Install Angular Globally
 

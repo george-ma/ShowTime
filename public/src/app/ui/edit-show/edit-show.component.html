@@ -59,10 +59,11 @@
       </div>
 
       <div>
-        <button type="submit" *ngIf="getCheckAdmin()" class="btn btn-primary shadow">Submit changes</button>
-        <button type="submit" *ngIf="!getCheckAdmin()" class="btn btn-primary shadow">Submit changes for review</button>
+        <button type="submit" *ngIf="getCheckAdmin() && !popup" class="btn btn-primary shadow">Submit changes</button>
+        <button type="submit" *ngIf="!getCheckAdmin() && !popup" class="btn btn-primary shadow">Submit changes for review</button>
         <button type="button" routerLink="/grid" (click)="resetEdits()" class="btn btn-primary shadow">Discard changes</button>
       </div>
+      <p class="alert alert-success text-center" *ngIf="popup"> <strong>Saved Your Changes</strong> </p>
     </form>
   </div>
 </div>

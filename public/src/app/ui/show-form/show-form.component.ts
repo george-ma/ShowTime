@@ -33,10 +33,8 @@ export class ShowFormComponent{
 
   airingChecked = false;
   intervalChecked = false;
+  popup = false;
 
-  submitted = false;
-
-  onSubmit() { this.submitted = true; }  
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
@@ -56,7 +54,7 @@ export class ShowFormComponent{
 
       airDate.setSeconds(0);
 
-      airDate.setMilliseconds(0); 
+      airDate.setMilliseconds(0);
 
       // NaN if date is invalid, which would fail this
       if(airDate.getTime() === airDate.getTime()) {
@@ -77,7 +75,10 @@ export class ShowFormComponent{
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
     sessionStorage.setItem('numShows', JSON.stringify(this.numShows+1))
 
-    this.router.navigate(['/grid']);
+    this.popup = true;
+    setTimeout(() => {
+        this.router.navigate(['/grid']);
+    }, 2000);
   }
 
   ngOnInit() {
@@ -100,6 +101,6 @@ export class ShowFormComponent{
     this.date["hour"] = this.hours[currentDate.getHours()];
     this.date["day"] = currentDate.getDate();
     this.date["month"] = this.months[currentDate.getMonth()];
-    this.date["year"] = currentYear;    
+    this.date["year"] = currentYear;
   }
 }

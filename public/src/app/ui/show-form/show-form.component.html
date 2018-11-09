@@ -38,15 +38,15 @@
       <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
           <option *ngFor="let hour of hours">{{hour}}</option>
         </select>
-      
+
       <select class="form-control p-2" id="daySelect" [(ngModel)]="date.day" name="day">
           <option *ngFor="let day of days">{{day}}</option>
-        </select>    
-  
+        </select>
+
         <select class="form-control p-2" id="monthSelect" [(ngModel)]="date.month" name="month">
           <option *ngFor="let month of months">{{month}}</option>
         </select>
-  
+
         <select class="form-control p-2" id="yearSelect" [(ngModel)]="date.year" name="year">
           <option *ngFor="let year of years">{{year}}</option>
         </select>
@@ -60,7 +60,7 @@
       [(ngModel)]="model.airInterval" name="airInterval">
   </div>
 
-  <button type="submit" class="btn btn-success">Submit</button>
-
+  <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
+  <p class="alert alert-success text-center" *ngIf="popup"> <strong>Added Your New Show</strong> </p>
   </form>
 <div>

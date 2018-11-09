@@ -24,6 +24,7 @@ export class EditShowComponent implements OnInit {
 
   airingChecked = false;
   intervalChecked = false;
+  popup = false;
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -106,7 +107,10 @@ export class EditShowComponent implements OnInit {
     }
 
     sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    this.router.navigate(['/grid']);
+    this.popup = true;
+    setTimeout(() => {
+        this.router.navigate(['/grid']);
+    }, 2000);
   }
 
   resetEdits() {

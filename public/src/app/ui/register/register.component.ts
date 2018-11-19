@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
     } else {
       this.error = true;
     }
-    /*this.registerService.addUser(this.user).subscribe((response)=>{
+    this.registerService.addUser(this.user).subscribe((response)=>{
         this.error = false;
         console.log(response);
       },
@@ -64,7 +64,6 @@ export class RegisterComponent implements OnInit {
 
     );
     this.router.navigate(['/grid']);
-    */
   }
 
   /**

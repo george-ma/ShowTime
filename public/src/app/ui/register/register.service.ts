@@ -6,13 +6,12 @@ import { HttpService } from '../../http.service';
 })
 export class RegisterService {
 
-  //API_URL = 'http://localhost:8000/api';
+  API_URL = 'http://localhost:8000/api';
 
   constructor(private httpClient: HttpService) { }
 
-  /*addUser(data) {
+  addUser(data) {
     return this.httpClient.post(`${this.API_URL}/users`, data);
   }
-  */
 
 }

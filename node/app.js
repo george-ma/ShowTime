@@ -1,6 +1,11 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const { ObjectID } = require('mongodb')
+
+// Import our mongoose connection
+const { mongoose } = require('./server/db/mongoose');
+
 
 // Set up the express app
 const app = express();

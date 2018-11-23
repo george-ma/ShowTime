@@ -1,92 +1,69 @@
-const Users = require('../models').User;
+const { User } = require('../models/user')
+const { ObjectID } = require('mongodb')
 
 module.exports = {
   //create a new user
   create(req, res) {
-    return Users
-      .create({
-        username: req.body.username,
-        bio: " ",
-        password: req.body.password,
-        email: req.body.email,
-        img: " ",
-        is_admin: false,
-        is_blocked: false
-      })
-      .then(users => res.status(200).send("okay"))
-      .catch(error => res.status(400).send(error));
+    console.log(req.body)
+
+    // Create a new user
+  	const user = new User({
+  		username: req.body.username,
+  		email: req.body.email,
+  		password: req.body.password,
+  		is_admin: false,
+  		is_banned: false,
+      bio: " ",
+      img: " "
+  	})
+
+  	// save user to database
+  	user.save().then((result) => {
+  		res.send(user)
+  	}, (error) => {
+  		res.status(400).send(error) // 400 for bad request
+  	})
+
   },
 
-  // list all users
-  list(req, res) {
-    return Users
-      .findAll({
-        attributes: ['id', 'username', 'email', 'bio','is_admin', 'is_blocked' ],
-        order: [
-          ['createdAt', 'DESC'],
-        ],
-      })
-      .then((users) => res.status(200).send(users))
-      .catch((error) => res.status(400).send(error));
+  //get all users
+  getAllUsers(req, res) {
+
+    User.find().then((users) => {
+    		res.send({ users }) // put in object in case we want to add other properties
+    	}, (error) => {
+    		res.status(400).send(error)
+    	})
+
   },
 
-  // get a single user
+  //get a user
   getUser(req, res) {
-    return Users
-      .findById(req.params.user, {
-        attributes: {
-          exclude: ['password', 'createdAt', 'updatedAt']
-        },
-        order: [
-          ['createdAt', 'DESC'],
-        ],
-      })
-      .then((users) => res.status(200).send(users))
-      .catch((error) => res.status(400).send(error));
+
+    const id = req.params.id
+
+    // Good practise is to validate the id
+    if (!ObjectID.isValid(id)) {
+      return res.status(404).send()
+    }
+
+    // Otheriwse, findById
+    User.findById(id).then((student) => {
+      if (!student) {
+        res.status(404).send()
+      } else {
+        res.send({ student })
+      }
+
+    }).catch((error) => {
+      res.status(400).send(error)
+    })
+
   },
 
-  //update a user
-  update(req, res) {
-    return Users
-      .findById(req.body.id, {
-        attributes: {
-          exclude: ['password', 'createdAt', 'updatedAt']
-        },
-      })
-      .then(users => {
-        if (!users) {
-          return res.status(404).send({
-            message: 'User Not Found',
-          });
-        }
-        return users
-          .update({
-            username: req.body.username,
-            bio: req.body.bio,
-            password: req.body.password,
-            email: req.body.email,
-            img: req.body.img,
-            is_admin: req.body.is_admin,
-            is_blocked: req.body.is_blocked
-          })
-          .then((users) => res.status(200).send(users))
-          .catch((error) => res.status(400).send(error));
-      })
-      .catch((error) => res.status(400).send(error));
-  },
 
-  //remove a user
-  removeUser(req, res) {
-    return Users
-      .findById(
-        req.body.id
-      )
-      .then(user => {
-        return user.destroy()
-          .then(() => res.status(200).send("user deleted"))
-          .catch((error) => res.status(400).send(error));
-        })
-      .catch(error => res.status(400).send(error));
-  },
+
+
+
 
 };

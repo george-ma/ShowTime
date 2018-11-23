@@ -12,16 +12,11 @@ module.exports = (app) => {
 
   // * user routes *
   // create new users
-  app.post('/api/users', usersController.create);
-  // update a single usesr
-  app.post('/api/user/update', usersController.update);
-  // get all users
-  app.get('/api/users', usersController.list);
-  // get a single user info TODO
-  app.get('/api/users/:user', usersController.getUser);
-  // remove a single user TODO
-  app.post('/api/user/remove', usersController.removeUser);
-  // * sign-up routes *
+  app.post('/users', usersController.create);
+  // GET all users
+  app.get('/users', usersController.getAllUsers);
+  // get user by id
+  app.get('/users/:id', usersController.getUser);
 
 
 

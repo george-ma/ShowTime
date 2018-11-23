@@ -6,7 +6,7 @@ import { HttpService } from '../../http.service';
 })
 export class RegisterService {
 
-  API_URL = 'http://localhost:8000/api';
+  API_URL = 'http://localhost:8000';
 
   constructor(private httpClient: HttpService) { }
 

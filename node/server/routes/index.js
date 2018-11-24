@@ -21,6 +21,8 @@ module.exports = (app) => {
     app.post('/users/:id/update', usersController.update);
     // remove user by id
     app.get('/users/:id/delete', usersController.remove);
+    //login a user
+    app.post('/users/login', usersController.loginUser);
 
 
 

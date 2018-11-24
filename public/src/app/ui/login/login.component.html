@@ -2,8 +2,7 @@
   <div class="card bg-light shadow-lg card-form">
     <div class="card-body">
       <form (ngSubmit)="f.form.valid && loginUser()" #f="ngForm">
-        <p class="alert alert-warning text-center" *ngIf="error"> <strong>Login was unsuccessful</strong> </p>
-        <p class="alert alert-danger text-center" *ngIf="is_banned"> <strong>You have been banned pls contact the admin</strong> </p>
+        <p class="alert alert-warning text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>
         <div class="form-group">
           <label class="font-weight-bold" for="username"> Username </label>
           <input type="text" class="form-control" name="username" placeholder="Username" required [(ngModel)]="user.username" #username="ngModel">

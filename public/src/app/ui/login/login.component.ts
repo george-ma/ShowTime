@@ -22,11 +22,12 @@ export class LoginComponent implements OnInit {
 
   //boolean for login errors
   error: boolean = false;
+  errorMsg: string;
 
   // boolean for log banned user trying to login
   is_banned: boolean = false;
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
     this.getUsers();
@@ -45,23 +46,18 @@ export class LoginComponent implements OnInit {
    * see if the user existing and is not banned.
    */
   loginUser() {
-    for (let curUser of this.dummyUsers) {
-      if ((!curUser.is_banned) && this.user.username == curUser.username && this.user.password == curUser.password) {
-        sessionStorage.setItem('currentUser', JSON.stringify(curUser));
+    this.loginService.loginUser(this.user).subscribe((response)=>{
         this.error = false;
-        this.is_banned= false;
+        sessionStorage.setItem('currentUser', JSON.stringify(response));
         this.router.navigate(['/grid'] );
-        
-      } else if (curUser.is_banned && this.user.username == curUser.username) {
+      },
+      error => {
         this.error = true;
-        this.is_banned= curUser.is_banned;
-        return;
+        this.errorMsg = error.error;
 
-      } else {
-        this.error = true;
-        this.is_banned = false;
       }
-    }
+
+    );
   }
 
 }

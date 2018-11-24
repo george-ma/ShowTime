@@ -2,7 +2,7 @@ const { User } = require('../models/user')
 const { ObjectID } = require('mongodb')
 
 module.exports = {
-    
+
     //create a new user
     create(req, res) {
         console.log(req.body)
@@ -20,6 +20,7 @@ module.exports = {
 
         // save user to database
         user.save().then((result) => {
+
             res.send(user)
             }, (error) => {
                 res.status(400).send(error) // 400 for bad request
@@ -74,6 +75,26 @@ module.exports = {
             res.status(404).send()
         } else {
             res.send({ student })
+        }
+
+        }).catch((error) => {
+            res.status(400).send(error)
+        })
+    },
+
+    //login a user
+    loginUser(req, res) {
+
+        // Find by attributes
+        User.findOne({username: req.body.username, password: req.body.password}, 'username email is_banned is_admin my_shows').then((student, error) => {
+        if (!student) {
+            res.status(404).send("Invalid username or password")
+        } else {
+            if (student.is_banned) {
+              res.status(404).send("Sorry your are banned from the site")
+            } else {
+              res.send(student)
+            }
         }
 
         }).catch((error) => {

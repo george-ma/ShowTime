@@ -27,25 +27,11 @@ const UserSchema = new mongoose.Schema({
 			message: 'Not valid email.'
 		}
 	},
-	password: {
-		type: String,
-		required: true,
-		minlength: 6
-	},
-  bio: {
-    type: String,
-  },
-  img: {
-    type: String,
-  },
-	is_admin:{
-		type: Boolean,
-		required: true,
-	},
-	is_banned:{
-		type: Boolean,
-		required: true,
-	},
+	password: { type: String, required: true, minlength: 6 },
+    bio: { type: String },
+    img: { type: String },
+	is_admin:{ type: Boolean, required: true },
+	is_banned:{ type: Boolean, required: true },
 	my_shows : [{ type: Schema.Types.ObjectId, ref: 'Show' }]
 })
 
@@ -53,4 +39,4 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('User', UserSchema)
 
 
-module.exports = { User}
+module.exports = {User}

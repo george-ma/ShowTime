@@ -3,64 +3,92 @@ const { ObjectID } = require('mongodb')
 
 module.exports = {
     
-  //create a new user
-  create(req, res) {
-    console.log(req.body)
+    //create a new user
+    create(req, res) {
+        console.log(req.body)
 
-    // Create a new user
-  	const user = new User({
-  		username: req.body.username,
-  		email: req.body.email,
-  		password: req.body.password,
-  		is_admin: false,
-  		is_banned: false,
-      bio: " ",
-      img: " "
-  	})
+        // Create a new user
+        const user = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            is_admin: false,
+            is_banned: false,
+        bio: " ",
+        img: " "
+        })
 
-  	// save user to database
-  	user.save().then((result) => {
-  		res.send(user)
-  	}, (error) => {
-  		res.status(400).send(error) // 400 for bad request
-  	})
-  },
+        // save user to database
+        user.save().then((result) => {
+            res.send(user)
+            }, (error) => {
+                res.status(400).send(error) // 400 for bad request
+            })
+    },
 
-  delete(req, res) {
-      
-  },
+    // remove user by id
+    remove(req, res) {
+        const id = req.params.id
 
-  //get all users
-  getAllUsers(req, res) {
+        // Good practice is to validate the id
+        if (!ObjectID.isValid(id)) { return res.status(404).send() }
 
-    User.find().then((users) => {
-    		res.send({ users }) // put in object in case we want to add other properties
-    	}, (error) => {
-    		res.status(400).send(error)
-    	})
+        User.findByIdAndRemove(id).then((user) => {
+            if (!user) {
+                res.status(404).send()
+            } else {
+                res.send({ user })
+            }
+        })
+    },
 
-  },
+    // update user by id
+    update(req, res) {
+        const id = req.params.id
 
-  //get a user
-  getUser(req, res) {
+        // Good practice is to validate the id
+        if (!ObjectID.isValid(id)) { return res.status(404).send() }
 
-    const id = req.params.id
+        User.findByIdAndUpdate(id,{$set:req.body}).then((user) => {
+            if (!user) {
+                res.status(404).send()
+            } else {
+                res.send({ user })
+            }
+        })
+    },
 
-    // Good practise is to validate the id
-    if (!ObjectID.isValid(id)) {
-      return res.status(404).send()
-    }
+    //get a user
+    getUser(req, res) {
 
-    // Otheriwse, findById
-    User.findById(id).then((student) => {
-      if (!student) {
-        res.status(404).send()
-      } else {
-        res.send({ student })
-      }
+        const id = req.params.id
 
-    }).catch((error) => {
-      res.status(400).send(error)
-    })
-  },
+        // Good practise is to validate the id
+        if (!ObjectID.isValid(id)) {
+        return res.status(404).send()
+        }
+
+        // Otheriwse, findById
+        User.findById(id).then((student) => {
+        if (!student) {
+            res.status(404).send()
+        } else {
+            res.send({ student })
+        }
+
+        }).catch((error) => {
+            res.status(400).send(error)
+        })
+    },
+
+    //get all users
+    getAllUsers(req, res) {
+
+        User.find().then((users) => {
+                res.send({ users }) // put in object in case we want to add other properties
+            }, (error) => {
+                res.status(400).send(error)
+            })
+
+    },
 };

@@ -14,7 +14,7 @@ const ShowSchema = new mongoose.Schema({
 		required: true
 	},
 	airDate: {
-		type: String
+		type: Date
 	},
 	img:{
 		type: String
@@ -28,6 +28,9 @@ const ShowSchema = new mongoose.Schema({
 	},
 	airInterval:{
 		type: Number
+	},
+	updating:{
+		type: Schema.Types.ObjectId
 	}
 })
 

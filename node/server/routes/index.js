@@ -1,4 +1,5 @@
 const usersController = require('../controllers').user;
+const showsController = require('../controllers').show;
 
 module.exports = (app) => {
     app.use((req, res, next)=>{
@@ -23,6 +24,13 @@ module.exports = (app) => {
     app.get('/users/:id/delete', usersController.remove);
     //login a user
     app.post('/users/login', usersController.loginUser);
+
+    // * show routes *
+    // create a new show
+    app.post('/shows', showsController.create);
+    // get all shows
+    app.get('/shows', showsController.getAllShows);
+
 
 
 

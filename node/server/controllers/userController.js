@@ -14,8 +14,8 @@ module.exports = {
             password: req.body.password,
             is_admin: false,
             is_banned: false,
-        bio: " ",
-        img: " "
+            bio: " ",
+            img: " "
         })
 
         // save user to database
@@ -38,7 +38,7 @@ module.exports = {
             if (!user) {
                 res.status(404).send()
             } else {
-                res.send({ user })
+                res.send( user )
             }
         })
     },
@@ -54,7 +54,7 @@ module.exports = {
             if (!user) {
                 res.status(404).send()
             } else {
-                res.send({ user })
+                res.send( user )
             }
         })
     },
@@ -74,7 +74,7 @@ module.exports = {
         if (!student) {
             res.status(404).send()
         } else {
-            res.send({ student })
+            res.send( student )
         }
 
         }).catch((error) => {
@@ -106,7 +106,7 @@ module.exports = {
     getAllUsers(req, res) {
 
         User.find().then((users) => {
-                res.send({ users }) // put in object in case we want to add other properties
+                res.send( users ) // put in object in case we want to add other properties
             }, (error) => {
                 res.status(400).send(error)
             })

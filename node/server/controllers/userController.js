@@ -2,6 +2,7 @@ const { User } = require('../models/user')
 const { ObjectID } = require('mongodb')
 
 module.exports = {
+    
   //create a new user
   create(req, res) {
     console.log(req.body)
@@ -23,7 +24,10 @@ module.exports = {
   	}, (error) => {
   		res.status(400).send(error) // 400 for bad request
   	})
+  },
 
+  delete(req, res) {
+      
   },
 
   //get all users
@@ -58,12 +62,5 @@ module.exports = {
     }).catch((error) => {
       res.status(400).send(error)
     })
-
   },
-
-
-
-
-
-
 };

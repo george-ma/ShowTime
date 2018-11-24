@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ShowFormService } from './show-form.service';
 
 import { Show } from '../models/show';
 import { container } from '@angular/core/src/render3';
@@ -19,15 +20,12 @@ import { $ } from 'protractor';
  */
 export class ShowFormComponent {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private showFormService: ShowFormService) { }
 
-  shows: Array<Show> = []
-
-  numShows = parseInt(sessionStorage.getItem("numShows"));
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-  // Corresponding ngModel for the HTML of this component
-  model = new Show(this.numShows + 1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
+  // Corresponding ngshow for the HTML of this component
+  show = new Show(this.numShows + 1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];
@@ -38,6 +36,11 @@ export class ShowFormComponent {
   airingChecked = false;
   intervalChecked = false;
   popup = false;
+
+  // error checking
+  error: boolean = false;
+  errorMsg: string;
+
 
   /**
    * Initializes the form information
@@ -71,15 +74,19 @@ export class ShowFormComponent {
   addNewShow() {
     this.setAirDate();
 
-    this.shows = JSON.parse(sessionStorage.getItem('shows'));
-    this.shows.push(this.model);
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
-    sessionStorage.setItem('numShows', JSON.stringify(this.numShows + 1))
+    this.showFormService.addShow(this.show).subscribe((response)=>{
+        this.error = false;
+        this.popup = true;
+        setTimeout(() => {
+          this.router.navigate(['/grid']);
+        }, 2000);
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
+      }
 
-    this.popup = true;
-    setTimeout(() => {
-      this.router.navigate(['/grid']);
-    }, 2000);
+    );
   }
 
   /**
@@ -104,11 +111,11 @@ export class ShowFormComponent {
 
       // NaN if date is invalid, which would fail this
       if (airDate.getTime() === airDate.getTime()) {
-        this.model.airDate = airDate.toISOString();
+        this.show.airDate = airDate.toISOString();
       }
 
       else {
-        this.model.airDate = undefined;
+        this.show.airDate = undefined;
       }
     }
   }

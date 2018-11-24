@@ -6,12 +6,12 @@
   <form id="new-show-form" (ngSubmit)="f.form.valid && addNewShow()" #f="ngForm">
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
+      <input type="text" class="form-control" id="title" required [(ngModel)]="show.title" name="title">
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea type="text" class="form-control" id="description" required [(ngModel)]="model.description" name="description">
+      <textarea type="text" class="form-control" id="description" required [(ngModel)]="show.description" name="description">
       </textarea>
     </div>
 
@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <label for="link">Link</label>
-      <input type="text" class="form-control" id="link" [(ngModel)]="model.link" name="link">
+      <input type="text" class="form-control" id="link" [(ngModel)]="show.link" name="link">
     </div>
 
     <div class="form-group">
@@ -53,11 +53,12 @@
     <div class="form-group">
       <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
       <label for="interval">Airing Interval (Days)</label>
-      <input *ngIf="intervalChecked" type="number" class="form-control" id="interval" [(ngModel)]="model.airInterval" name="airInterval">
+      <input *ngIf="intervalChecked" type="number" class="form-control" id="interval" [(ngModel)]="show.airInterval" name="airInterval">
     </div>
 
   <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
   <p class="alert alert-success text-center" *ngIf="popup && !currentUser.is_admin"> <strong>Your show has been requested. Waiting for admin approval.</strong> </p>
   <p class="alert alert-success text-center" *ngIf="popup && currentUser.is_admin"> <strong>Added new show</strong> </p>
+  <p class="alert alert-danger text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>
   </form>
   <div>

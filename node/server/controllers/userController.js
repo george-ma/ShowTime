@@ -20,7 +20,7 @@ module.exports = {
 
         // save user to database
         user.save().then((result) => {
-
+            user.password=""
             res.send(user)
             }, (error) => {
                 res.status(400).send(error) // 400 for bad request

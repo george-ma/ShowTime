@@ -3,11 +3,11 @@ const { ObjectID } = require('mongodb')
 
 module.exports = {
 
-    //create a new user
+    // create a new show
     create(req, res) {
         console.log(req.body)
 
-        // Create a new user
+        // create a new show
         const show = new Show({
             title: req.body.title,
             description: req.body.description,
@@ -26,10 +26,21 @@ module.exports = {
             })
     },
 
-    //get all shows
-    getAllShows(req, res) {
+    // get all approved shows
+    getApprovedShows(req, res) {
 
-        Show.find().then((shows) => {
+        Show.find({approved: true}).then((shows) => {
+                res.send(shows) // put in object in case we want to add other properties
+            }, (error) => {
+                res.status(400).send(error)
+            })
+
+    },
+
+    // get all approved shows
+    getUnapprovedShows(req, res) {
+
+        Show.find({approved: false}).then((shows) => {
                 res.send(shows) // put in object in case we want to add other properties
             }, (error) => {
                 res.status(400).send(error)

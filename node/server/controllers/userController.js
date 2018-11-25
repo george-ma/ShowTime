@@ -1,4 +1,5 @@
-const { User } = require('../models/user')
+const User = require('../models/user').User
+const Show = require('../models/show').Show
 const { ObjectID } = require('mongodb')
 
 module.exports = {
@@ -110,6 +111,93 @@ module.exports = {
             }, (error) => {
                 res.status(400).send(error)
             })
+
+    },
+
+    // add new show to user
+    addShow(req, res) {
+
+      const id = req.params.id
+
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+      User.findById(id).then((user) => {
+        user.my_shows.push(req.body.showId);
+
+        user.save().then((result) => {
+          user.password = '';
+          res.send(result);
+        }, (error) => {
+          res.status(400).send(error);
+        });
+
+      }, (error) => {
+        res.status(400).send(error);
+      })
+
+    },
+
+    // removes show from user's list
+    removeShow(req, res) {
+
+      const id = req.params.id
+
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+      User.findById(id).then((user) => {
+        user.my_shows = user.my_shows.filter(showId => showId != req.body.showId);
+
+        user.save().then((result) => {
+          user.password = '';
+          res.send(result);
+        }, (error) => {
+          res.status(400).send(error);
+        });
+
+      }, (error) => {
+        res.status(400).send(error);
+      })
+
+    },
+
+    // get shows that belong to user
+    getMyShows(req, res) {
+
+      const id = req.params.id
+
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+      User.findById(id, "my_shows").populate('my_shows').then((user) => {
+        res.send(user.my_shows);
+
+      }, (error) => {
+        res.status(400).send(error);
+      })
+
+    },
+
+    // get shows that do not belong to this user
+    getNotMyShows(req, res) {
+
+      const id = req.params.id
+
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+      User.findById(id, "my_shows").populate('my_shows').then((user) => {
+        Show.find({_id: {$nin: user.my_shows}, approved: true}).then((shows) => {
+          res.send(shows);
+
+        }, (error) => {
+          res.status(400).send(error);
+        })
+
+      }, (error) => {
+        res.status(400).send(error);
+      })
 
     },
 };

@@ -31,6 +31,7 @@ export class GridComponent implements OnInit {
   myShows: Array<Show>=[];
   // boolean for form errors
   error: boolean = false;
+  errorMsg: string;
   // user object to bind current user
   user: any = {};
   // arry to bind all users from session storage
@@ -44,11 +45,16 @@ export class GridComponent implements OnInit {
   // string to bind search input
   search: string ='';
 
+  // // error checking
+  // error: boolean = false;
+  // errorMsg: string;
+
+
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
-    this.getShows();
     this.getUser();
+    this.getShows();
   }
 
   /**
@@ -59,7 +65,7 @@ export class GridComponent implements OnInit {
   }
 
   /**
-   * Retrives the current user info if a user is logged in.
+   * Retrieves the current user info if a user is logged in.
    */
   getUser(){
     if(sessionStorage.getItem('currentUser') != null){
@@ -73,22 +79,44 @@ export class GridComponent implements OnInit {
    * Adds the list of shows into the correct list.
    */
   getShows(){
-    let data:Array<Show> = this.gridService.getShows()
-    this.shows = [];
-    this.myShows = [];
-    this.unapprovedShows = [];
-    this.getUser();
-    for( let show of data){
-      if(show.approved == true){
-        if( this.getCheckUser() && this.InMyShows(show.id) ){
-          this.myShows.push(show);
-        } else{
-          this.shows.push(show);
-        }
-      } else{
-        this.unapprovedShows.push(show);
+    if (this.getCheckUser()) {
+      this.gridService.getMyShows(this.user._id).subscribe((response: Array<Show>) => {
+        this.myShows = response;
+        this.error = false;
+
+      }, (error) => {
+        this.error = true;
+      });
+
+      this.gridService.getNotMyShows(this.user._id).subscribe((response: Array<Show>) => {
+        this.shows = response;
+        this.error = false;
+
+      }, (error) => {
+        this.error = true;
+      });
+
+      if (this.user.is_admin) {
+        this.gridService.getUnapprovedShows().subscribe((response: Array<Show>) => {
+          this.unapprovedShows = response;
+          this.error = false;
+
+        }, (error) => {
+          this.error = true;
+        });
       }
+
+    } else {
+
+      this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
+        this.shows = response;
+        this.error = false;
+
+      }, (error) => {
+        this.error = true;
+      });
     }
+
   }
 
   /**

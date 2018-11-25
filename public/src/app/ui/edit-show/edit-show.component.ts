@@ -69,7 +69,7 @@ export class EditShowComponent implements OnInit {
   getShow(id) {
     let data = JSON.parse(sessionStorage.getItem('shows'))
     for (let show of data) {
-      if (show.id == id) {
+      if (show._id == id) {
         return show;
       }
     }
@@ -118,7 +118,7 @@ export class EditShowComponent implements OnInit {
     if (this.getCheckAdmin()) {
       this.updateShow.approved = true;
       for (let i = 0; i < this.shows.length; i++) {
-        if (this.shows[i].id == this.show.id) {
+        if (this.shows[i]._id == this.show._id) {
           this.copyShowAttributes(this.shows[i], this.updateShow);
           break;
         }
@@ -149,7 +149,7 @@ export class EditShowComponent implements OnInit {
    * Helper function that copies the attributes of showToCopy to show
    */
   copyShowAttributes(show, showToCopy) {
-    show.id = showToCopy.id;
+    show._id = showToCopy._id;
     show.title = showToCopy.title;
     show.img = showToCopy.img;
     show.description = showToCopy.description;

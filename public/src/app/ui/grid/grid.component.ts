@@ -31,7 +31,6 @@ export class GridComponent implements OnInit {
   myShows: Array<Show>=[];
   // boolean for form errors
   error: boolean = false;
-  errorMsg: string;
   // user object to bind current user
   user: any = {};
   // arry to bind all users from session storage
@@ -44,10 +43,6 @@ export class GridComponent implements OnInit {
   unapproved_shows: boolean = false;
   // string to bind search input
   search: string ='';
-
-  // // error checking
-  // error: boolean = false;
-  // errorMsg: string;
 
 
   constructor(private gridService: GridService, public router: Router) { }
@@ -181,9 +176,9 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we are looking for
    */
-  InMyShows(id){
-    for ( let my_show of this.user.my_shows){
-      if(my_show.id == id){
+  InMyShows(id) {
+    for (let my_show of this.user.my_shows) {
+      if (my_show._id == id) {
         return true;
       }
     }
@@ -224,10 +219,10 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we want to approve
    */
-  approve(id){
+  approve(id) {
     let i = 0;
     for (i; i < this.unapprovedShows.length; i++) {
-      if (this.unapprovedShows[i].id == id) {
+      if (this.unapprovedShows[i]._id == id) {
         break;
       }
     }
@@ -237,7 +232,7 @@ export class GridComponent implements OnInit {
     let modifiedShow = null;
     let foundShow = false;
     for (let curShow of this.shows) {
-      if (curShow.id == id) {
+      if (curShow._id == id) {
         modifiedShow = this.copyShowAttributes(curShow, this.unapprovedShows[i]);
         foundShow = true;
         break;
@@ -254,7 +249,7 @@ export class GridComponent implements OnInit {
         }
 
         for( let show of this.shows){
-            if (show.id == modifiedShow.id) {
+            if (show._id == modifiedShow._id) {
                 this.copyShowAttributes(show, modifiedShow);
                 this.sessionShows.push(show);
             }
@@ -262,7 +257,7 @@ export class GridComponent implements OnInit {
         }
 
         for( let show of this.myShows){
-            if (show.id == modifiedShow.id) {
+            if (show._id == modifiedShow._id) {
                 this.copyShowAttributes(show, modifiedShow);
                 this.sessionShows.push(show);
             }
@@ -306,7 +301,7 @@ export class GridComponent implements OnInit {
   reject(id){
     let i = 0;
     for( i; i < this.unapprovedShows.length; i++ ){
-      if(this.unapprovedShows[i].id == id){
+      if(this.unapprovedShows[i]._id == id){
         break;
       }
     }
@@ -337,7 +332,7 @@ export class GridComponent implements OnInit {
   RemoveFromMyShows(id){
     let i = 0;
     for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i].id == id){
+      if(this.user.my_shows[i]._id == id){
         break;
       }
     }
@@ -402,7 +397,7 @@ export class GridComponent implements OnInit {
 
       for (let show of data) {
         if (show.approved == true && reg.test(show.title)) {
-          if (this.getCheckUser() && this.InMyShows(show.id)) {
+          if (this.getCheckUser() && this.InMyShows(show._id)) {
             this.myShows.push(show);
           } else {
             this.shows.push(show);

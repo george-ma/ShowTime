@@ -233,7 +233,7 @@ export class AppComponent {
 
   loadDummyShows() {
     this.shows = [{
-      id: 1,
+      _id: 1,
       title: "WestWorld",
       description: "Season 1",
       link: "https://www.hbo.com/westworld",
@@ -243,7 +243,7 @@ export class AppComponent {
       airInterval: 7
     },
     {
-      id: 2,
+      _id: 2,
       title: "Riverdale",
       description: "Season 2",
       link: "https://www.imdb.com/title/tt5420376/",
@@ -253,7 +253,7 @@ export class AppComponent {
       airInterval: 7
     },
     {
-      id: 3,
+      _id: 3,
       title: "Silicon Valley",
       description: "Season 3",
       link: "https://www.hbo.com/silicon-valley",
@@ -263,7 +263,7 @@ export class AppComponent {
       airInterval: 7
     },
     {
-      id: 4,
+      _id: 4,
       title: "Better Call Saul",
       description: "Season 4",
       link: "https://www.amc.com/shows/better-call-saul",

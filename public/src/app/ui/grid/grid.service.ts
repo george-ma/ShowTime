@@ -29,8 +29,5 @@ export class GridService {
   getNotMyShows(param) {
     return this.httpClient.get(`${this.API_URL}/users/${param}/notmyshows`);
   }
-
-  getAllUsers() {
-    return this.httpClient.get(`${this.API_URL}/users`);
-  }
+  
 }

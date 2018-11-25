@@ -24,7 +24,7 @@
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
-      <a routerLink="show/{{show.id}}">
+      <a routerLink="show/{{show._id}}">
         <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text"> {{ show.description }} </p>
@@ -35,8 +35,8 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show.id}}">Edit</button>
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="addToMyShows(show.id)">Add To My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show._id}}">Edit</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="addToMyShows(show._id)">Add To My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -44,7 +44,7 @@
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
-      <a routerLink="show/{{show.id}}">
+      <a routerLink="show/{{show._id}}">
         <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text"> {{ show.description }} </p>
@@ -55,8 +55,8 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show.id}}">Edit</button>
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show._id}}">Edit</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show._id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -66,7 +66,7 @@
   <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
-      <a routerLink="show/{{show.id}}">
+      <a routerLink="show/{{show._id}}">
         <img class="card-img-top" src="{{show.img}}" alt="Card image cap">
         <div class="card-body">
           <!-- <h5 class="card-title">{{ show.title }}</h5> -->
@@ -78,7 +78,7 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show._id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -93,8 +93,8 @@
         <p class="card-text"> {{ show.description }} </p>
       </div>
       <div class="card-footer">
-        <button class="btn btn-outline-success d-block btn-block mx-auto" (click)="approve(show.id)">Approve</button>
-        <button class="btn btn-outline-danger d-block btn-block mx-auto" (click)="reject(show.id)">Reject</button>
+        <button class="btn btn-outline-success d-block btn-block mx-auto" (click)="approve(show._id)">Approve</button>
+        <button class="btn btn-outline-danger d-block btn-block mx-auto" (click)="reject(show._id)">Reject</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

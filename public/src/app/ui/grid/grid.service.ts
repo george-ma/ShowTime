@@ -10,14 +10,6 @@ export class GridService {
 
   API_URL = 'http://localhost:8000';
 
-  // addShow(shows) {
-  //   sessionStorage.setItem('shows', JSON.stringify(shows));
-  // }
-  //
-  // getShows() {
-  //   return JSON.parse(sessionStorage.getItem('shows'))
-  // }
-
   addShow(data) {
     return this.httpClient.post(`${this.API_URL}/shows`, data);
   }

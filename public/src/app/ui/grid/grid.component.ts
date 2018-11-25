@@ -83,7 +83,6 @@ export class GridComponent implements OnInit {
       this.gridService.getMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.myShows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -91,7 +90,6 @@ export class GridComponent implements OnInit {
       this.gridService.getNotMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.shows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -100,7 +98,6 @@ export class GridComponent implements OnInit {
         this.gridService.getUnapprovedShows().subscribe((response: Array<Show>) => {
           this.unapprovedShows = response;
           this.error = false;
-
         }, (error) => {
           this.error = true;
         });
@@ -111,7 +108,6 @@ export class GridComponent implements OnInit {
       this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
         this.shows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -240,8 +236,8 @@ export class GridComponent implements OnInit {
 
     let modifiedShow = null;
     let foundShow = false;
-    for (let curShow of this.gridService.getShows()) {
-      if (curShow.id == id && curShow.approved == true) {
+    for (let curShow of this.shows) {
+      if (curShow.id == id) {
         modifiedShow = this.copyShowAttributes(curShow, this.unapprovedShows[i]);
         foundShow = true;
         break;
@@ -394,23 +390,34 @@ export class GridComponent implements OnInit {
   getRegxShows(){
     let reg = RegExp(`^${this.search}`, 'i');
     reg.ignoreCase;
-    let data:Array<Show> = this.gridService.getShows()
-    this.shows = [];
-    this.myShows = [];
-    this.unapprovedShows = [];
-    this.getUser();
-    for( let show of data){
-      if(show.approved == true && reg.test(show.title)){
-        if( this.getCheckUser() && this.InMyShows(show.id) ){
-          this.myShows.push(show);
-        } else{
-          this.shows.push(show);
-        }
-      } else{
-        if(reg.test(show.title)){
-          this.unapprovedShows.push(show);
+
+    this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
+      let data:Array<Show> = response;
+      this.error = false;
+
+      this.shows = [];
+      this.myShows = [];
+      this.unapprovedShows = [];
+      this.getUser();
+
+      for (let show of data) {
+        if (show.approved == true && reg.test(show.title)) {
+          if (this.getCheckUser() && this.InMyShows(show.id)) {
+            this.myShows.push(show);
+          } else {
+            this.shows.push(show);
+          }
+        } else {
+          if (reg.test(show.title)) {
+            this.unapprovedShows.push(show);
+          }
         }
       }
-    }
+
+    }, (error) => {
+      this.error = true;
+    });
+
+
   }
 }

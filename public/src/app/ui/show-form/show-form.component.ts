@@ -25,7 +25,7 @@ export class ShowFormComponent {
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   // Corresponding ngshow for the HTML of this component
-  show = new Show(this.numShows + 1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
+  show = new Show(1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];

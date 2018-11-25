@@ -8,6 +8,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyShow } from '../models/my_show';
 import { User } from '../models/user';
+import { AdminUserListService } from './admin-user-list.service';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -19,7 +20,7 @@ export class AdminUserListComponent implements OnInit {
   // list of users
   users: Array<User> = []
 
-  constructor() { }
+  constructor(private adminUserListService: AdminUserListService) { }
 
   ngOnInit() {
     this.fetchUsers();

@@ -87,7 +87,7 @@ module.exports = {
     loginUser(req, res) {
 
         // Find by attributes
-        User.findOne({username: req.body.username, password: req.body.password}, 'username email is_banned is_admin my_shows').then((student, error) => {
+        User.findOne({username: req.body.username, password: req.body.password}, 'username email is_banned is_admin my_shows bio').then((student, error) => {
         if (!student) {
             res.status(404).send("Invalid username or password")
         } else {

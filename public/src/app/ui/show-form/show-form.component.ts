@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ShowFormService } from './show-form.service';
+import {  FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 
 import { Show } from '../models/show';
 import { container } from '@angular/core/src/render3';
 import { $ } from 'protractor';
+
+const URL = 'http://localhost:8000/upload';
 
 @Component({
   selector: 'app-show-form',
@@ -19,6 +22,8 @@ import { $ } from 'protractor';
  * link, and airing date/interval
  */
 export class ShowFormComponent {
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
   constructor(public router: Router, private showFormService: ShowFormService) { }
 
@@ -40,6 +45,9 @@ export class ShowFormComponent {
   // error checking
   error: boolean = false;
   errorMsg: string;
+
+  // var to bind file to
+  selectedFile: File;
 
 
   /**
@@ -65,6 +73,20 @@ export class ShowFormComponent {
     this.date["day"] = currentDate.getDate();
     this.date["month"] = this.months[currentDate.getMonth()];
     this.date["year"] = currentYear;
+
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+      this.show.img= `assets/${file.file.name}`;
+     };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+        if(status == 200){
+          this.addNewShow();
+          this.router.navigate(['/grid']);
+        } else{
+          alert('Image file failed, try agian')
+        }
+
+     };
   }
 
   /**
@@ -79,7 +101,7 @@ export class ShowFormComponent {
         this.popup = true;
         setTimeout(() => {
           this.router.navigate(['/grid']);
-        }, 2000);
+        }, 1000);
       },
       error => {
         this.error = true;
@@ -119,5 +141,6 @@ export class ShowFormComponent {
       }
     }
   }
+
 
 }

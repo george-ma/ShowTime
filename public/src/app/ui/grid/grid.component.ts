@@ -240,13 +240,7 @@ export class GridComponent implements OnInit {
 
     let modifiedShow = null;
     let foundShow = false;
-    for (let curShow of this.gridService.getShows()) {
-      if (curShow.id == id && curShow.approved == true) {
-        modifiedShow = this.copyShowAttributes(curShow, this.unapprovedShows[i]);
-        foundShow = true;
-        break;
-      }
-    }
+
 
     if (!foundShow) {
         this.shows.push(this.unapprovedShows[i]);
@@ -394,7 +388,7 @@ export class GridComponent implements OnInit {
   getRegxShows(){
     let reg = RegExp(`^${this.search}`, 'i');
     reg.ignoreCase;
-    let data:Array<Show> = this.gridService.getShows()
+    let data:Array<Show> = [];
     this.shows = [];
     this.myShows = [];
     this.unapprovedShows = [];

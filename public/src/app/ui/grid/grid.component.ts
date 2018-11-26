@@ -175,9 +175,9 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we are looking for
    */
-  InMyShows(id) {
+  inMyShows(id) {
     for (let my_show of this.user.my_shows) {
-      if (my_show._id == id) {
+      if (my_show == id) {
         return true;
       }
     }
@@ -320,14 +320,19 @@ export class GridComponent implements OnInit {
     const userId = this.user._id;
     const reqBody = {showId: id};
 
+    // add show to currentUser's shows in session storage
+    this.user.my_shows.push(id);
+    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+
+    // add show to user with userId in database
+    // note: the update has to be performed after we receive a response
     this.gridService.userAddShow(userId, reqBody).subscribe((response)=>{
         this.error = false;
+        this.getShows();
       }, (error) => {
         this.error = true;
       }
     );
-
-    this.updateSessionMyShows();
   }
 
   /**
@@ -342,23 +347,19 @@ export class GridComponent implements OnInit {
     const userId = this.user._id;
     const reqBody = {showId: id};
 
+    // remove show from currentUser in session storage
+    this.user.my_shows = this.user.my_shows.filter(show => show != id)
+    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+
+    // remove show from user with userId in database
+    // note: the update has to be performed after we receive a response
     this.gridService.userRemoveShow(userId, reqBody).subscribe((response)=>{
         this.error = false;
+        this.getShows();
       }, (error) => {
         this.error = true;
       }
     );
-
-    this.updateSessionMyShows();
-  }
-
-  /**
-   * Updates the session storage with the local versions of
-   * the user and users data.
-   */
-  updateSessionMyShows(){
-    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    this.getShows();
   }
 
   /**
@@ -400,7 +401,7 @@ export class GridComponent implements OnInit {
 
       for (let show of data) {
         if (show.approved == true && reg.test(show.title)) {
-          if (this.getCheckUser() && this.InMyShows(show._id)) {
+          if (this.getCheckUser() && this.inMyShows(show._id)) {
             this.myShows.push(show);
           } else {
             this.shows.push(show);

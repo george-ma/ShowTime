@@ -28,7 +28,7 @@ export class AppComponent {
       "is_admin": false,
       "is_banned": true,
       "my_shows": [{
-        "id": 1,
+        "_id": 1,
         "review": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
         "rating": 5,
         "status": 2, /* Completed = 1
@@ -39,7 +39,7 @@ export class AppComponent {
                          */
       },
       {
-        "id": 2,
+        "_id": 2,
         "review": "Aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
         "rating": 2,
         "status": 5,
@@ -53,7 +53,7 @@ export class AppComponent {
       "is_admin": false,
       "is_banned": false,
       "my_shows": [{
-        "id": 1,
+        "_id": 1,
         "review": "At vero eos et accusamus et iusto odio dignissimos ducimus,",
         "rating": 4,
         "status": 2,
@@ -66,13 +66,13 @@ export class AppComponent {
       "is_admin": true,
       "is_banned": false,
       "my_shows": [{
-        "id": 2,
+        "_id": 2,
         "review": "Et harum quidem rerum facilis est et expedita distinctio?",
         "rating": 5,
         "status": 1,
       },
       {
-        "id": 1,
+        "_id": 1,
         "review": "Nam libero tempore, cum soluta nobis est eligendi optio cumque!",
         "rating": 4,
         "status": 1,
@@ -86,7 +86,7 @@ export class AppComponent {
       "is_admin": false,
       "is_banned": false,
       "my_shows": [{
-        "id": 2,
+        "_id": 2,
         "review": "Reiciendis voluptatibus maiores alias consequatur.",
         "rating": 5,
         "status": 1,
@@ -99,7 +99,7 @@ export class AppComponent {
       "is_admin": false,
       "is_banned": true,
       "my_shows": [{
-        "id": 1,
+        "_id": 1,
         "review": "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis.",
         "rating": 5,
         "status": 1,
@@ -112,7 +112,7 @@ export class AppComponent {
       "is_admin": false,
       "is_banned": true,
       "my_shows": [{
-        "id": 1,
+        "_id": 1,
         "review": "Wow!",
         "rating": 5,
         "status": 4,
@@ -126,13 +126,13 @@ export class AppComponent {
       "is_banned": false,
       "my_shows": [
         {
-          "id": 2,
+          "_id": 2,
           "review": "Sed ut perspiciatis.",
           "rating": 4,
           "status": 3,
         },
         {
-          "id": 1,
+          "_id": 1,
           "review": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
           "rating": 5,
           "status": 1,
@@ -147,13 +147,13 @@ export class AppComponent {
       "is_banned": true,
       "my_shows": [
         {
-          "id": 1,
+          "_id": 1,
           "review": "Voluptatem sequi nesciunt.",
           "rating": 1,
           "status": 5,
         },
         {
-          "id": 2,
+          "_id": 2,
           "review": "Excepteur sint occaecat cupidatat non proident.",
           "rating": 1,
           "status": 3,
@@ -168,13 +168,13 @@ export class AppComponent {
       "is_banned": true,
       "my_shows": [
         {
-          "id": 1,
+          "_id": 1,
           "review": "Voluptatem sequi nesciunt.",
           "rating": 3,
           "status": 5,
         },
         {
-          "id": 2,
+          "_id": 2,
           "review": "Nemo enim ipsam voluptatem quia voluptas.",
           "rating": 1,
           "status": 3,
@@ -189,7 +189,7 @@ export class AppComponent {
       "is_banned": true,
       "my_shows": [
         {
-          "id": 2,
+          "_id": 2,
           "review": "Ut enim ad minima veniam, quis nostrum exercitationem.",
           "rating": 5,
           "status": 1,
@@ -204,7 +204,7 @@ export class AppComponent {
       "is_banned": true,
       "my_shows": [
         {
-          "id": 1,
+          "_id": 1,
           "review": "Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.",
           "rating": 4,
           "status": 4,
@@ -219,7 +219,7 @@ export class AppComponent {
       "is_banned": false,
       "my_shows": [
         {
-          "id": 1,
+          "_id": 1,
           "review": "Ut enim ad minima veniam, quis nostrum exercitationem.",
           "rating": 5,
           "status": 2,

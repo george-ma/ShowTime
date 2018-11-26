@@ -99,7 +99,6 @@ export class GridComponent implements OnInit {
       }
 
     } else {
-
       this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
         this.shows = response;
         this.error = false;
@@ -241,6 +240,7 @@ export class GridComponent implements OnInit {
 
     if (!foundShow) {
         this.shows.push(this.unapprovedShows[i]);
+
     } else { // show was modified. code from updateSessionShows()
         this.getShows();
         this.sessionShows = [];
@@ -317,7 +317,16 @@ export class GridComponent implements OnInit {
    * current user's shows
    */
   addToMyShows(id){
-    this.user.my_shows.push(new MyShow(id));
+    const userId = this.user._id;
+    const reqBody = {showId: id};
+
+    this.gridService.userAddShow(userId, reqBody).subscribe((response)=>{
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      }
+    );
+
     this.updateSessionMyShows();
   }
 
@@ -329,14 +338,17 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove from the
    * current user's shows
    */
-  RemoveFromMyShows(id){
-    let i = 0;
-    for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i]._id == id){
-        break;
+  removeFromMyShows(id){
+    const userId = this.user._id;
+    const reqBody = {showId: id};
+
+    this.gridService.userRemoveShow(userId, reqBody).subscribe((response)=>{
+        this.error = false;
+      }, (error) => {
+        this.error = true;
       }
-    }
-    this.user.my_shows.splice(i, 1);
+    );
+
     this.updateSessionMyShows();
   }
 
@@ -345,16 +357,7 @@ export class GridComponent implements OnInit {
    * the user and users data.
    */
   updateSessionMyShows(){
-    this.allUsers = []
-    this.allUsers = JSON.parse(sessionStorage.getItem('users'));
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    let i = 0;
-    for( i; i < this.allUsers.length; i++ ){
-      if(this.allUsers[i].username == this.user.username){
-         this.allUsers[i].my_shows = this.user.my_shows;
-      }
-    }
-    sessionStorage.setItem('users', JSON.stringify(this.allUsers));
     this.getShows();
   }
 

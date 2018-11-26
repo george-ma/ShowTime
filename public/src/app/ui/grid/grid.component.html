@@ -56,7 +56,7 @@
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
         <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" routerLink="editShow/{{show._id}}">Edit</button>
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show._id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="removeFromMyShows(show._id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->
@@ -78,7 +78,7 @@
         </div>
       </a>
       <div class="card-footer" *ngIf="getCheckUser()">
-        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="RemoveFromMyShows(show._id)">Remove From My Shows</button>
+        <button class="btn btn-outline-primary text-primary d-block btn-block mx-auto" (click)="removeFromMyShows(show._id)">Remove From My Shows</button>
       </div>
     </div> <!-- //end card -->
   </div> <!-- //end col -->

@@ -14,6 +14,14 @@ export class GridService {
     return this.httpClient.post(`${this.API_URL}/shows`, data);
   }
 
+  userAddShow(id, data) {
+    return this.httpClient.post(`${this.API_URL}/users/${id}/addshow`, data);
+  }
+
+  userRemoveShow(id, data) {
+    return this.httpClient.post(`${this.API_URL}/users/${id}/removeshow`, data);
+  }
+
   getApprovedShows() {
     return this.httpClient.get(`${this.API_URL}/shows/approved`);
   }
@@ -29,5 +37,5 @@ export class GridService {
   getNotMyShows(param) {
     return this.httpClient.get(`${this.API_URL}/users/${param}/notmyshows`);
   }
-  
+
 }

@@ -14,6 +14,8 @@ module.exports = (app) => {
     // * user routes *
     // create new users
     app.post('/users', usersController.create);
+    // create new admins
+    app.post('/users/admin', usersController.createAdmin);
     // GET all users
     app.get('/users', usersController.getAllUsers);
     // get user by id

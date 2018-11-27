@@ -219,54 +219,31 @@ export class GridComponent implements OnInit {
    * ID of the show we want to approve
    */
   approve(id) {
-    let i = 0;
-    for (i; i < this.unapprovedShows.length; i++) {
-      if (this.unapprovedShows[i]._id == id) {
-        break;
-      }
+    // finds index of of unapproved show with id and sets approved to true
+    const unapprovedIndex = this.unapprovedShows.findIndex(show => show._id == id);
+
+    // checks current list of approved shows for unapproved show to be accepted
+    const approvedIndex = this.shows.findIndex(show => show._id == id);
+
+    // approvedIndex is not -1: show is already in approved, so remove that first
+    if (approvedIndex >= 0) {
+      const removeShowBody = {showId: id};
+      this.gridService.removeShow(removeShowBody).subscribe((response) => {
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      });
     }
 
-    this.unapprovedShows[i].approved = true;
+    // approve show
+    const approveShowBody = {showId: id};
+    this.gridService.approveShow(approveShowBody).subscribe((response) => {
+      this.error = false;
+      this.getShows()
+    }, (error) => {
+      this.error = true;
+    });
 
-    let modifiedShow = null;
-    let foundShow = false;
-    for (let curShow of this.shows) {
-      if (curShow._id == id) {
-        modifiedShow = this.copyShowAttributes(curShow, this.unapprovedShows[i]);
-        foundShow = true;
-        break;
-      }
-    }
-
-    if (!foundShow) {
-        this.shows.push(this.unapprovedShows[i]);
-
-    } else { // show was modified. code from updateSessionShows()
-        this.getShows();
-        this.sessionShows = [];
-        for( let show of this.unapprovedShows){
-            this.sessionShows.push(show);
-        }
-
-        for( let show of this.shows){
-            if (show._id == modifiedShow._id) {
-                this.copyShowAttributes(show, modifiedShow);
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
-        }
-
-        for( let show of this.myShows){
-            if (show._id == modifiedShow._id) {
-                this.copyShowAttributes(show, modifiedShow);
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
-        }
-    }
-
-    this.unapprovedShows.splice(i, 1);
-    this.getShows()
   }
 
   /**
@@ -299,8 +276,6 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove
    */
   reject(id){
-    // remove show from list of unapproved shows
-    this.unapprovedShows = this.unapprovedShows.filter(show => show._id != id);
 
     // remove show from backend
     const reqBody = {showId: id}

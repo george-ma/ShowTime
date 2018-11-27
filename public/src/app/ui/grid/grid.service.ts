@@ -30,12 +30,15 @@ export class GridService {
     return this.httpClient.get(`${this.API_URL}/shows/unapproved`);
   }
 
-  getMyShows(param) {
-    return this.httpClient.get(`${this.API_URL}/users/${param}/myshows`);
+  getMyShows(id) {
+    return this.httpClient.get(`${this.API_URL}/users/${id}/myshows`);
   }
 
-  getNotMyShows(param) {
-    return this.httpClient.get(`${this.API_URL}/users/${param}/notmyshows`);
+  getNotMyShows(id) {
+    return this.httpClient.get(`${this.API_URL}/users/${id}/notmyshows`);
   }
 
+  removeShow(data) {
+    return this.httpClient.post(`${this.API_URL}/shows/remove`, data);
+  }
 }

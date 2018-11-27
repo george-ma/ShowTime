@@ -266,7 +266,7 @@ export class GridComponent implements OnInit {
     }
 
     this.unapprovedShows.splice(i, 1);
-    this.updateSessionShows()
+    this.getShows()
   }
 
   /**
@@ -299,14 +299,17 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove
    */
   reject(id){
-    let i = 0;
-    for( i; i < this.unapprovedShows.length; i++ ){
-      if(this.unapprovedShows[i]._id == id){
-        break;
-      }
-    }
-    this.unapprovedShows.splice(i, 1);
-    this.updateSessionShows()
+    // remove show from list of unapproved shows
+    this.unapprovedShows = this.unapprovedShows.filter(show => show._id != id);
+
+    // remove show from backend
+    const reqBody = {showId: id}
+    this.gridService.removeShow(reqBody).subscribe((response) => {
+      this.error = false;
+      this.getShows();
+    }, (error) => {
+      this.error = true;
+    });
   }
 
   /**
@@ -360,26 +363,6 @@ export class GridComponent implements OnInit {
         this.error = true;
       }
     );
-  }
-
-  /**
-   * Updates the session storage with the local lists of shows
-   */
-  updateSessionShows(){
-    this.sessionShows = [];
-    for( let show of this.unapprovedShows){
-      this.sessionShows.push(show);
-    }
-
-    for( let show of this.shows){
-      this.sessionShows.push(show);
-    }
-
-    for( let show of this.myShows){
-      this.sessionShows.push(show);
-    }
-    sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
-    this.getShows();
   }
 
   /**

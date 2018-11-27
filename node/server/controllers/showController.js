@@ -59,4 +59,21 @@ module.exports = {
 
     },
 
+    // approve show
+    approveShow(req, res) {
+
+      Show.findById(req.body.showId).then((show) => {
+          show.approved = true;
+          show.save().then((result) => {
+            res.send(result);
+          }, (error) => {
+            res.status(400).send(error);
+          });
+
+        }, (error) => {
+          res.status(400).send(error);
+        })
+
+    },
+
 };

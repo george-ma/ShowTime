@@ -45,6 +45,8 @@ module.exports = (app) => {
     // remove show
     // TODO: change post request to delete request
     app.post('/shows/remove', showsController.removeShow);
-
+    // approve show
+    // TODO: change post request to put request
+    app.post('/shows/approve', showsController.approveShow);
 
 };

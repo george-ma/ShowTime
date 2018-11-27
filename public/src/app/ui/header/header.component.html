@@ -4,7 +4,6 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="grid">Home</a>
       <a *ngIf="setUser() && user.is_admin" class="nav-item nav-link" routerLink="adminuserlist">User List</a>
-      <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="login">Login</a>
     </div>
   </div>
   <div class="navbar-expand ml-auto navbar-nav">
@@ -15,6 +14,7 @@
       <a class="nav-item nav-link" *ngIf="getCheckUser()" (click)="logOut()" routerLink="grid">
         Log out
       </a>
+      <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="login">Login</a>
       <a class="nav-item nav-link" *ngIf="!getCheckUser()" routerLink="register">
         Register
       </a>

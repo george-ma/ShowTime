@@ -20,20 +20,20 @@ module.exports = {
 
         // save show to database
         show.save().then((result) => {
-            res.send(show)
-            }, (error) => {
-                res.status(400).send(error) // 400 for bad request
-            })
+            res.send(show);
+          }, (error) => {
+            res.status(400).send(error); // 400 for bad request
+          })
     },
 
     // get all approved shows
     getApprovedShows(req, res) {
 
         Show.find({approved: true}).then((shows) => {
-                res.send(shows) // put in object in case we want to add other properties
-            }, (error) => {
-                res.status(400).send(error)
-            })
+            res.send(shows); // put in object in case we want to add other properties
+          }, (error) => {
+            res.status(400).send(error);
+          })
 
     },
 
@@ -41,10 +41,21 @@ module.exports = {
     getUnapprovedShows(req, res) {
 
         Show.find({approved: false}).then((shows) => {
-                res.send(shows) // put in object in case we want to add other properties
-            }, (error) => {
-                res.status(400).send(error)
-            })
+            res.send(shows); // put in object in case we want to add other properties
+          }, (error) => {
+            res.status(400).send(error);
+          })
+
+    },
+
+    // removes show from all shows
+    removeShow(req, res) {
+
+      Show.findByIdAndRemove(req.body.showId).then((shows) => {
+          res.send(shows); // put in object in case we want to add other properties
+        }, (error) => {
+          res.status(400).send(error);
+        })
 
     },
 

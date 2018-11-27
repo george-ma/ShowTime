@@ -42,7 +42,9 @@ module.exports = (app) => {
     app.get('/shows/approved', showsController.getApprovedShows);
     // get unapproved shows
     app.get('/shows/unapproved', showsController.getUnapprovedShows);
-
+    // remove show
+    // TODO: change post request to delete request
+    app.post('/shows/remove', showsController.removeShow);
 
 
 };

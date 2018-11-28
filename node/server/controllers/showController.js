@@ -91,10 +91,46 @@ module.exports = {
           } else {
             res.send( show );
           }
-          
+
         }).catch((error) => {
             res.status(400).send(error);
         })
     },
 
+    editShow(req, res) {
+
+      const id = req.params.id
+
+      // Good practise is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+      // Otheriwse, findById
+      Show.findById(id).then((show) => {
+        if (!show) {
+          res.status(404).send();
+        } else {
+
+          // update show parameters
+          show.title = req.body.title;
+          show.description = req.body.description;
+          show.approved = req.body.approved;
+          show.img = (req.body.img) ? req.body.img : show.img;
+          show.link = (req.body.link) ? req.body.link : show.link;
+          show.airDate = (req.body.airDate) ? req.body.airDate : show.airDate;
+          show.airInterval = (req.body.airInterval) ? req.body.airInterval : show.airInterval;
+          show.updating = (req.body.updating) ? req.body.updating : show.updating;
+
+          // save show 
+          show.save().then((result) => {
+              res.send(show);
+            }, (error) => {
+              res.status(400).send(error); // 400 for bad request
+            });
+        }
+
+      }).catch((error) => {
+          res.status(400).send(error);
+      })
+
+    }
 };

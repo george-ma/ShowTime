@@ -50,5 +50,7 @@ module.exports = (app) => {
     app.post('/shows/approve', showsController.approveShow);
     // get single show based on show id
     app.get('/shows/:id', showsController.getShow);
+    // edit show
+    app.post('/shows/:id/edit', showsController.editShow);
 
 };

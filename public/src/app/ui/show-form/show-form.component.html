@@ -18,7 +18,7 @@
     <div class="form-group">
       <label for="image">Image</label>
       <br>
-      <input type="file" accept="image/*" id="image">
+      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
       <!-- required [(ngModel)]="model.img" name="image"> -->
     </div>
 
@@ -29,7 +29,7 @@
 
     <div class="form-group">
       <input type="checkbox" aria-label="Airing Date" id="checkboxAiringDate" [(ngModel)]="airingChecked" name="airingChecked">
-      <label for="link">Airing Date</label>
+      <label for="checkboxAiringDate">Airing Date</label>
 
       <div *ngIf="airingChecked" class="d-flex flex-row">
         <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
@@ -52,13 +52,19 @@
 
     <div class="form-group">
       <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
-      <label for="interval">Airing Interval (Days)</label>
+      <label for="checkboxAiringInterval">Airing Interval (Days)</label>
       <input *ngIf="intervalChecked" type="number" class="form-control" id="interval" [(ngModel)]="show.airInterval" name="airInterval">
     </div>
 
-  <button type="submit" class="btn btn-success" *ngIf="!popup">Submit</button>
-  <p class="alert alert-success text-center" *ngIf="popup && !currentUser.is_admin"> <strong>Your show has been requested. Waiting for admin approval.</strong> </p>
-  <p class="alert alert-success text-center" *ngIf="popup && currentUser.is_admin"> <strong>Added new show</strong> </p>
-  <p class="alert alert-danger text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>
+    <button type="button" class="btn btn-success btn-s"
+      (click)="uploader.uploadAll()"
+      *ngIf="uploader.getNotUploadedItems().length" >
+          Submit (Show+Image)
+    </button>
+
+    <button type="submit" class="btn btn-success" *ngIf="!uploader.getNotUploadedItems().length">Submit</button>
+    <p class="alert alert-success text-center" *ngIf="popup && !currentUser.is_admin"> <strong>Your show has been requested. Waiting for admin approval.</strong> </p>
+    <p class="alert alert-success text-center" *ngIf="popup && currentUser.is_admin"> <strong>Added new show</strong> </p>
+    <p class="alert alert-danger text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>
   </form>
-  <div>
+<div>

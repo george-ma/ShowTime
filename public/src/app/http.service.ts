@@ -31,4 +31,10 @@ export class HttpService {
     return this.http.post(url, data, { headers: header });
   }
 
+  // performs a post request after calling the addAuthToken function
+  upload(url, data) {
+    return this.http.post(url, data);
+  }
+
+
 }

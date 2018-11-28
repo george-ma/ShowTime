@@ -21,10 +21,34 @@ module.exports = {
 
         // save user to database
         user.save().then((result) => {
-            user.password=""
-            res.send(user)
+            user.password = "";
+            res.send(user);
             }, (error) => {
-                res.status(400).send(error) // 400 for bad request
+                res.status(400).send(error); // 400 for bad request
+            })
+    },
+
+    // create a new admin
+    createAdmin(req, res) {
+        console.log(req.body)
+
+        // Create a new user
+        const user = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            is_admin: true,
+            is_banned: false,
+            bio: " ",
+            img: " "
+        })
+
+        // save user to database
+        user.save().then((result) => {
+            user.password = "";
+            res.send(user);
+            }, (error) => {
+                res.status(400).send(error); // 400 for bad request
             })
     },
 

@@ -1,6 +1,6 @@
 export class Show {
   constructor(
-    public id: number,
+    public _id: number,
     public title: string,
     public description: string,
     public approved: boolean,

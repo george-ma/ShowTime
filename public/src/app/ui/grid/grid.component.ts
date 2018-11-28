@@ -31,7 +31,6 @@ export class GridComponent implements OnInit {
   myShows: Array<Show>=[];
   // boolean for form errors
   error: boolean = false;
-  errorMsg: string;
   // user object to bind current user
   user: any = {};
   // arry to bind all users from session storage
@@ -44,10 +43,6 @@ export class GridComponent implements OnInit {
   unapproved_shows: boolean = false;
   // string to bind search input
   search: string ='';
-
-  // // error checking
-  // error: boolean = false;
-  // errorMsg: string;
 
 
   constructor(private gridService: GridService, public router: Router) { }
@@ -83,7 +78,6 @@ export class GridComponent implements OnInit {
       this.gridService.getMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.myShows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -91,7 +85,6 @@ export class GridComponent implements OnInit {
       this.gridService.getNotMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.shows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -100,18 +93,15 @@ export class GridComponent implements OnInit {
         this.gridService.getUnapprovedShows().subscribe((response: Array<Show>) => {
           this.unapprovedShows = response;
           this.error = false;
-
         }, (error) => {
           this.error = true;
         });
       }
 
     } else {
-
       this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
         this.shows = response;
         this.error = false;
-
       }, (error) => {
         this.error = true;
       });
@@ -185,9 +175,9 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we are looking for
    */
-  InMyShows(id){
-    for ( let my_show of this.user.my_shows){
-      if(my_show.id == id){
+  inMyShows(id) {
+    for (let my_show of this.user.my_shows) {
+      if (my_show == id) {
         return true;
       }
     }
@@ -228,48 +218,32 @@ export class GridComponent implements OnInit {
    * @param {number} id
    * ID of the show we want to approve
    */
-  approve(id){
-    let i = 0;
-    for (i; i < this.unapprovedShows.length; i++) {
-      if (this.unapprovedShows[i].id == id) {
-        break;
-      }
+  approve(id) {
+    // finds index of of unapproved show with id and sets approved to true
+    const unapprovedIndex = this.unapprovedShows.findIndex(show => show._id == id);
+
+    // checks current list of approved shows for unapproved show to be accepted
+    const approvedIndex = this.shows.findIndex(show => show._id == id);
+
+    // approvedIndex is not -1: show is already in approved, so remove that first
+    if (approvedIndex >= 0) {
+      const removeShowBody = {showId: id};
+      this.gridService.removeShow(removeShowBody).subscribe((response) => {
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      });
     }
 
-    this.unapprovedShows[i].approved = true;
+    // approve show
+    const approveShowBody = {showId: id};
+    this.gridService.approveShow(approveShowBody).subscribe((response) => {
+      this.error = false;
+      this.getShows()
+    }, (error) => {
+      this.error = true;
+    });
 
-    let modifiedShow = null;
-    let foundShow = false;
-
-
-    if (!foundShow) {
-        this.shows.push(this.unapprovedShows[i]);
-    } else { // show was modified. code from updateSessionShows()
-        this.getShows();
-        this.sessionShows = [];
-        for( let show of this.unapprovedShows){
-            this.sessionShows.push(show);
-        }
-
-        for( let show of this.shows){
-            if (show.id == modifiedShow.id) {
-                this.copyShowAttributes(show, modifiedShow);
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
-        }
-
-        for( let show of this.myShows){
-            if (show.id == modifiedShow.id) {
-                this.copyShowAttributes(show, modifiedShow);
-                this.sessionShows.push(show);
-            }
-            this.sessionShows.push(show);
-        }
-    }
-
-    this.unapprovedShows.splice(i, 1);
-    this.updateSessionShows()
   }
 
   /**
@@ -302,14 +276,15 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove
    */
   reject(id){
-    let i = 0;
-    for( i; i < this.unapprovedShows.length; i++ ){
-      if(this.unapprovedShows[i].id == id){
-        break;
-      }
-    }
-    this.unapprovedShows.splice(i, 1);
-    this.updateSessionShows()
+
+    // remove show from backend
+    const reqBody = {showId: id}
+    this.gridService.removeShow(reqBody).subscribe((response) => {
+      this.error = false;
+      this.getShows();
+    }, (error) => {
+      this.error = true;
+    });
   }
 
   /**
@@ -320,8 +295,22 @@ export class GridComponent implements OnInit {
    * current user's shows
    */
   addToMyShows(id){
-    this.user.my_shows.push(new MyShow(id));
-    this.updateSessionMyShows();
+    const userId = this.user._id;
+    const reqBody = {showId: id};
+
+    // add show to currentUser's shows in session storage
+    this.user.my_shows.push(id);
+    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
+
+    // add show to user with userId in database
+    // note: the update has to be performed after we receive a response
+    this.gridService.userAddShow(userId, reqBody).subscribe((response)=>{
+        this.error = false;
+        this.getShows();
+      }, (error) => {
+        this.error = true;
+      }
+    );
   }
 
   /**
@@ -332,53 +321,23 @@ export class GridComponent implements OnInit {
    * The ID of the show we want to remove from the
    * current user's shows
    */
-  RemoveFromMyShows(id){
-    let i = 0;
-    for( i; i < this.user.my_shows.length; i++ ){
-      if(this.user.my_shows[i].id == id){
-        break;
-      }
-    }
-    this.user.my_shows.splice(i, 1);
-    this.updateSessionMyShows();
-  }
+  removeFromMyShows(id){
+    const userId = this.user._id;
+    const reqBody = {showId: id};
 
-  /**
-   * Updates the session storage with the local versions of
-   * the user and users data.
-   */
-  updateSessionMyShows(){
-    this.allUsers = []
-    this.allUsers = JSON.parse(sessionStorage.getItem('users'));
+    // remove show from currentUser in session storage
+    this.user.my_shows = this.user.my_shows.filter(show => show != id)
     sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    let i = 0;
-    for( i; i < this.allUsers.length; i++ ){
-      if(this.allUsers[i].username == this.user.username){
-         this.allUsers[i].my_shows = this.user.my_shows;
+
+    // remove show from user with userId in database
+    // note: the update has to be performed after we receive a response
+    this.gridService.userRemoveShow(userId, reqBody).subscribe((response)=>{
+        this.error = false;
+        this.getShows();
+      }, (error) => {
+        this.error = true;
       }
-    }
-    sessionStorage.setItem('users', JSON.stringify(this.allUsers));
-    this.getShows();
-  }
-
-  /**
-   * Updates the session storage with the local lists of shows
-   */
-  updateSessionShows(){
-    this.sessionShows = [];
-    for( let show of this.unapprovedShows){
-      this.sessionShows.push(show);
-    }
-
-    for( let show of this.shows){
-      this.sessionShows.push(show);
-    }
-
-    for( let show of this.myShows){
-      this.sessionShows.push(show);
-    }
-    sessionStorage.setItem('shows', JSON.stringify(this.sessionShows));
-    this.getShows();
+    );
   }
 
   /**
@@ -388,23 +347,34 @@ export class GridComponent implements OnInit {
   getRegxShows(){
     let reg = RegExp(`^${this.search}`, 'i');
     reg.ignoreCase;
-    let data:Array<Show> = [];
-    this.shows = [];
-    this.myShows = [];
-    this.unapprovedShows = [];
-    this.getUser();
-    for( let show of data){
-      if(show.approved == true && reg.test(show.title)){
-        if( this.getCheckUser() && this.InMyShows(show.id) ){
-          this.myShows.push(show);
-        } else{
-          this.shows.push(show);
-        }
-      } else{
-        if(reg.test(show.title)){
-          this.unapprovedShows.push(show);
+
+    this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
+      let data:Array<Show> = response;
+      this.error = false;
+
+      this.shows = [];
+      this.myShows = [];
+      this.unapprovedShows = [];
+      this.getUser();
+
+      for (let show of data) {
+        if (show.approved == true && reg.test(show.title)) {
+          if (this.getCheckUser() && this.inMyShows(show._id)) {
+            this.myShows.push(show);
+          } else {
+            this.shows.push(show);
+          }
+        } else {
+          if (reg.test(show.title)) {
+            this.unapprovedShows.push(show);
+          }
         }
       }
-    }
+
+    }, (error) => {
+      this.error = true;
+    });
+
+
   }
 }

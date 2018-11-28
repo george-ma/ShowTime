@@ -10,18 +10,32 @@ export class GridService {
 
   API_URL = 'http://localhost:8000';
 
-  // addShow(shows) {
-  //   sessionStorage.setItem('shows', JSON.stringify(shows));
-  // }
-  //
-  // getShows() {
-  //   return JSON.parse(sessionStorage.getItem('shows'))
-  // }
 
-  addShow(data) {
-    return this.httpClient.post(`${this.API_URL}/shows`, data);
+  /**
+   *  User related API calls
+   */
+
+  userAddShow(id, data) {
+    return this.httpClient.post(`${this.API_URL}/users/${id}/addshow`, data);
   }
 
+  userRemoveShow(id, data) {
+    return this.httpClient.post(`${this.API_URL}/users/${id}/removeshow`, data);
+  }
+
+  getMyShows(id) {
+    return this.httpClient.get(`${this.API_URL}/users/${id}/myshows`);
+  }
+
+  getNotMyShows(id) {
+    return this.httpClient.get(`${this.API_URL}/users/${id}/notmyshows`);
+  }
+
+
+  /**
+   *  Show related API calls
+   */
+   
   getApprovedShows() {
     return this.httpClient.get(`${this.API_URL}/shows/approved`);
   }
@@ -30,15 +44,15 @@ export class GridService {
     return this.httpClient.get(`${this.API_URL}/shows/unapproved`);
   }
 
-  getMyShows(param) {
-    return this.httpClient.get(`${this.API_URL}/users/${param}/myshows`);
+  addShow(data) {
+    return this.httpClient.post(`${this.API_URL}/shows`, data);
   }
 
-  getNotMyShows(param) {
-    return this.httpClient.get(`${this.API_URL}/users/${param}/notmyshows`);
+  removeShow(data) {
+    return this.httpClient.post(`${this.API_URL}/shows/remove`, data);
   }
 
-  getAllUsers() {
-    return this.httpClient.get(`${this.API_URL}/users`);
+  approveShow(data) {
+    return this.httpClient.post(`${this.API_URL}/shows/approve`, data);
   }
 }

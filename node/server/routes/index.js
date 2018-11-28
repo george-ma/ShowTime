@@ -14,6 +14,8 @@ module.exports = (app) => {
     // * user routes *
     // create new users
     app.post('/users', usersController.create);
+    // create new admins
+    app.post('/users/admin', usersController.createAdmin);
     // GET all users
     app.get('/users', usersController.getAllUsers);
     // get user by id
@@ -40,7 +42,11 @@ module.exports = (app) => {
     app.get('/shows/approved', showsController.getApprovedShows);
     // get unapproved shows
     app.get('/shows/unapproved', showsController.getUnapprovedShows);
-
-
+    // remove show
+    // TODO: change post request to delete request
+    app.post('/shows/remove', showsController.removeShow);
+    // approve show
+    // TODO: change post request to put request
+    app.post('/shows/approve', showsController.approveShow);
 
 };

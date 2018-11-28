@@ -8,5 +8,6 @@ export class Show {
     public link?: string,
     public airDate?: string,
     public airInterval?: number,
+    public updating?: number,
   ) { }
 }

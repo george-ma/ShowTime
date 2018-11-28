@@ -76,4 +76,25 @@ module.exports = {
 
     },
 
+    // get a show by ID
+    getShow(req, res) {
+
+        const id = req.params.id
+
+        // Good practise is to validate the id
+        if (!ObjectID.isValid(id)) { return res.status(404).send() }
+
+        // Otheriwse, findById
+        Show.findById(id).then((show) => {
+          if (!show) {
+            res.status(404).send();
+          } else {
+            res.send( show );
+          }
+          
+        }).catch((error) => {
+            res.status(400).send(error);
+        })
+    },
+
 };

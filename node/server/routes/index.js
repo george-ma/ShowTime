@@ -48,5 +48,7 @@ module.exports = (app) => {
     // approve show
     // TODO: change post request to put request
     app.post('/shows/approve', showsController.approveShow);
+    // get single show based on show id
+    app.get('/shows/:id', showsController.getShow);
 
 };

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { EditShowService } from './edit-show.service';
 import { switchMap } from 'rxjs/operators';
 
 import { Show } from '../models/show';
@@ -14,7 +15,6 @@ export class EditShowComponent implements OnInit {
   // Global Variables that will store data from the sessionStorage on ngInit()
   user: any = {}
   show: Show
-  shows: Array<Show> = []
 
   // Corresponding model for the html
   updateShow = new Show(-1, '', '', false, 'assets/noImage.jpg', '')
@@ -29,7 +29,13 @@ export class EditShowComponent implements OnInit {
   intervalChecked = false;
   popup = false;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  // boolean for form errors
+  error:boolean = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private editShowService: EditShowService,
+    private router: Router) { }
 
   /**
    * Initializes the airing date form information and the global variables
@@ -54,26 +60,19 @@ export class EditShowComponent implements OnInit {
     this.date["month"] = this.months[currentDate.getMonth()];
     this.date["year"] = currentYear;
 
-    this.shows = JSON.parse(sessionStorage.getItem('shows'));
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.show = this.getShow(this.route.snapshot.paramMap.get('id'));
+    const showId = this.route.snapshot.paramMap.get('id');
 
-    this.copyShowAttributes(this.updateShow, this.show);
+    this.editShowService.getShowbyId(showId).subscribe((response: Show) => {
+      this.show = response;
+      this.copyShowAttributes(this.updateShow, this.show);
+      this.updateShow.updating = this.show._id;
+    }, (error) => {
+      this.error = true;
+    });
+
   }
 
-  /**
-   * Returns the corresponding show stored in the sessionStorage for
-   * the passed in id
-   * @param id - id of the currently edited show
-   */
-  getShow(id) {
-    let data = JSON.parse(sessionStorage.getItem('shows'))
-    for (let show of data) {
-      if (show._id == id) {
-        return show;
-      }
-    }
-  }
   /**
    * Sets the airing-date for the corresponding show
    */
@@ -117,19 +116,23 @@ export class EditShowComponent implements OnInit {
     // Automatically edits the show if the user is an admin
     if (this.getCheckAdmin()) {
       this.updateShow.approved = true;
-      for (let i = 0; i < this.shows.length; i++) {
-        if (this.shows[i]._id == this.show._id) {
-          this.copyShowAttributes(this.shows[i], this.updateShow);
-          break;
-        }
-      }
+      this.updateShow.updating = null;
 
-      // Otherwise, push to the unapproved shows if a regular user
+      // updates this.show directly
+      this.editShowService.editShow(this.show._id, this.updateShow).subscribe((response: Show) => {
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      });
+
+    // otherwise, add this.updateShow to shows (it will be unapproved)
     } else {
-      this.shows.push(this.updateShow);
+      this.editShowService.addShow(this.updateShow).subscribe((response: Show) => {
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      });
     }
-
-    sessionStorage.setItem('shows', JSON.stringify(this.shows));
 
     // Creates successful notification and redirects user to the grid
     this.popup = true;
@@ -149,7 +152,6 @@ export class EditShowComponent implements OnInit {
    * Helper function that copies the attributes of showToCopy to show
    */
   copyShowAttributes(show, showToCopy) {
-    show._id = showToCopy._id;
     show.title = showToCopy.title;
     show.img = showToCopy.img;
     show.description = showToCopy.description;

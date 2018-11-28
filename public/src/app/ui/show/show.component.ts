@@ -177,6 +177,7 @@ export class ShowComponent implements OnInit {
       this.myShow.id = this.show.id;
       this.user.my_shows.push(this.myShow);
     }
+    
     this.updateSessionMyShows();
   }
 

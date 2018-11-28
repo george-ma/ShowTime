@@ -1,5 +1,6 @@
 const usersController = require('../controllers').user;
 const showsController = require('../controllers').show;
+const ratingController = require('../controllers').rating;
 
 module.exports = (app) => {
     app.use((req, res, next)=>{
@@ -42,7 +43,7 @@ module.exports = (app) => {
     app.get('/shows/approved', showsController.getApprovedShows);
     // get unapproved shows
     app.get('/shows/unapproved', showsController.getUnapprovedShows);
-    // remove show
+     // remove show
     // TODO: change post request to delete request
     app.post('/shows/remove', showsController.removeShow);
     // approve show
@@ -50,5 +51,17 @@ module.exports = (app) => {
     app.post('/shows/approve', showsController.approveShow);
     // get single show based on show id
     app.get('/shows/:id', showsController.getShow);
+
+    // * rating routes *
+    // create a new rating
+    app.post('/rating', ratingController.create);
+    // get all ratings
+    app.get('/rating', ratingController.getAllRatings);
+    // get avrage rating for show
+    app.get('/rating/avg/:show_id', ratingController.getAvgRating);
+    // get number of status for a show
+    app.get('/rating/status/:show_id', ratingController.numberofStatus);
+    // get reviews for this show
+    app.get('/rating/review/:show_id', ratingController.getReviews);
 
 };

@@ -8,25 +8,83 @@ module.exports = {
     //create a new user
     create(req, res) {
         console.log(req.body)
-
-        // Create a new user
-        const user = new Rating({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            is_admin: false,
-            is_banned: false,
-            bio: " ",
-            img: " "
-        })
-
-        // save user to database
-        user.save().then((result) => {
-            user.password=""
-            res.send(user)
+        Rating.findOneAndUpdate({show_id:req.body.show_id, user_id: req.body.user_id},{$set:req.body}, {upsert: true}).then((result) => {
+              res.send(req.body)
             }, (error) => {
-                res.status(400).send(error) // 400 for bad request
-            })
+              res.status(400).send(error) // 400 for bad request
+        })
     },
+
+    //get all ratings
+    getAllRatings(req, res) {
+
+        Rating.find().then((result) => {
+                res.send( result ) // put in object in case we want to add other properties
+            }, (error) => {
+                res.status(400).send(error)
+            })
+
+    },
+
+
+    getAvgRating(req, res) {
+      Rating.aggregate([{$group:
+        {_id:
+          {show_id:"$show_id"},
+          count:{$sum: 1},
+          avg:{$avg: "$rating"}
+        }
+      }]).then((results) => {
+              filtered = results.filter(result => result._id.show_id == req.params.show_id )
+              res.send( filtered )
+          }, (error) => {
+              res.status(400).send(error)
+          })
+    },
+
+    numberofStatus(req, res) {
+      Rating.aggregate([{$group:
+        {_id:
+          {status:"$status", show_id:"$show_id"},
+          count:{$sum: 1},
+          avg:{$avg: "$rating"}
+        }
+      }]).then((results) => {
+              filtered = results.filter(result => result._id.show_id == req.params.show_id )
+              res.send( filtered )
+          }, (error) => {
+              res.status(400).send(error)
+          })
+
+    },
+
+    getReviews(req, res) {
+      Rating.aggregate([{$group:
+        {_id:
+          {status:"$status", show_id:"$show_id", user_id:"$user_id", review:"$review"},
+        }
+      }]).populate('user_id').then((results) => {
+              filtered = results.filter(result => result._id.show_id == req.params.show_id )
+              res.send( filtered )
+          }, (error) => {
+              res.status(400).send(error)
+          })
+
+    },
+    /*
+    {$group: {_id: product._id, average: {$avg: '$Rating'}}}
+    {
+      $project:{
+        avgrating: { $avg: {$group:{rating:"$rating"}}}
+      }
+    }
+    // Group documents by created_at, sender and calculate number of documents.
+{$group:
+  {_id:
+    {created_at:"$created_at", sender:"$sender"},
+    count:{$sum: 1}
+  }
+}
+    */
 
 };

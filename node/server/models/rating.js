@@ -22,6 +22,16 @@ const RatingSchema = new mongoose.Schema({
   },
 	rating: {
 		type: Number,
+		default:0,
+		required: true
+	},
+	status: {
+		type: Number,
+		default:0,
+		required: true
+	},
+	review: {
+		type: String,
 		required: true
 	}
 })

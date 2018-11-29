@@ -9,8 +9,12 @@ export class AdminUserListService {
     API_URL = 'http://localhost:8000';
 
     constructor(private httpClient: HttpService) { }
+    
+    fetchUsers() {
+        return this.httpClient.get(`${this.API_URL}/users`)
+    }
 
-    banUser(data){
-        
+    banUser(user) {
+        return this.httpClient.post(`${this.API_URL}/users/${user._id}/update`, user);
     }
 }

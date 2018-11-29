@@ -219,9 +219,6 @@ export class GridComponent implements OnInit {
    * ID of the show we want to approve
    */
   approve(id) {
-    // finds index of of unapproved show with id and sets approved to true
-    const unapprovedIndex = this.unapprovedShows.findIndex(show => show._id == id);
-
     // checks current list of approved shows for unapproved show to be accepted
     const approvedIndex = this.shows.findIndex(show => show._id == id);
 
@@ -235,14 +232,39 @@ export class GridComponent implements OnInit {
       });
     }
 
-    // approve show
-    const approveShowBody = {showId: id};
-    this.gridService.approveShow(approveShowBody).subscribe((response) => {
-      this.error = false;
-      this.getShows()
-    }, (error) => {
-      this.error = true;
-    });
+    const unapproved = this.unapprovedShows.find(show => show._id == id);
+
+    // if approved show was an edit
+    if (unapproved.updating) {
+      unapproved.approved = true;
+      const updateId = unapproved.updating;
+
+      // approve show by copying over show details
+      this.gridService.editShow(updateId, unapproved).subscribe((response: Show) => {
+        this.error = false;
+      }, (error) => {
+        this.error = true;
+      });
+
+      // remove unapproved show that we copied details from
+      const showId = {showId: unapproved._id};
+      this.gridService.removeShow(showId).subscribe((response: Show) => {
+        this.error = false;
+        this.getShows();
+      }, (error) => {
+        this.error = true;
+      });
+
+    } else {
+      // approve show by adding it to shows
+      const approveShowBody = {showId: id};
+      this.gridService.approveShow(approveShowBody).subscribe((response) => {
+        this.error = false;
+        this.getShows()
+      }, (error) => {
+        this.error = true;
+      });
+    }
 
   }
 

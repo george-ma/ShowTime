@@ -15,7 +15,8 @@ module.exports = {
             img: req.body.img,
             link: req.body.link,
             airInterval: req.body.airInterval,
-            approved: req.body.approved
+            approved: req.body.approved,
+            updating: req.body.updating,
         })
 
         // save show to database
@@ -118,9 +119,8 @@ module.exports = {
           show.link = (req.body.link) ? req.body.link : show.link;
           show.airDate = (req.body.airDate) ? req.body.airDate : show.airDate;
           show.airInterval = (req.body.airInterval) ? req.body.airInterval : show.airInterval;
-          show.updating = (req.body.updating) ? req.body.updating : show.updating;
 
-          // save show 
+          // save show
           show.save().then((result) => {
               res.send(show);
             }, (error) => {

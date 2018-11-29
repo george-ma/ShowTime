@@ -23,7 +23,14 @@ export class AdminUserListComponent implements OnInit {
   constructor(private adminUserListService: AdminUserListService) { }
 
   ngOnInit() {
-    this.fetchUsers();
+
+    // Fetch Users from DB
+    this.adminUserListService.fetchUsers().subscribe( (response: Array<User>) => {
+        this.users = response;
+    }, (error) => {
+        console.log(error)
+    })
+
   }
 
   /**
@@ -35,7 +42,11 @@ export class AdminUserListComponent implements OnInit {
   promoteUser(user) {
     console.log(`Promoting ${user.username} to admin`);
     user.is_admin = true;
-    this.updateUsers();
+    this.adminUserListService.banUser(user).subscribe( (response: User) => {
+        console.log(response)
+    }, (error) => {
+        console.log(error)
+    })
   }
 
   /**
@@ -45,35 +56,28 @@ export class AdminUserListComponent implements OnInit {
    *  User to ban
    */
   banUser(user) {
-    console.log(`Banning ${user.username}`);
-    user.is_banned = true;
-    this.updateUsers();
+      console.log(`Banning user ${user.username}`);
+      user.is_banned = true;
+      this.adminUserListService.banUser(user).subscribe( (response: User) => {
+          console.log(response)
+      }, (error) => {
+          console.log(error)
+      })
   }
 
   /**
-   * Unbans the input user
+   * Unbans the input user.
    *
    * @param {User} user
    *  User to unban
    */
   unbanUser(user) {
-    console.log(`Unbanning ${user.username}`);
+    console.log(`Un-banning user ${user.username}`);
     user.is_banned = false;
-    this.updateUsers();
-  }
-
-  /**
-   * Retrieves list of users from session storage and saves it
-   * in this.users
-   */
-  fetchUsers() {
-    this.users = JSON.parse(sessionStorage.getItem('users'));
-  }
-
-  /**
-   * Modifies the user list in session storage to match this.users
-   */
-  updateUsers() {
-    sessionStorage.setItem('users', JSON.stringify(this.users));
+    this.adminUserListService.banUser(user).subscribe( (response: User) => {
+        console.log(response)
+    }, (error) => {
+        console.log(error)
+    })
   }
 }

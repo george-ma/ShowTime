@@ -120,7 +120,7 @@ export class EditShowComponent implements OnInit {
 
       // updates this.show directly
       this.editShowService.editShow(this.show._id, this.updateShow).subscribe((response: Show) => {
-        this.error = false;
+        //
       }, (error) => {
         this.error = true;
       });
@@ -128,7 +128,7 @@ export class EditShowComponent implements OnInit {
     // otherwise, add this.updateShow to shows (it will be unapproved)
     } else {
       this.editShowService.addShow(this.updateShow).subscribe((response: Show) => {
-        this.error = false;
+        //
       }, (error) => {
         this.error = true;
       });

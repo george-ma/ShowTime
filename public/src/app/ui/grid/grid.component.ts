@@ -77,14 +77,12 @@ export class GridComponent implements OnInit {
     if (this.getCheckUser()) {
       this.gridService.getMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.myShows = response;
-        this.error = false;
       }, (error) => {
         this.error = true;
       });
 
       this.gridService.getNotMyShows(this.user._id).subscribe((response: Array<Show>) => {
         this.shows = response;
-        this.error = false;
       }, (error) => {
         this.error = true;
       });
@@ -92,7 +90,6 @@ export class GridComponent implements OnInit {
       if (this.user.is_admin) {
         this.gridService.getUnapprovedShows().subscribe((response: Array<Show>) => {
           this.unapprovedShows = response;
-          this.error = false;
         }, (error) => {
           this.error = true;
         });
@@ -101,7 +98,6 @@ export class GridComponent implements OnInit {
     } else {
       this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
         this.shows = response;
-        this.error = false;
       }, (error) => {
         this.error = true;
       });
@@ -226,7 +222,7 @@ export class GridComponent implements OnInit {
     if (approvedIndex >= 0) {
       const removeShowBody = {showId: id};
       this.gridService.removeShow(removeShowBody).subscribe((response) => {
-        this.error = false;
+        //
       }, (error) => {
         this.error = true;
       });
@@ -241,7 +237,7 @@ export class GridComponent implements OnInit {
 
       // approve show by copying over show details
       this.gridService.editShow(updateId, unapproved).subscribe((response: Show) => {
-        this.error = false;
+        //
       }, (error) => {
         this.error = true;
       });
@@ -249,7 +245,6 @@ export class GridComponent implements OnInit {
       // remove unapproved show that we copied details from
       const showId = {showId: unapproved._id};
       this.gridService.removeShow(showId).subscribe((response: Show) => {
-        this.error = false;
         this.getShows();
       }, (error) => {
         this.error = true;
@@ -259,8 +254,7 @@ export class GridComponent implements OnInit {
       // approve show by adding it to shows
       const approveShowBody = {showId: id};
       this.gridService.approveShow(approveShowBody).subscribe((response) => {
-        this.error = false;
-        this.getShows()
+        this.getShows();
       }, (error) => {
         this.error = true;
       });
@@ -302,11 +296,11 @@ export class GridComponent implements OnInit {
     // remove show from backend
     const reqBody = {showId: id}
     this.gridService.removeShow(reqBody).subscribe((response) => {
-      this.error = false;
       this.getShows();
     }, (error) => {
       this.error = true;
     });
+
   }
 
   /**
@@ -327,12 +321,11 @@ export class GridComponent implements OnInit {
     // add show to user with userId in database
     // note: the update has to be performed after we receive a response
     this.gridService.userAddShow(userId, reqBody).subscribe((response)=>{
-        this.error = false;
-        this.getShows();
-      }, (error) => {
-        this.error = true;
-      }
-    );
+      this.getShows();
+    }, (error) => {
+      this.error = true;
+    });
+
   }
 
   /**
@@ -354,12 +347,11 @@ export class GridComponent implements OnInit {
     // remove show from user with userId in database
     // note: the update has to be performed after we receive a response
     this.gridService.userRemoveShow(userId, reqBody).subscribe((response)=>{
-        this.error = false;
-        this.getShows();
-      }, (error) => {
-        this.error = true;
-      }
-    );
+      //
+      this.getShows();
+    }, (error) => {
+      this.error = true;
+    });
   }
 
   /**
@@ -372,7 +364,6 @@ export class GridComponent implements OnInit {
 
     this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
       let data:Array<Show> = response;
-      this.error = false;
 
       this.shows = [];
       this.myShows = [];
@@ -396,7 +387,6 @@ export class GridComponent implements OnInit {
     }, (error) => {
       this.error = true;
     });
-
 
   }
 }

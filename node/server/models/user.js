@@ -36,6 +36,28 @@ const UserSchema = new mongoose.Schema({
 	my_shows : [{ type: Schema.Types.ObjectId, ref: 'Show' }]
 })
 
+
+// Our own student finding function 
+UserSchema.statics.findByUserPassword = function(username, password) {
+	const User = this
+
+	return User.findOne({username: username}).then((user) => {
+		if (!user) {
+			return Promise.reject()
+		}
+
+		return new Promise((resolve, reject) => {
+			bcrypt.compare(password, user.password, (error, result) => {
+				if (result) {
+					resolve(user);
+				} else {
+					reject();
+				}
+			})
+		})
+	})
+}
+
 // This function runs before saving user to database
 UserSchema.pre('save', function(next) {
     const user = this

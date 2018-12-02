@@ -60,7 +60,7 @@ export class AccountComponent implements OnInit {
     }
 
     if (validEmail) {
-        if (this.updatedInfo.username){ modifiedUser.username = this.updatedInfo.username; }
+        // if (this.updatedInfo.username){ modifiedUser.username = this.updatedInfo.username; }
         if (this.updatedInfo.password){ modifiedUser.password = this.updatedInfo.password; }
         if (this.updatedInfo.bio){ modifiedUser.bio = this.updatedInfo.bio; }
         

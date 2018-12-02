@@ -13,6 +13,5 @@ export class AccountService {
     editUser(data) {
         console.log(data);
         return this.httpClient.post(`${this.API_URL}/users/${data._id}/update`, data);
-        //return this.httpClient.post(`${this.API_URL}/users/:id/update`, data);
     }
 }

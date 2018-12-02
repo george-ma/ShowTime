@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { Show } from '../models/show';
 import { MyShow } from '../models/my_show';
 import { User } from '../models/user';
+import { ShowService } from './show.service';
 
 @Component({
   selector: 'app-show',
@@ -15,24 +16,30 @@ export class ShowComponent implements OnInit {
 
   show: any = {};
   user: any = {};
-  myShow: any = {};
+  myShow: any ={};
   inMyShows: boolean = false;
   updatedTimeout: boolean = false;
   ratingData: Array<MyShow> = [];
-  reviews: Array<string> = [];
+  reviews: Array<object> = [];
   rating: number = 0;
   numberOfRatings: number = 0;
   status: Array<number> = [];
   show_reviews: boolean = false;
 
+  error: boolean = false;
+  errorMsg: string;
+
+  currShowId: string;
 
 
-  constructor(public route: ActivatedRoute, public router: Router) { }
+
+  constructor(public route: ActivatedRoute, public router: Router, private showService: ShowService) { }
 
   ngOnInit() {
-    this.getShow(this.route.snapshot.paramMap.get('id'));
+    this.currShowId = this.route.snapshot.paramMap.get('id')
+    this.getShow(this.currShowId);
     this.getUser()
-    this.getRatingData()
+    this.getRatingData(this.currShowId)
   }
 
   /**
@@ -100,12 +107,16 @@ export class ShowComponent implements OnInit {
    * @param {number} id
    */
   getShow(id) {
-    let data = JSON.parse(sessionStorage.getItem('shows'))
-    for (let show of data) {
-      if (show.id == id) {
-        this.show = show;
+    this.showService.getShow(id).subscribe((response)=>{
+        this.error = false;
+        this.show = response;
+        console.log(this.show)
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
       }
-    }
+    );
   }
 
   /**
@@ -123,7 +134,8 @@ export class ShowComponent implements OnInit {
   getUser() {
     if (sessionStorage.getItem('currentUser') != null) {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
-      this.setMyShow();
+      this.isMyShow()
+      this.getMyRating()
       return true;
     }
     return false;
@@ -132,16 +144,15 @@ export class ShowComponent implements OnInit {
   /**
    * Checks whether this.show is in the user's list of shows.
    */
-  setMyShow() {
-    for (let my_show of this.user.my_shows) {
-      if (my_show.id == this.show.id) {
-        this.myShow = my_show;
-        this.inMyShows = true
-        return
+  isMyShow() {
+    this.showService.isMyShow(this.user._id, this.currShowId).subscribe((response: boolean)=>{
+        this.inMyShows = response;
+      },
+      error => {
+        this.inMyShows = false;
       }
-    }
-    this.myShow = {};
-    this.inMyShows = false;
+    );
+
   }
 
   /**
@@ -162,24 +173,6 @@ export class ShowComponent implements OnInit {
     this.myShow.status = status;
   }
 
-  /**
-   * Adds show to user's list of shows and updates session storage
-   */
-  updateMyShows() {
-    if (this.inMyShows) {
-      let i = 0;
-      for (i; i < this.user.my_shows.length; i++) {
-        if (this.user.my_shows[i].id == this.show.id) {
-          this.user.my_shows[i] = this.myShow;
-        }
-      }
-    } else {
-      this.myShow.id = this.show.id;
-      this.user.my_shows.push(this.myShow);
-    }
-    
-    this.updateSessionMyShows();
-  }
 
   /**
    * Removes show from user's list of shows and updates session storage
@@ -192,65 +185,54 @@ export class ShowComponent implements OnInit {
       }
     }
     this.user.my_shows.splice(i, 1);
-    this.updateSessionMyShows();
   }
 
-  /**
-   * Updates session storage with the current user's list of shows
-   */
-  updateSessionMyShows() {
-    let allUsers = []
-    allUsers = JSON.parse(sessionStorage.getItem('users'));
-    sessionStorage.setItem('currentUser', JSON.stringify(this.user));
-    let i = 0;
-    for (i; i < allUsers.length; i++) {
-      if (allUsers[i].username == this.user.username) {
-        allUsers[i].my_shows = this.user.my_shows;
-      }
-    }
-    sessionStorage.setItem('users', JSON.stringify(allUsers));
-    this.updatedTimeout = true;
-    setTimeout(() => {
-      this.updatedTimeout = false;
-    }, 2000);
-    this.getUser();
-    this.getRatingData()
-  }
 
   /**
    * Retrieves number of ratings, status, reviews and average rating of show
    */
-  getRatingData() {
-    this.ratingData = [];
-    this.reviews = [];
-    let allUsers = [];
-    let numberOfRatings = 0;
-    let sumofRatings = 0;
-    let status = [0, 0, 0, 0, 0];
-    allUsers = JSON.parse(sessionStorage.getItem('users'));
+  getRatingData(id) {
+    let statusArr = [0, 0, 0, 0, 0];
 
-    for (let i = 0; i < allUsers.length; i++) {
-      for (let j = 0; j < allUsers[i].my_shows.length; j++) {
+    this.showService.getShowReviews(id).subscribe((response: Array<object>)=>{
+        this.error = false;
+        this.reviews = response;
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
+      }
+    );
 
-        if (allUsers[i].my_shows[j].id == this.show.id) {
-          this.ratingData.push(allUsers[i].my_shows[j]);
-          if (allUsers[i].my_shows[j].review != undefined) {
-            this.reviews.push(`${allUsers[i].username} : ${allUsers[i].my_shows[j].review}`);
-          }
-          if (allUsers[i].my_shows[j].rating != undefined) {
-            numberOfRatings = numberOfRatings + 1;
-            sumofRatings = sumofRatings + allUsers[i].my_shows[j].rating;
-          }
-          if (allUsers[i].my_shows[j].status != undefined || allUsers[i].my_shows[j].status != 0) {
-            status[allUsers[i].my_shows[j].status - 1] = status[allUsers[i].my_shows[j].status - 1] + 1
-          }
+    this.showService.getShowAvg(id).subscribe((response: Array<any>)=>{
+        this.error = false;
+        if(response.length != 0){
+          this.rating = response[0].avg;
+          this.numberOfRatings = response[0].count
+        }
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
+      }
+    );
+
+    this.showService.getShowStatus(id).subscribe((response: Array<any>)=>{
+        this.error = false;
+        if(response.length != 0){
+          response.forEach(status => {
+            statusArr[status._id.status -1] = status.count
+          });
         }
 
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
       }
-    }
-    this.numberOfRatings = numberOfRatings;
-    this.status = status;
-    this.rating = +(sumofRatings / numberOfRatings).toFixed(2);
+    );
+
+    this.status = statusArr;
   }
 
   /**
@@ -263,5 +245,112 @@ export class ShowComponent implements OnInit {
       this.show_reviews = true;
     }
   }
+
+  getMyRating(){
+    this.showService.getMyRating(this.user._id, this.currShowId).subscribe((response: Array<any>)=>{
+        this.error = false;
+        if(response.length != 0){
+          this.myShow =response[0];
+        }
+
+      },
+      error => {
+        this.error = true;
+        this.errorMsg = error.error.message;
+      }
+    );
+
+  }
+
+  /**
+   * Adds the show with ID id to the current user's shows
+   *
+   * @param {number} id
+   * The ID of the show we want to add to the
+   * current user's shows
+   */
+  addToMyShows(id){
+    const userId = this.user._id;
+    const reqBody = {showId: id};
+
+
+    // add show to user with userId in database
+    // note: the update has to be performed after we receive a response
+    this.showService.userAddShow(userId, reqBody).subscribe((response)=>{
+      this.isMyShow();
+    }, (error) => {
+      this.error = true;
+    });
+
+  }
+
+  /**
+   * Removes the show with the ID id from the
+   * current user's show
+   *
+   * @param {number} id
+   * The ID of the show we want to remove from the
+   * current user's shows
+   */
+  removeFromMyShows(id){
+    const userId = this.user._id;
+    const reqBody = {showId: id};
+
+
+    // remove show from user with userId in database
+    // note: the update has to be performed after we receive a response
+    this.showService.userRemoveShow(userId, reqBody).subscribe((response)=>{
+      //
+      this.isMyShow();
+    }, (error) => {
+      this.error = true;
+    });
+  }
+
+  /**
+   * Adds the a rating for the current show
+   *
+   */
+  addRating(){
+    const reqBody = {
+       show_id: this.currShowId,
+       user_id: this.user._id,
+       rating: this.myShow.rating,
+       status: this.myShow.status,
+       review: this.myShow.review
+     };
+
+    if(reqBody.status < 1 && reqBody.status < 5 ){
+      this.error = true;
+      this.errorMsg = "Status is Invalid or Unset"
+      setTimeout(() => {
+        this.error = false;
+        this.errorMsg = ""
+      }, 2000);
+      return
+    }
+    if(reqBody.rating < 1 && reqBody.rating < 5 ){
+      this.error = true;
+      this.errorMsg = "Rating is Invalid or Unset"
+
+      setTimeout(() => {
+        this.error = false;
+        this.errorMsg = ""
+      }, 2000);
+      return
+    }
+    this.showService.addRating(reqBody).subscribe((response)=>{
+      this.updatedTimeout = true
+      setTimeout(() => {
+        this.updatedTimeout = false
+      }, 1000);
+      this.getRatingData(this.currShowId);
+    }, (error) => {
+      this.error = true;
+      this.errorMsg = error.error.message;
+    });
+
+  }
+
 
 }

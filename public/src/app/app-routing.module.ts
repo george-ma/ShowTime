@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'show/:id', component: ShowComponent },
   { path: 'editShow/:id', component: EditShowComponent },
   { path: 'grid/editShow/:id', component: EditShowComponent },
+  { path: 'show/:id/editShow', component: EditShowComponent },
   { path: 'grid/show/:id/editShow', component: EditShowComponent }
 ];
 

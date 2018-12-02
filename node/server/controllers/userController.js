@@ -224,4 +224,25 @@ module.exports = {
       })
 
     },
+
+    isMyShow(req, res) {
+
+      const id = req.params.id
+      const show_id = req.params.show_id
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(id)) { return res.status(404).send() }
+      if (!ObjectID.isValid(show_id)) { return res.status(404).send() }
+
+      User.findById(id, "my_shows").populate('my_shows').then((user) => {
+        for( show of user.my_shows){
+          if(show._id == show_id ){
+            res.status(200).send(true);
+          }
+        }
+        res.status(200).send(false);
+      }, (error) => {
+        res.status(400).send(error);
+      })
+
+    },
 };

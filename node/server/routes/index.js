@@ -35,6 +35,8 @@ module.exports = (app) => {
     app.get('/users/:id/myshows', usersController.getMyShows);
     // get not user's shows
     app.get('/users/:id/notmyshows', usersController.getNotMyShows);
+    // get user's shows
+    app.get('/users/:id/show/:show_id', usersController.isMyShow);
 
     // * show routes *
     // create a new show
@@ -65,5 +67,7 @@ module.exports = (app) => {
     app.get('/rating/status/:show_id', ratingController.numberofStatus);
     // get reviews for this show
     app.get('/rating/review/:show_id', ratingController.getReviews);
+    // get my rating data for a show
+    app.get('/rating/user/:user_id/:show_id', ratingController.getMyRating);
 
 };

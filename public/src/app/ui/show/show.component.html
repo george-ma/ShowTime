@@ -30,8 +30,8 @@
       </div>
       <div class="card-body" *ngIf="getCheckUser()">
         <button class="btn btn-primary " routerLink="editShow">Edit</button>
-        <button class="btn btn-success" *ngIf="!inMyShows" (click)="updateMyShows()">Add To My Shows</button>
-        <button class="btn btn-danger" *ngIf="inMyShows" (click)="RemoveFromMyShows(show.id)">Remove From My Shows</button>
+        <button class="btn btn-success" *ngIf="!inMyShows" (click)="addToMyShows(show._id)">Add To My Shows</button>
+        <button class="btn btn-danger" *ngIf="inMyShows" (click)="removeFromMyShows(show._id)">Remove From My Shows</button>
 
       </div>
     </div> <!-- //end card -->
@@ -43,7 +43,20 @@
 
       <div class="card-body" *ngIf="show_reviews">
         <ul class="list-group list-group-flush" *ngFor="let review of reviews; ">
-          <li class="list-group-item">{{review}}</li>
+          <li class="list-group-item">
+            <div class="card">
+              <div class="card-header">
+                {{review.user_id.username}}
+              </div>
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p>{{review.review}}</p>
+                  <footer class="blockquote-footer"> <cite title="Source Title"> rating:</cite> {{review.rating}} </footer>
+                  <footer class="blockquote-footer"> <cite title="Source Title"> status:</cite> {{review.status}} </footer>
+                </blockquote>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -61,7 +74,7 @@
         </form>
       </div>
       <div class="col-sm-12">
-        <form (ngSubmit)="f.form.valid && updateMyShows()" #f="ngForm">
+        <form (ngSubmit)="f.form.valid && addRating()" #f="ngForm">
           <div class="form-group">
             <label class="font-weight-bold" for="review">My Ratings: {{myShow.rating}} </label>
             <br>
@@ -84,7 +97,7 @@
         </form>
       </div>
       <div class="col-sm-12">
-        <form (ngSubmit)="f.form.valid && updateMyShows()" #f="ngForm">
+        <form (ngSubmit)="f.form.valid && addRating()" #f="ngForm">
           <div class="form-group">
             <label class="font-weight-bold" for="review">Status </label>
             <br>
@@ -107,6 +120,7 @@
               <button type="submit" class="btn btn-primary shadow">Save</button>
             </div>
             <p class="alert alert-success text-center" *ngIf="updatedTimeout"> <strong>Saved Your Response</strong> </p>
+            <p class="alert alert-danger text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>
           </div>
         </form>
       </div>

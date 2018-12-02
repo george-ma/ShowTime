@@ -26,6 +26,14 @@ module.exports = {
 
     },
 
+    getMyRating(req, res) {
+        Rating.find({show_id: req.params.show_id, user_id: req.params.user_id}).then((result) => {
+                res.send( result ) // put in object in case we want to add other properties
+            }, (error) => {
+                res.status(400).send(error)
+            })
+    },
+
 
     getAvgRating(req, res) {
       Rating.aggregate([{$group:
@@ -59,13 +67,14 @@ module.exports = {
     },
 
     getReviews(req, res) {
-      Rating.aggregate([{$group:
-        {_id:
-          {status:"$status", show_id:"$show_id", user_id:"$user_id", review:"$review"},
-        }
-      }]).populate('user_id').then((results) => {
-              filtered = results.filter(result => result._id.show_id == req.params.show_id )
-              res.send( filtered )
+      const showId = req.params.show_id
+
+      // Good practice is to validate the id
+      if (!ObjectID.isValid(showId)) { return res.status(404).send([]) }
+
+      Rating.find({show_id: req.params.show_id}).populate("user_id", "username").then((results) => {
+              results.filter(result => result.review.length >= 1 )
+              res.send( results )
           }, (error) => {
               res.status(400).send(error)
           })

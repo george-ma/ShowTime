@@ -75,12 +75,15 @@ module.exports = {
         // Good practice is to validate the id
         if (!ObjectID.isValid(id)) { return res.status(404).send() }
 
-        User.findByIdAndUpdate(id,{$set:req.body}).then((user) => {
-            if (!user) {
-                res.status(404).send()
-            } else {
-                res.send( user )
-            }
+        User.findOne({'_id': id}).then( (user) => {
+            user.set(req.body)
+
+            user.save().then( (result) => {
+                res.send(result)
+            }, (error) => {
+                res.status(400).send(error)
+            })
+
         })
     },
 
@@ -110,20 +113,22 @@ module.exports = {
     //login a user
     loginUser(req, res) {
 
-        // Find by attributes
-        User.findOne({username: req.body.username, password: req.body.password}, 'username email is_banned is_admin my_shows bio').then((student, error) => {
-        if (!student) {
-            res.status(404).send("Invalid username or password")
-        } else {
-            if (student.is_banned) {
-              res.status(404).send("Sorry your are banned from the site")
+        const username = req.body.username
+        const password = req.body.password
+    
+        User.findByUserPassword(username, password).then((user) => {
+            if(!user) {
+                res.status(404).send("Username not found.")
+                // res.redirect('/login')
             } else {
-              res.send(student)
+                if (user.is_banned) {
+                    res.status(404).send("Sorry your are banned from the site.")
+                } else { // not banned
+                    res.send(user)
+                }
             }
-        }
-
         }).catch((error) => {
-            res.status(400).send(error)
+            res.status(404).send(error)
         })
     },
 

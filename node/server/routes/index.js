@@ -69,6 +69,8 @@ module.exports = (app) => {
     app.get('/users/:id/delete', usersController.remove);
     // login a user
     app.post('/users/login', usersController.loginUser);
+    // login out a user
+    app.get('/logout', usersController.logoutUser);
     // add show to user's list of shows
     app.post('/users/:id/addshow', authenticate, usersController.addShow);
     // removes show from user's list of shows

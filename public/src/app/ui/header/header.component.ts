@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeaderService } from './header.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   user: any = {}
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private headerService: HeaderService) { }
 
   ngOnInit() {
     this.setUser();
@@ -29,9 +30,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-    sessionStorage.removeItem('currentUser');
-    this.user = null;
-    this.router.navigate(['/grid']);
+    this.headerService.logout().subscribe((response)=>{
+      this.user = null;
+      sessionStorage.removeItem('currentUser');
+    }, (error) => {
+      sessionStorage.removeItem('currentUser');
+    });
+
   }
 
 }

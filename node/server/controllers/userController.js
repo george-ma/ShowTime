@@ -135,6 +135,17 @@ module.exports = {
         })
     },
 
+    //login a user
+    logoutUser(req, res) {
+      req.session.destroy((error) => {
+    		if (error) {
+    			res.status(500).send(error)
+    		} else {
+    			res.send("success")
+    		}
+    	})
+    },
+
     //get all users
     getAllUsers(req, res) {
 

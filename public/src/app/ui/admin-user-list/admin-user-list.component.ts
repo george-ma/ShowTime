@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { MyShow } from '../models/my_show';
 import { User } from '../models/user';
 import { AdminUserListService } from './admin-user-list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -20,9 +21,17 @@ export class AdminUserListComponent implements OnInit {
   // list of users
   users: Array<User> = []
 
-  constructor(private adminUserListService: AdminUserListService) { }
+  constructor(private adminUserListService: AdminUserListService, public router: Router) { }
 
   ngOnInit() {
+    this.adminUserListService.isAdmin().subscribe( (response: boolean) => {
+        if(!response){
+          this.router.navigate(['login']);
+        }
+    }, (error) => {
+        console.log(error)
+        this.router.navigate(['login']);
+    })
 
     // Fetch Users from DB
     this.adminUserListService.fetchUsers().subscribe( (response: Array<User>) => {

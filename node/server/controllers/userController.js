@@ -115,7 +115,7 @@ module.exports = {
 
         const username = req.body.username
         const password = req.body.password
-    
+
         User.findByUserPassword(username, password).then((user) => {
             if(!user) {
                 res.status(404).send("Username not found.")
@@ -124,7 +124,10 @@ module.exports = {
                 if (user.is_banned) {
                     res.status(404).send("Sorry your are banned from the site.")
                 } else { // not banned
-                    res.send(user)
+                  req.session.user = user._id;
+                  req.session.email = user.email
+                  user.password = "";
+                  res.send(user)
                 }
             }
         }).catch((error) => {

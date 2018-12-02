@@ -2,10 +2,52 @@ const usersController = require('../controllers').user;
 const showsController = require('../controllers').show;
 const ratingController = require('../controllers').rating;
 
+const User = require('../models/user').User
+const Show = require('../models/show').Show
+const { Rating } = require('../models/rating')
+const { ObjectID } = require('mongodb')
+
+// Authentication for user resource routes
+const authenticate = (req, res, next) => {
+	if (req.session.user) {
+		User.findById(req.session.user).then((user) => {
+			if (!user) {
+				return Promise.reject()
+			} else {
+				req.user = user
+				next()
+			}
+		}).catch((error) => {
+			res.redirect('http://localhost:4200/login')
+		})
+	} else {
+		res.redirect('http://localhost:4200/login')
+	}
+}
+
+// Authentication for user resource routes
+const authenticateAdmin = (req, res, next) => {
+	if (req.session.user) {
+		User.findById(req.session.user).then((user) => {
+			if (!user || !user.is_admin) {
+				return Promise.reject()
+			} else {
+				req.user = user
+				next()
+			}
+		}).catch((error) => {
+			res.redirect('http://localhost:4200/login')
+		})
+	} else {
+		res.redirect('http://localhost:4200/login')
+	}
+}
+
 module.exports = (app) => {
     app.use((req, res, next)=>{
-        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Origin", "http://localhost:4200");
         res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+        res.header('Access-Control-Allow-Credentials',' true');
         next();
     });
     app.get('/api', (req, res) => res.status(200).send({
@@ -28,7 +70,7 @@ module.exports = (app) => {
     // login a user
     app.post('/users/login', usersController.loginUser);
     // add show to user's list of shows
-    app.post('/users/:id/addshow', usersController.addShow);
+    app.post('/users/:id/addshow', authenticate, usersController.addShow);
     // removes show from user's list of shows
     app.post('/users/:id/removeshow', usersController.removeShow);
     // get user's shows
@@ -54,7 +96,7 @@ module.exports = (app) => {
     // get single show based on show id
     app.get('/shows/:id', showsController.getShow);
     // edit show
-    app.post('/shows/:id/edit', showsController.editShow);
+    app.post('/shows/:id/edit', authenticate, showsController.editShow);
 
     // * rating routes *
     // create a new rating
@@ -69,5 +111,8 @@ module.exports = (app) => {
     app.get('/rating/review/:show_id', ratingController.getReviews);
     // get my rating data for a show
     app.get('/rating/user/:user_id/:show_id', ratingController.getMyRating);
+
+    //check if admin is log in
+    app.get('/sessioncheckeradmin', authenticateAdmin, (req, res) => {res.send(true)})
 
 };

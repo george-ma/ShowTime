@@ -30,7 +30,7 @@ export class ShowFormComponent {
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   // Corresponding ngshow for the HTML of this component
-  show = new Show(1, '', '', this.currentUser.is_admin, 'assets/noImage.jpg', '')
+  show = new Show(1, '', '', false, 'assets/noImage.jpg', '')
 
   months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   hours = [];
@@ -54,6 +54,12 @@ export class ShowFormComponent {
    * Initializes the form information
    */
   ngOnInit() {
+    if(this.currentUser == null){
+      this.router.navigate(['/grid']);
+    } else{
+      this.show.approved = this.currentUser.is_admin;
+    }
+
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 

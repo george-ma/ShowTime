@@ -7,6 +7,7 @@ const { ObjectID } = require('mongodb')
 const { mongoose } = require('./server/db/mongoose');
 const multer = require('multer');
 const path = require('path');
+const session = require('express-session')
 
 const DIR = '../public/src/assets';
 
@@ -33,12 +34,34 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Add express sesssion middleware
+app.use(session({
+	secret: 'oursecret',
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		expires: 600000,
+		httpOnly: true
+	}
+}))
+
 
 // Require our routes into the application.
 require('./server/routes')(app);
+
+app.get('/sessionchecker', (req, res) => {
+  if (req.session.user) {
+     res.send(true)
+  } else {
+     res.send(false)
+  }
+})
+
 app.get('*', (req, res) => res.status(200).send({
   message: 'Welcome to the beginning of nothingness.',
 }));
+
+
 
 //upload route
 app.post('/upload',upload.single('photo'), function (req, res) {

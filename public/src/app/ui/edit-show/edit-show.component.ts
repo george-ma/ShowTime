@@ -41,6 +41,10 @@ export class EditShowComponent implements OnInit {
    * Initializes the airing date form information and the global variables
    */
   ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('currentUser'));
+    if(this.user == null){
+      this.router.navigate(['/grid']);
+    }
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
@@ -60,7 +64,6 @@ export class EditShowComponent implements OnInit {
     this.date["month"] = this.months[currentDate.getMonth()];
     this.date["year"] = currentYear;
 
-    this.user = JSON.parse(sessionStorage.getItem('currentUser'));
     const showId = this.route.snapshot.paramMap.get('id');
 
     this.editShowService.getShowbyId(showId).subscribe((response: Show) => {
@@ -102,7 +105,13 @@ export class EditShowComponent implements OnInit {
    * Returns whether the session storage current user is an admin
    */
   getCheckAdmin() {
-    return this.user.is_admin;
+    if(this.user == null){
+      this.router.navigate(['/grid']);
+    } else{
+      return this.user.is_admin;
+    }
+    return false
+
   }
 
   /**

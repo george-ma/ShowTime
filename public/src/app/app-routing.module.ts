@@ -8,6 +8,7 @@ import { ShowFormComponent } from './ui/show-form/show-form.component';
 import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component';
 import { AccountComponent } from './ui/account/account.component';
 import { EditShowComponent } from './ui/edit-show/edit-show.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: GridComponent },
@@ -15,14 +16,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'addNewShow', component: ShowFormComponent },
-  { path: 'adminuserlist', component: AdminUserListComponent },
-  { path: 'account', component: AccountComponent },
+  { path: 'adminuserlist', component: AdminUserListComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
+  { path: 'account', component: AccountComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'grid/show/:id', component: ShowComponent },
   { path: 'show/:id', component: ShowComponent },
-  { path: 'editShow/:id', component: EditShowComponent },
-  { path: 'grid/editShow/:id', component: EditShowComponent },
-  { path: 'show/:id/editShow', component: EditShowComponent },
-  { path: 'grid/show/:id/editShow', component: EditShowComponent }
+  { path: 'editShow/:id', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always'},
+  { path: 'grid/editShow/:id', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
+  { path: 'show/:id/editShow', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
+  { path: 'grid/show/:id/editShow', component: EditShowComponent, canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' }
 ];
 
 @NgModule({

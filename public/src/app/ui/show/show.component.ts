@@ -320,7 +320,7 @@ export class ShowComponent implements OnInit {
        review: this.myShow.review
      };
 
-    if(reqBody.status < 1 && reqBody.status < 5 ){
+    if(reqBody.status < 1 || reqBody.status > 5 ){
       this.error = true;
       this.errorMsg = "Status is Invalid or Unset"
       setTimeout(() => {
@@ -329,7 +329,8 @@ export class ShowComponent implements OnInit {
       }, 2000);
       return
     }
-    if(reqBody.rating < 1 && reqBody.rating < 5 ){
+    
+    if(reqBody.rating < 1 || reqBody.rating > 5 ){
       this.error = true;
       this.errorMsg = "Rating is Invalid or Unset"
 

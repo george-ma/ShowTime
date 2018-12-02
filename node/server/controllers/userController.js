@@ -122,7 +122,7 @@ module.exports = {
                 // res.redirect('/login')
             } else {
                 if (user.is_banned) {
-                    res.status(404).send("Sorry your are banned from the site.")
+                    res.status(401).send("Sorry, you are banned from the site.")
                 } else { // not banned
                   req.session.user = user._id;
                   req.session.email = user.email
@@ -131,7 +131,7 @@ module.exports = {
                 }
             }
         }).catch((error) => {
-            res.status(404).send(error)
+            res.status(404).send("Incorrect user/password combination.")
         })
     },
 

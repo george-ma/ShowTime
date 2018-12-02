@@ -41,22 +41,21 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * checks login credtentials based on the given user credtentials bound to
-   * the user object and validates them, aginest the dummy users to
+   * checks login credentials based on the given user credentials bound to
+   * the user object and validates them, against the dummy users to
    * see if the user existing and is not banned.
    */
   loginUser() {
     this.loginService.loginUser(this.user).subscribe((response)=>{
-        this.error = false;
-        sessionStorage.setItem('currentUser', JSON.stringify(response));
-        this.router.navigate(['/grid'] );
-      },
-      error => {
-        this.error = true;
-        this.errorMsg = error.error;
-
-      }
-
+            this.error = false;
+            sessionStorage.setItem('currentUser', JSON.stringify(response));
+            this.router.navigate(['/grid']);
+        }, error => {
+            // console.log(error)
+            // console.log(error.error)
+            this.error = true
+            this.errorMsg = error.error
+        }
     );
   }
 

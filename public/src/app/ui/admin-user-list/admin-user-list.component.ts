@@ -51,7 +51,7 @@ export class AdminUserListComponent implements OnInit {
   promoteUser(user) {
     console.log(`Promoting ${user.username} to admin`);
     user.is_admin = true;
-    this.adminUserListService.banUser(user).subscribe( (response: User) => {
+    this.adminUserListService.updateUser(user).subscribe( (response: User) => {
         console.log(response)
     }, (error) => {
         console.log(error)
@@ -67,7 +67,7 @@ export class AdminUserListComponent implements OnInit {
   banUser(user) {
       console.log(`Banning user ${user.username}`);
       user.is_banned = true;
-      this.adminUserListService.banUser(user).subscribe( (response: User) => {
+      this.adminUserListService.updateUser(user).subscribe( (response: User) => {
           console.log(response)
       }, (error) => {
           console.log(error)
@@ -83,8 +83,7 @@ export class AdminUserListComponent implements OnInit {
   unbanUser(user) {
     console.log(`Un-banning user ${user.username}`);
     user.is_banned = false;
-    this.adminUserListService.banUser(user).subscribe( (response: User) => {
-        console.log(response)
+    this.adminUserListService.updateUser(user).subscribe( (response: User) => {
     }, (error) => {
         console.log(error)
     })

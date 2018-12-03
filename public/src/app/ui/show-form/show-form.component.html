@@ -28,41 +28,45 @@
     </div>
 
     <div class="form-group">
-      <input type="checkbox" aria-label="Airing Date" id="checkboxAiringDate" [(ngModel)]="airingChecked" name="airingChecked">
       <label for="checkboxAiringDate">Airing Date</label>
 
-      <div *ngIf="airingChecked" class="d-flex flex-row">
-        <select class="form-control p-2" id="hourSelect" [(ngModel)]="date.hour" name="hour">
+      <div class="d-flex flex-row">
+        <select class="form-control p-2" id="hourSelect" required [(ngModel)]="date.hour" name="hour">
           <option *ngFor="let hour of hours">{{hour}}</option>
         </select>
 
-        <select class="form-control p-2" id="daySelect" [(ngModel)]="date.day" name="day">
+        <select class="form-control p-2" id="daySelect" required [(ngModel)]="date.day" name="day">
           <option *ngFor="let day of days">{{day}}</option>
         </select>
 
-        <select class="form-control p-2" id="monthSelect" [(ngModel)]="date.month" name="month">
+        <select class="form-control p-2" id="monthSelect" required [(ngModel)]="date.month" name="month">
           <option *ngFor="let month of months">{{month}}</option>
         </select>
 
-        <select class="form-control p-2" id="yearSelect" [(ngModel)]="date.year" name="year">
+        <select class="form-control p-2" id="yearSelect" required [(ngModel)]="date.year" name="year">
           <option *ngFor="let year of years">{{year}}</option>
         </select>
       </div>
     </div>
 
     <div class="form-group">
-      <input type="checkbox" aria-label="Airing Interval" id="checkboxAiringInterval" [(ngModel)]="intervalChecked" name="intervalChecked">
       <label for="checkboxAiringInterval">Airing Interval (Days)</label>
-      <input *ngIf="intervalChecked" type="number" class="form-control" id="interval" [(ngModel)]="show.airInterval" name="airInterval">
+      <input type="number" class="form-control" id="interval" required [(ngModel)]="show.airInterval" name="airInterval">
     </div>
 
     <button type="button" class="btn btn-success btn-s"
       (click)="uploader.uploadAll()"
-      *ngIf="uploader.getNotUploadedItems().length" >
-          Submit (Show+Image)
+      *ngIf="uploader.getNotUploadedItems().length" 
+      [disabled]="!f.form.valid">
+          Submit with Image
     </button>
 
-    <button type="submit" class="btn btn-success" *ngIf="!uploader.getNotUploadedItems().length">Submit</button>
+    <button type="submit" class="btn btn-success" 
+      *ngIf="!uploader.getNotUploadedItems().length"
+      [disabled]="!f.form.valid">
+      Submit
+    </button>
+
     <p class="alert alert-success text-center" *ngIf="popup && !currentUser.is_admin"> <strong>Your show has been requested. Waiting for admin approval.</strong> </p>
     <p class="alert alert-success text-center" *ngIf="popup && currentUser.is_admin"> <strong>Added new show</strong> </p>
     <p class="alert alert-danger text-center" *ngIf="error"> <strong>{{errorMsg}}</strong> </p>

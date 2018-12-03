@@ -121,31 +121,32 @@ export class ShowFormComponent {
  * Sets the date object once submit is clicked.
  */
   setAirDate() {
-    if (this.airingChecked) {
-      let airDate = new Date();
-      airDate.setFullYear(this.date["year"]);
+    console.log("YEET")
+    
+    let airDate = new Date();
+    airDate.setFullYear(this.date["year"]);
 
-      airDate.setMonth(this.months.indexOf(this.date["month"]));
+    airDate.setMonth(this.months.indexOf(this.date["month"]));
 
-      airDate.setDate(this.date["day"]);
+    airDate.setDate(this.date["day"]);
 
-      airDate.setHours(this.date["hour"]);
+    airDate.setHours(this.date["hour"]);
 
-      airDate.setMinutes(0);
+    airDate.setMinutes(0);
 
-      airDate.setSeconds(0);
+    airDate.setSeconds(0);
 
-      airDate.setMilliseconds(0);
+    airDate.setMilliseconds(0);
 
-      // NaN if date is invalid, which would fail this
-      if (airDate.getTime() === airDate.getTime()) {
-        this.show.airDate = airDate.toISOString();
-      }
-
-      else {
-        this.show.airDate = undefined;
-      }
+    // NaN if date is invalid, which would fail this
+    if (airDate.getTime() === airDate.getTime()) {
+      this.show.airDate = airDate.toISOString();
     }
+
+    else {
+      this.show.airDate = undefined;
+    }
+    
   }
 
 

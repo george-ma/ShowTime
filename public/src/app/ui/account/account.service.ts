@@ -17,4 +17,6 @@ export class AccountService {
     uploadFile(data){
       return this.httpClient.upload(`${this.API_URL}/upload`, data);
     }
+
+    
 }

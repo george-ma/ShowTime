@@ -15,8 +15,8 @@ module.exports = {
             password: req.body.password,
             is_admin: false,
             is_banned: false,
-            bio: " ",
-            img: " "
+            bio: "",
+            img: ""
         })
 
         // save user to database
@@ -39,8 +39,8 @@ module.exports = {
             password: req.body.password,
             is_admin: true,
             is_banned: false,
-            bio: " ",
-            img: " "
+            bio: "",
+            img: ""
         })
 
         // save user to database
@@ -75,16 +75,37 @@ module.exports = {
         // Good practice is to validate the id
         if (!ObjectID.isValid(id)) { return res.status(404).send() }
 
-        User.findOne({'_id': id}).then( (user) => {
-            user.set(req.body)
+        User.findById(id).then( (user) => {
+            if (!user){
+                res.status(404).send();
+            } else {
 
-            user.save().then( (result) => {
-                res.send(result)
-            }, (error) => {
-                res.status(400).send(error)
-            })
+                // update user attributes
+                user.email = (req.body.email) ? req.body.email : user.email;
+                user.password = (req.body.password) ? req.body.password : user.password;
+                user.bio = (req.body.bio) ? req.body.bio : user.bio;
+                user.img = (req.body.img) ? req.body.img : user.img;
 
+                user.save().then( (result) => {
+                    res.send(result)
+                }, (error) => {
+                    res.status(400).send(error)
+                })
+            }
+        }).catch((error) => {
+            res.status(400).send(error);
         })
+
+        // User.findOne({'_id': id}).then( (user) => {
+        //     user.set(req.body)
+
+        //     user.save().then( (result) => {
+        //         res.send(result)
+        //     }, (error) => {
+        //         res.status(400).send(error)
+        //     })
+
+        // })
     },
 
     //get a user

@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { RegisterAdminComponent } from './register-admin/register-admin.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ShowFormComponent } from './show-form/show-form.component';
@@ -23,7 +24,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     FormsModule,
     CountdownModule
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent, FileSelectDirective],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, RegisterAdminComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent, FileSelectDirective],
   exports: [LayoutComponent]
 })
 export class UiModule { }

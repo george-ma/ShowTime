@@ -73,7 +73,7 @@ module.exports = {
       if (!ObjectID.isValid(showId)) { return res.status(404).send([]) }
 
       Rating.find({show_id: req.params.show_id}).populate("user_id", "username").then((results) => {
-              results.filter(result => result.review.length >= 1 )
+              results.filter(result => result.review != undefined && result.review.length >= 1 )
               res.send( results )
           }, (error) => {
               res.status(400).send(error)

@@ -85,6 +85,8 @@ module.exports = {
                 user.password = (req.body.password) ? req.body.password : user.password;
                 user.bio = (req.body.bio) ? req.body.bio : user.bio;
                 user.img = (req.body.img) ? req.body.img : user.img;
+                user.is_admin = (req.body.is_admin) ? req.body.is_admin : user.is_admin;
+                user.is_banned = (req.body.is_banned) ? req.body.is_banned : user.is_banned;
 
                 user.save().then( (result) => {
                     res.send(result)

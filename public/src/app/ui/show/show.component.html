@@ -77,6 +77,7 @@
         <form (ngSubmit)="f.form.valid && addRating()" #f="ngForm">
           <div class="form-group">
             <label class="font-weight-bold" for="review">My Ratings: {{myShow.rating}} </label>
+            <span class="font-weight-light"> (Required)</span>
             <br>
             <button type="button" class="btnrating btn" (click)="setRating(1)" [ngClass]="{'btn-default': myShow.rating < 1 , 'btn-warning': myShow.rating >= 1}">
               <i class="fa fa-star" aria-hidden="true"></i>
@@ -99,7 +100,8 @@
       <div class="col-sm-12">
         <form (ngSubmit)="f.form.valid && addRating()" #f="ngForm">
           <div class="form-group">
-            <label class="font-weight-bold" for="review">Status </label>
+            <label class="font-weight-bold" for="review">Status</label>
+            <span class="font-weight-light"> (Required)</span>
             <br>
             <button type="button" class="btnrating btn" (click)="setStatus(1)" [ngClass]="{'btn-default': myShow.status != 1 , 'btn-success': myShow.status == 1}">
               Completed
@@ -124,6 +126,6 @@
           </div>
         </form>
       </div>
-    </div><!-- end <!-- rating:  row -->
+    </div><!-- end rating:  row -->
   </div>
 </div>

@@ -36,15 +36,19 @@ export class ShowComponent implements OnInit {
   constructor(public route: ActivatedRoute, public router: Router, private showService: ShowService) { }
 
   ngOnInit() {
+    this.currShowId = this.route.snapshot.paramMap.get('id')
+    
     this.showService.getSessionUser().subscribe((response)=>{
       sessionStorage.setItem('currentUser', JSON.stringify(response));
+      this.getShow(this.currShowId);
+      this.getUser()
+      this.getRatingData(this.currShowId)
     }, (error) => {
       sessionStorage.removeItem('currentUser');
+      this.getShow(this.currShowId);
+      this.getUser()
+      this.getRatingData(this.currShowId)
     });
-    this.currShowId = this.route.snapshot.paramMap.get('id')
-    this.getShow(this.currShowId);
-    this.getUser()
-    this.getRatingData(this.currShowId)
   }
 
   /**
@@ -325,7 +329,8 @@ export class ShowComponent implements OnInit {
        review: this.myShow.review
      };
 
-    if(reqBody.status < 1 || reqBody.status > 5 ){
+    if(reqBody.status === undefined || reqBody.status < 1 || reqBody.status > 5 ){
+
       this.error = true;
       this.errorMsg = "Status is Invalid or Unset"
       setTimeout(() => {
@@ -335,7 +340,7 @@ export class ShowComponent implements OnInit {
       return
     }
 
-    if(reqBody.rating < 1 || reqBody.rating > 5 ){
+    if(reqBody.rating === undefined || reqBody.rating < 1 || reqBody.rating > 5 ){
       this.error = true;
       this.errorMsg = "Rating is Invalid or Unset"
 

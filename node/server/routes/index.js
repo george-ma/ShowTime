@@ -11,7 +11,7 @@ const { ObjectID } = require('mongodb')
 const authenticate = (req, res, next) => {
 	if (req.session.user) {
 		User.findById(req.session.user).then((user) => {
-			if (!user) {
+			if (!user || user.is_banned) {
 				return Promise.reject()
 			} else {
 				req.user = user

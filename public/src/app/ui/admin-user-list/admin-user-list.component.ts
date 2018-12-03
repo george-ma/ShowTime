@@ -26,11 +26,11 @@ export class AdminUserListComponent implements OnInit {
   ngOnInit() {
     this.adminUserListService.isAdmin().subscribe( (response: boolean) => {
         if(!response){
-          this.router.navigate(['login']);
+          this.router.navigate(['grid']);
         }
     }, (error) => {
         console.log(error)
-        this.router.navigate(['login']);
+        this.router.navigate(['grid']);
     })
 
     // Fetch Users from DB

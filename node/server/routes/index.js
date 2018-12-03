@@ -18,10 +18,10 @@ const authenticate = (req, res, next) => {
 				next()
 			}
 		}).catch((error) => {
-			res.redirect('http://localhost:4200/login')
+			res.status(401).send()
 		})
 	} else {
-		res.redirect('http://localhost:4200/login')
+		res.status(401).send()
 	}
 }
 
@@ -36,10 +36,10 @@ const authenticateAdmin = (req, res, next) => {
 				next()
 			}
 		}).catch((error) => {
-			res.redirect('http://localhost:4200/login')
+			res.status(401).send()
 		})
 	} else {
-		res.redirect('http://localhost:4200/login')
+		res.status(401).send()
 	}
 }
 
@@ -114,6 +114,9 @@ module.exports = (app) => {
     // get my rating data for a show
     app.get('/rating/user/:user_id/:show_id', ratingController.getMyRating);
 
+    // User Check routes
+    //get current logged in user
+    app.get('/getsessionuser', authenticate, usersController.getSessionUser);
     //check if admin is log in
     app.get('/sessioncheckeradmin', authenticateAdmin, (req, res) => {res.send(true)})
 

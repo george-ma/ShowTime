@@ -48,6 +48,11 @@ export class GridComponent implements OnInit {
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
+    this.gridService.getSessionUser().subscribe((response)=>{
+      sessionStorage.setItem('currentUser', JSON.stringify(response));
+    }, (error) => {
+      sessionStorage.removeItem('currentUser');
+    });
     this.getUser();
     this.getShows();
   }

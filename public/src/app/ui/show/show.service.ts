@@ -46,5 +46,8 @@ export class ShowService {
     return this.httpClient.post(`${this.API_URL}/users/${id}/removeshow`, data);
   }
 
+  getSessionUser(){
+    return this.httpClient.get(`${this.API_URL}/getsessionuser`);
+  }
 
 }

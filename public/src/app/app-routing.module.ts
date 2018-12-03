@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register/admin', component: RegisterAdminComponent },
-  { path: 'addNewShow', component: ShowFormComponent },
+  { path: 'addNewShow', component: ShowFormComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'adminuserlist', component: AdminUserListComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'account', component: AccountComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'grid/show/:id', component: ShowComponent },

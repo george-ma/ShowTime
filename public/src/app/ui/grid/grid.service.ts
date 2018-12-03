@@ -59,4 +59,9 @@ export class GridService {
   approveShow(data) {
     return this.httpClient.post(`${this.API_URL}/shows/approve`, data);
   }
+
+  getSessionUser(){
+    return this.httpClient.get(`${this.API_URL}/getsessionuser`);
+  }
+
 }

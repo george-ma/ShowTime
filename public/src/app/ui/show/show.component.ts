@@ -36,6 +36,11 @@ export class ShowComponent implements OnInit {
   constructor(public route: ActivatedRoute, public router: Router, private showService: ShowService) { }
 
   ngOnInit() {
+    this.showService.getSessionUser().subscribe((response)=>{
+      sessionStorage.setItem('currentUser', JSON.stringify(response));
+    }, (error) => {
+      sessionStorage.removeItem('currentUser');
+    });
     this.currShowId = this.route.snapshot.paramMap.get('id')
     this.getShow(this.currShowId);
     this.getUser()
@@ -329,7 +334,7 @@ export class ShowComponent implements OnInit {
       }, 2000);
       return
     }
-    
+
     if(reqBody.rating < 1 || reqBody.rating > 5 ){
       this.error = true;
       this.errorMsg = "Rating is Invalid or Unset"

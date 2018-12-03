@@ -14,4 +14,8 @@ export class HeaderService {
     return this.httpClient.get(`${this.API_URL}/logout`);
   }
 
+  getSessionUser(){
+    return this.httpClient.get(`${this.API_URL}/getsessionuser`);
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService } from './header.service';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,6 +16,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.setUser();
+    this.headerService.getSessionUser().subscribe((response)=>{
+      sessionStorage.setItem('currentUser', JSON.stringify(response));
+    }, (error) => {
+      sessionStorage.removeItem('currentUser');
+    });
   }
 
   getCheckUser() {

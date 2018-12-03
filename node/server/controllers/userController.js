@@ -131,6 +131,30 @@ module.exports = {
         })
     },
 
+    //get a user
+    getSessionUser(req, res) {
+
+        const id = req.session.user
+
+        // Good practise is to validate the id
+        if (!ObjectID.isValid(id)) {
+        return res.status(404).send("no user")
+        }
+
+        // Otheriwse, findById
+        User.findById(id).then((user) => {
+          if (!user) {
+              res.status(404).send()
+          } else {
+              user.password = ""
+              res.send( user )
+          }
+
+        }).catch((error) => {
+            res.status(400).send(error)
+        })
+    },
+
     //login a user
     loginUser(req, res) {
 

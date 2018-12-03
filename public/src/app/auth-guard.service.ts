@@ -15,16 +15,19 @@ export class AuthGuardService implements CanActivate {
 
   // required to implement CanActivate interface
   canActivate(): boolean {
-    this.sessionChecker().subscribe((response: boolean)=>{
-      if(!response){
-        this.router.navigate(['login']);
-      }
+    this.getSessionUser().subscribe((response)=>{
+      sessionStorage.setItem('currentUser', JSON.stringify(response));
       return true
     }, (error) => {
+      sessionStorage.removeItem('currentUser');
       this.router.navigate(['login']);
       return false
     });
     return true
+  }
+
+  getSessionUser(){
+    return this.httpClient.get(`${this.API_URL}/getsessionuser`);
   }
 
   sessionChecker(){

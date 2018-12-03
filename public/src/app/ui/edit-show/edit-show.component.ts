@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EditShowService } from './edit-show.service';
 import { switchMap } from 'rxjs/operators';
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 
 import { Show } from '../models/show';
+
+const URL = 'http://localhost:8000/upload';
 
 @Component({
   selector: 'app-edit-show',
@@ -11,6 +14,8 @@ import { Show } from '../models/show';
   styleUrls: ['./edit-show.component.css']
 })
 export class EditShowComponent implements OnInit {
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
   // Global Variables that will store data from the sessionStorage on ngInit()
   user: any = {}
@@ -74,6 +79,19 @@ export class EditShowComponent implements OnInit {
       this.error = true;
     });
 
+    // for image upload
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+      this.updateShow.img = `assets/${file.file.name}`;
+     };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+        if (status == 200) {
+
+        } else {
+          alert('Image file failed, try again')
+        }
+     };
   }
 
   /**

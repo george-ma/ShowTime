@@ -25,4 +25,8 @@ export class EditShowService {
   editShow(id, data) {
     return this.httpClient.post(`${this.API_URL}/shows/${id}/edit`, data);
   }
+
+  uploadFile(data){
+    return this.httpClient.upload(`${this.API_URL}/upload`, data);
+  }
 }

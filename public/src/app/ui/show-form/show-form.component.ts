@@ -101,7 +101,7 @@ export class ShowFormComponent {
    */
   addNewShow() {
     this.setAirDate();
-
+    console.log(this.show)
     this.showFormService.addShow(this.show).subscribe((response)=>{
         this.error = false;
         this.popup = true;
@@ -121,16 +121,15 @@ export class ShowFormComponent {
  * Sets the date object once submit is clicked.
  */
   setAirDate() {
-    if (this.airingChecked) {
-      let airDate = new Date();
-      
-      airDate.setFullYear(this.date["year"]);
-      airDate.setMonth(this.months.indexOf(this.date["month"]));
-      airDate.setDate(this.date["day"]);
-      airDate.setHours(this.date["hour"]);
-      airDate.setMinutes(0);
-      airDate.setSeconds(0);
-      airDate.setMilliseconds(0);
+    let airDate = new Date();
+    
+    airDate.setFullYear(this.date["year"]);
+    airDate.setMonth(this.months.indexOf(this.date["month"]));
+    airDate.setDate(this.date["day"]);
+    airDate.setHours(this.date["hour"]);
+    airDate.setMinutes(0);
+    airDate.setSeconds(0);
+    airDate.setMilliseconds(0);
 
     // NaN if date is invalid, which would fail this
     if (airDate.getTime() === airDate.getTime()) {
@@ -140,9 +139,5 @@ export class ShowFormComponent {
     else {
       this.show.airDate = undefined;
     }
-    
   }
-
-
-}
 }

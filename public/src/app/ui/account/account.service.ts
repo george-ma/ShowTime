@@ -11,7 +11,10 @@ export class AccountService {
     constructor(private httpClient: HttpService) { }
 
     editUser(data) {
-        console.log(data);
-        return this.httpClient.post(`${this.API_URL}/users/${data._id}/update`, data);
+      return this.httpClient.post(`${this.API_URL}/users/${data._id}/update`, data);
+    }
+
+    uploadFile(data){
+      return this.httpClient.upload(`${this.API_URL}/upload`, data);
     }
 }

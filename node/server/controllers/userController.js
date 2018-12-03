@@ -97,17 +97,6 @@ module.exports = {
         }).catch((error) => {
             res.status(400).send(error);
         })
-
-        // User.findOne({'_id': id}).then( (user) => {
-        //     user.set(req.body)
-
-        //     user.save().then( (result) => {
-        //         res.send(result)
-        //     }, (error) => {
-        //         res.status(400).send(error)
-        //     })
-
-        // })
     },
 
     //get a user

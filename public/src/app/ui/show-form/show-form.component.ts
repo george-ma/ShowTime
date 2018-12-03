@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ShowFormService } from './show-form.service';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 
 import { Show } from '../models/show';
 import { container } from '@angular/core/src/render3';
@@ -84,6 +84,7 @@ export class ShowFormComponent {
       file.withCredentials = false;
       this.show.img= `assets/${file.file.name}`;
      };
+
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
         if(status == 200){
           this.addNewShow();
@@ -91,7 +92,6 @@ export class ShowFormComponent {
         } else{
           alert('Image file failed, try agian')
         }
-
      };
   }
 
@@ -123,18 +123,13 @@ export class ShowFormComponent {
   setAirDate() {
     if (this.airingChecked) {
       let airDate = new Date();
+      
       airDate.setFullYear(this.date["year"]);
-
       airDate.setMonth(this.months.indexOf(this.date["month"]));
-
       airDate.setDate(this.date["day"]);
-
       airDate.setHours(this.date["hour"]);
-
       airDate.setMinutes(0);
-
       airDate.setSeconds(0);
-
       airDate.setMilliseconds(0);
 
       // NaN if date is invalid, which would fail this

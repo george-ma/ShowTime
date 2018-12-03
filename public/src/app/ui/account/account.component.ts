@@ -1,10 +1,13 @@
 /**
  * Displays information about the current user, and shows fields
  * for changing them.
- * 
+ *
  */
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './account.service';
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+
+const URL = 'http://localhost:8000/upload';
 
 @Component({
   selector: 'app-account',
@@ -12,6 +15,8 @@ import { AccountService } from './account.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
+
+    public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
     /** TODO: can remove once we figure out image storing */
     // stores a local copy of the current user
@@ -34,11 +39,24 @@ export class AccountComponent implements OnInit {
         /** TODO: can remove once we figure out image storing */
         this.user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (!this.user.bio) {
-        this.user.bio = "hello I am a dummy user and this is my bio";
+          this.user.bio = "hello I am a dummy user and this is my bio";
         }
-        if (!this.user.profilePic) {
-        this.user.profilePic = "../../assets/profilepic.png";
+        if (!this.user.img) {
+          this.user.img = "../../assets/noImage.jpg";
         }
+
+        this.uploader.onAfterAddingFile = (file) => {
+          file.withCredentials = false;
+          this.updatedInfo.img = `assets/${file.file.name}`;
+         };
+
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+            if (status == 200) {
+              this.updateUserInfo();
+            } else {
+              alert('Image file failed, try again')
+            }
+         };
     }
 
   /**
@@ -46,7 +64,6 @@ export class AccountComponent implements OnInit {
    * the new information from the user forms.
    */
   updateUserInfo() {
-    /** TODO: Update new display picture */
 
     let validEmail: boolean = true; // for email verification
     const modifiedUser = this.user;
@@ -60,20 +77,25 @@ export class AccountComponent implements OnInit {
     }
 
     if (validEmail) {
+
         // if (this.updatedInfo.username){ modifiedUser.username = this.updatedInfo.username; }
+        if (this.updatedInfo.img){ modifiedUser.img = this.updatedInfo.img; }
         if (this.updatedInfo.password){ modifiedUser.password = this.updatedInfo.password; }
         if (this.updatedInfo.bio){ modifiedUser.bio = this.updatedInfo.bio; }
-        
+
         this.accountService.editUser(modifiedUser).subscribe((response)=> {
             sessionStorage.setItem('currentUser', JSON.stringify(response));
+
             this.error = false;
             this.success = true;
             this.successMsg = "Changes saved."
+
         }, error => {
             this.error = true;
             this.errorMsg = error.error.message;
             }
         );
+
     } else {
         this.error = true;
         this.errorMsg = "Invalid email address.";

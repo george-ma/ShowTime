@@ -50,11 +50,14 @@ export class GridComponent implements OnInit {
   ngOnInit() {
     this.gridService.getSessionUser().subscribe((response)=>{
       sessionStorage.setItem('currentUser', JSON.stringify(response));
+      this.getUser();
+      this.getShows();
     }, (error) => {
       sessionStorage.removeItem('currentUser');
+      this.getUser();
+      this.getShows();
     });
-    this.getUser();
-    this.getShows();
+
   }
 
   /**

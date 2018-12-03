@@ -18,7 +18,7 @@ export class AdminUserListService {
         return this.httpClient.get(`${this.API_URL}/sessioncheckeradmin`)
     }
 
-    banUser(user) {
+    updateUser(user) {
         return this.httpClient.post(`${this.API_URL}/users/${user._id}/update`, user);
     }
 }

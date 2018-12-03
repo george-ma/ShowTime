@@ -132,15 +132,15 @@ export class ShowFormComponent {
       airDate.setSeconds(0);
       airDate.setMilliseconds(0);
 
-      // NaN if date is invalid, which would fail this
-      if (airDate.getTime() === airDate.getTime()) {
-        this.show.airDate = airDate.toISOString();
-      }
-
-      else {
-        this.show.airDate = undefined;
-      }
+    // NaN if date is invalid, which would fail this
+    if (airDate.getTime() === airDate.getTime()) {
+      this.show.airDate = airDate.toISOString();
     }
+
+    else {
+      this.show.airDate = undefined;
+    }
+    
   }
 
 

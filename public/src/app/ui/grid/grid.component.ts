@@ -359,7 +359,10 @@ export class GridComponent implements OnInit {
    * the local lists of shows.
    */
   getRegxShows(){
-    let reg = RegExp(`^${this.search}`, 'i');
+    let words = this.search.trim().split(' ')
+    console.log(words)
+
+    let reg = RegExp(`${this.search.trim()}`, 'i');
     reg.ignoreCase;
 
     this.gridService.getApprovedShows().subscribe((response: Array<Show>) => {
@@ -371,7 +374,21 @@ export class GridComponent implements OnInit {
       this.getUser();
 
       for (let show of data) {
-        if (show.approved == true && reg.test(show.title)) {
+        // if (show.approved == true && reg.test(show.title)) {
+
+        if (show.approved == true && (() => {
+          console.log("HELLO?")
+          for (let word of words) {
+            let reg = RegExp(`${word}`, 'i');
+
+            console.log(word)
+            if(!reg.test(show.title)) {
+              console.log("Failed", word)
+              return false
+            }
+          }
+          return true
+        })()) {
           if (this.getCheckUser() && this.inMyShows(show._id)) {
             this.myShows.push(show);
           } else {

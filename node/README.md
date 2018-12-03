@@ -15,6 +15,6 @@ $ mongod --dbpath ./mongo-data
 
 ## Development server
 
-Run `npm run start:dev` or `nodemon ./bin/www` for a dev server. 
+Run `npm run start` or `nodemon ./bin/www` for a dev server. 
 
 Navigate to `http://127.0.0.1:8000/`.

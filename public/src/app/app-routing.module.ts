@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './ui/login/login.component';
 import { GridComponent } from './ui/grid/grid.component';
 import { RegisterComponent } from './ui/register/register.component';
+import { RegisterAdminComponent } from './ui/register-admin/register-admin.component';
 import { ShowComponent } from './ui/show/show.component';
 import { ShowFormComponent } from './ui/show-form/show-form.component';
 import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'grid', component: GridComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'register/admin', component: RegisterAdminComponent },
   { path: 'addNewShow', component: ShowFormComponent },
   { path: 'adminuserlist', component: AdminUserListComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'account', component: AccountComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },

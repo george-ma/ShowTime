@@ -60,11 +60,11 @@ module.exports = (app) => {
     // create new admins
     app.post('/users/admin', usersController.createAdmin);
     // GET all users
-    app.get('/users', usersController.getAllUsers);
+    app.get('/users', authenticateAdmin, usersController.getAllUsers);
     // get user by id
     app.get('/users/:id', usersController.getUser);
     // update user by id
-    app.post('/users/:id/update', usersController.update);
+    app.post('/users/:id/update', authenticate, usersController.update);
     // remove user by id
     app.get('/users/:id/delete', usersController.remove);
     // login a user
@@ -74,27 +74,27 @@ module.exports = (app) => {
     // add show to user's list of shows
     app.post('/users/:id/addshow', authenticate, usersController.addShow);
     // removes show from user's list of shows
-    app.post('/users/:id/removeshow', usersController.removeShow);
+    app.post('/users/:id/removeshow', authenticate, usersController.removeShow);
     // get user's shows
-    app.get('/users/:id/myshows', usersController.getMyShows);
+    app.get('/users/:id/myshows', authenticate, usersController.getMyShows);
     // get not user's shows
-    app.get('/users/:id/notmyshows', usersController.getNotMyShows);
+    app.get('/users/:id/notmyshows', authenticate, usersController.getNotMyShows);
     // get user's shows
     app.get('/users/:id/show/:show_id', usersController.isMyShow);
 
     // * show routes *
     // create a new show
-    app.post('/shows', showsController.create);
+    app.post('/shows', authenticate, showsController.create);
     // get all shows
-    app.get('/shows/approved', showsController.getApprovedShows);
+    app.get('/shows/approved', authenticateAdmin, showsController.getApprovedShows);
     // get unapproved shows
-    app.get('/shows/unapproved', showsController.getUnapprovedShows);
+    app.get('/shows/unapproved', authenticateAdmin, showsController.getUnapprovedShows);
      // remove show
-    // TODO: change post request to delete request
-    app.post('/shows/remove', showsController.removeShow);
+    // change post request to delete request
+    app.post('/shows/remove', authenticateAdmin, showsController.removeShow);
     // approve show
     // TODO: change post request to put request
-    app.post('/shows/approve', showsController.approveShow);
+    app.post('/shows/approve', authenticateAdmin, showsController.approveShow);
     // get single show based on show id
     app.get('/shows/:id', showsController.getShow);
     // edit show
@@ -102,7 +102,7 @@ module.exports = (app) => {
 
     // * rating routes *
     // create a new rating
-    app.post('/rating', ratingController.create);
+    app.post('/rating', authenticate, ratingController.create);
     // get all ratings
     app.get('/rating', ratingController.getAllRatings);
     // get avrage rating for show

@@ -28,25 +28,27 @@
     </div>
 
     <div class="form-group">
-      <label for="checkboxAiringDate">Airing Date</label>
-
-      <div class="d-flex flex-row">
-        <select class="form-control p-2" id="hourSelect" required [(ngModel)]="date.hour" name="hour">
-          <option *ngFor="let hour of hours">{{hour}}</option>
-        </select>
-
-        <select class="form-control p-2" id="daySelect" required [(ngModel)]="date.day" name="day">
-          <option *ngFor="let day of days">{{day}}</option>
-        </select>
-
-        <select class="form-control p-2" id="monthSelect" required [(ngModel)]="date.month" name="month">
-          <option *ngFor="let month of months">{{month}}</option>
-        </select>
-
-        <select class="form-control p-2" id="yearSelect" required [(ngModel)]="date.year" name="year">
-          <option *ngFor="let year of years">{{year}}</option>
-        </select>
-      </div>
+      <label for="link"><strong>Airing Date</strong></label>
+      <br>
+      <label for="hourSelect">Hour: </label>
+      <select class="form-control p-2" id="hourSelect" required [(ngModel)]="date.hour" name="hour">
+        <option *ngFor="let hour of hours">{{hour}}</option>
+      </select>
+      <br>
+      <label for="hourSelect">Day: </label>
+      <select class="form-control p-2" id="daySelect" required [(ngModel)]="date.day" name="day">
+        <option *ngFor="let day of days">{{day}}</option>
+      </select>
+      <br>
+      <label for="hourSelect">Month: </label>
+      <select class="form-control p-2" id="monthSelect" required [(ngModel)]="date.month" name="month">
+        <option *ngFor="let month of months">{{month}}</option>
+      </select>
+      <br>
+      <label for="hourSelect">Year: </label>
+      <select class="form-control p-2" id="yearSelect" required [(ngModel)]="date.year" name="year">
+        <option *ngFor="let year of years">{{year}}</option>
+      </select>
     </div>
 
     <div class="form-group">
@@ -56,12 +58,12 @@
 
     <button type="button" class="btn btn-success btn-s"
       (click)="uploader.uploadAll()"
-      *ngIf="uploader.getNotUploadedItems().length" 
+      *ngIf="uploader.getNotUploadedItems().length"
       [disabled]="!f.form.valid">
           Submit with Image
     </button>
 
-    <button type="submit" class="btn btn-success" 
+    <button type="submit" class="btn btn-success"
       *ngIf="!uploader.getNotUploadedItems().length"
       [disabled]="!f.form.valid">
       Submit

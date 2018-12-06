@@ -37,7 +37,7 @@ export class ShowComponent implements OnInit {
 
   ngOnInit() {
     this.currShowId = this.route.snapshot.paramMap.get('id')
-    
+
     this.showService.getSessionUser().subscribe((response)=>{
       sessionStorage.setItem('currentUser', JSON.stringify(response));
       this.getShow(this.currShowId);
@@ -119,7 +119,6 @@ export class ShowComponent implements OnInit {
     this.showService.getShow(id).subscribe((response)=>{
         this.error = false;
         this.show = response;
-        console.log(this.show)
       },
       error => {
         this.error = true;

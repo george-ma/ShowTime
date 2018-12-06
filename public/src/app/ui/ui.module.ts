@@ -16,6 +16,7 @@ import { ShowComponent } from './show/show.component';
 import { EditShowComponent } from './edit-show/edit-show.component';
 import { CountdownModule } from 'ngx-countdown';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     FormsModule,
     CountdownModule
   ],
-  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, RegisterAdminComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent, FileSelectDirective],
+  declarations: [LayoutComponent, HeaderComponent, GridComponent, LoginComponent, RegisterComponent, RegisterAdminComponent, ShowFormComponent, AccountComponent, ShowComponent, EditShowComponent, FileSelectDirective, NotFoundComponent],
   exports: [LayoutComponent]
 })
 export class UiModule { }

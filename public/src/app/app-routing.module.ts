@@ -10,6 +10,7 @@ import { AdminUserListComponent } from './ui/admin-user-list/admin-user-list.com
 import { AccountComponent } from './ui/account/account.component';
 import { EditShowComponent } from './ui/edit-show/edit-show.component';
 import { AuthGuardService } from './auth-guard.service';
+import { NotFoundComponent } from './ui/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: GridComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'editShow/:id', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always'},
   { path: 'grid/editShow/:id', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
   { path: 'show/:id/editShow', component: EditShowComponent , canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
-  { path: 'grid/show/:id/editShow', component: EditShowComponent, canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' }
+  { path: 'grid/show/:id/editShow', component: EditShowComponent, canActivate: [AuthGuardService], runGuardsAndResolvers: 'always' },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

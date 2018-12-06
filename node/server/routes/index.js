@@ -81,12 +81,14 @@ module.exports = (app) => {
     app.get('/users/:id/notmyshows', authenticate, usersController.getNotMyShows);
     // get user's shows
     app.get('/users/:id/show/:show_id', usersController.isMyShow);
+		// update user's type by id
+		app.post('/users/:id/update/type', authenticateAdmin, usersController.update);
 
     // * show routes *
     // create a new show
     app.post('/shows', authenticate, showsController.create);
     // get all shows
-    app.get('/shows/approved', authenticateAdmin, showsController.getApprovedShows);
+    app.get('/shows/approved', showsController.getApprovedShows);
     // get unapproved shows
     app.get('/shows/unapproved', authenticateAdmin, showsController.getUnapprovedShows);
      // remove show

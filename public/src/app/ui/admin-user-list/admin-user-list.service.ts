@@ -19,6 +19,6 @@ export class AdminUserListService {
     }
 
     updateUser(user) {
-        return this.httpClient.post(`${this.API_URL}/users/${user._id}/update`, user);
+        return this.httpClient.post(`${this.API_URL}/users/${user._id}/update/type`, user);
     }
 }

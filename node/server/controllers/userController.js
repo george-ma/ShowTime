@@ -89,7 +89,7 @@ module.exports = {
                 if (req.body.is_banned != user.is_banned){
                     user.is_banned = req.body.is_banned;
                 }
-                
+
                 if (req.body.is_admin != user.is_admin){
                     user.is_admin = req.body.is_admin;
                 }
@@ -173,7 +173,7 @@ module.exports = {
                 }
             }
         }).catch((error) => {
-            res.status(404).send("Incorrect user/password combination.")
+            res.status(401).send("Incorrect user/password combination.")
         })
     },
 

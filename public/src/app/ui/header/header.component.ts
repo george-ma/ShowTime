@@ -39,10 +39,10 @@ export class HeaderComponent implements OnInit {
     this.headerService.logout().subscribe((response)=>{
       this.user = null;
       sessionStorage.removeItem('currentUser');
+      this.router.navigate(['/login'])
     }, (error) => {
       sessionStorage.removeItem('currentUser');
+      this.router.navigate(['/login'])
     });
-
   }
-
 }

@@ -10,6 +10,12 @@ export class RegisterAdminService {
 
   constructor(private httpClient: HttpService) { }
 
+  /**
+   * Requests to register a new administrator
+   * 
+   * @param data 
+   * request body
+   */
   addAdmin(data) {
     return this.httpClient.post(`${this.API_URL}/users/admin`, data);
   }

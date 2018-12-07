@@ -44,7 +44,6 @@ export class GridComponent implements OnInit {
   // string to bind search input
   search: string ='';
 
-
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
@@ -423,10 +422,8 @@ export class GridComponent implements OnInit {
           }
         }
       }
-
     }, (error) => {
       this.error = true;
     });
-
   }
 }

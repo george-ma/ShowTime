@@ -10,10 +10,16 @@ export class HeaderService {
 
   constructor(private httpClient: HttpService) { }
 
+  /**
+   * Logs out the current user
+   */
   logout(){
     return this.httpClient.get(`${this.API_URL}/logout`);
   }
 
+  /**
+   * Gets the current user
+   */
   getSessionUser(){
     return this.httpClient.get(`${this.API_URL}/getsessionuser`);
   }

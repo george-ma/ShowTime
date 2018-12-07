@@ -63,7 +63,6 @@ export class EditShowComponent implements OnInit {
       this.years[i] = (currentYear - 15) + i;
     }
 
-    // TODO: hour doesn't fill properly
     this.date["hour"] = this.hours[currentDate.getHours()];
     this.date["day"] = currentDate.getDate();
     this.date["month"] = this.months[currentDate.getMonth()];

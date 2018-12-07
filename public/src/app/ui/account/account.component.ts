@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
 
     public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
-    /** TODO: can remove once we figure out image storing */
+   
     // stores a local copy of the current user
     user: any = {};
 
@@ -35,11 +35,14 @@ export class AccountComponent implements OnInit {
 
     constructor(private accountService: AccountService) { }
 
+    /**
+     * Populates the page with filler data if not found, sets
+     * up uploader
+     */
     ngOnInit() {
-        /** TODO: can remove once we figure out image storing */
         this.user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (!this.user.bio) {
-          this.user.bio = "hello I am a dummy user and this is my bio";
+          this.user.bio = "Bio not found";
         }
         if (!this.user.img) {
           this.user.img = "../../assets/noImage.jpg";
@@ -64,7 +67,6 @@ export class AccountComponent implements OnInit {
    * the new information from the user forms.
    */
   updateUserInfo() {
-
     let validEmail: boolean = true; // for email verification
     const modifiedUser = this.user;
 
@@ -77,8 +79,6 @@ export class AccountComponent implements OnInit {
     }
 
     if (validEmail) {
-
-        // if (this.updatedInfo.username){ modifiedUser.username = this.updatedInfo.username; }
         if (this.updatedInfo.img){ modifiedUser.img = this.updatedInfo.img; }
         if (this.updatedInfo.password){ modifiedUser.password = this.updatedInfo.password; }
         if (this.updatedInfo.bio){ modifiedUser.bio = this.updatedInfo.bio; }
@@ -100,6 +100,5 @@ export class AccountComponent implements OnInit {
         this.error = true;
         this.errorMsg = "Invalid email address.";
     }
-
   }
 }

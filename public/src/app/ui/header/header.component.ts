@@ -23,10 +23,16 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Check if user is logged in
+   */
   getCheckUser() {
     return sessionStorage.getItem('currentUser') != null;
   }
 
+  /**
+   * Sets local user to user in session storage
+   */
   setUser() {
     if (sessionStorage.getItem('currentUser') != null) {
       this.user = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -35,6 +41,9 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Logs out the current user, redirects to login
+   */
   logOut() {
     this.headerService.logout().subscribe((response)=>{
       this.user = null;

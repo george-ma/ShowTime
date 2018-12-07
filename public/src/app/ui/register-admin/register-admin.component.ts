@@ -62,8 +62,6 @@ export class RegisterAdminComponent implements OnInit {
           if(errormsg.length == 0){errormsg += "server error"}
           this.errorMsg = errormsg;
         }
-
       );
     }
-
   }

@@ -10,15 +10,26 @@ export class LoginService {
 
   constructor(private httpClient: HttpService) { }
 
-  // returns true iff user is logged in, otherwise returns false
+  /**
+   * Checks if user is logged in
+   */
   getCheckUser() {
     return sessionStorage.getItem('currentUser') != null;
   }
 
+  /**
+   * Gets current user
+   */
   getUser() {
     return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
+  /**
+   * Requests login
+   * 
+   * @param data 
+   * request body
+   */
   loginUser(data){
     return this.httpClient.post(`${this.API_URL}/users/login`, data);
   }

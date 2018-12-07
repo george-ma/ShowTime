@@ -33,6 +33,4 @@ export class AuthGuardService implements CanActivate {
   sessionChecker(){
     return this.httpClient.get(`${this.API_URL}/sessionchecker`);
   }
-
-
 }

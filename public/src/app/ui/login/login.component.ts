@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
+    if(sessionStorage.getItem('currentUser') != null) {
+      this.router.navigate(['/grid'])
+    }
   }
 
   /**

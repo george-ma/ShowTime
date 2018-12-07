@@ -10,6 +10,12 @@ export class RegisterService {
 
   constructor(private httpClient: HttpService) { }
 
+  /**
+   * Requests to add new user
+   * 
+   * @param data 
+   * request body
+   */
   addUser(data) {
     return this.httpClient.post(`${this.API_URL}/users`, data);
   }

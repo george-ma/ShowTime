@@ -44,7 +44,6 @@ export class GridComponent implements OnInit {
   // string to bind search input
   search: string ='';
 
-
   constructor(private gridService: GridService, public router: Router) { }
 
   ngOnInit() {
@@ -244,23 +243,10 @@ export class GridComponent implements OnInit {
 
     // if approved show was an edit
     if (unapproved.updating) {
-      unapproved.approved = true;
-      const updateId = unapproved.updating;
 
-      // approve show by copying over show details
-      this.gridService.editShow(updateId, unapproved).subscribe((response: Show) => {
-        //
-      }, (error) => {
-        this.error = true;
-        if (error.status == '401'){
-          alert("your session has expired")
-          this.router.navigate(['/login']);
-        }
-      });
-
-      // remove unapproved show that we copied details from
-      const showId = {showId: unapproved._id};
-      this.gridService.removeShow(showId).subscribe((response: Show) => {
+      // approve show and delete copy in unapprovedShows
+      const approveAndDeleteBody = {showId: id}
+      this.gridService.approveAndDeleteShow(approveAndDeleteBody).subscribe((response: Show) => {
         this.getShows();
       }, (error) => {
         this.error = true;
@@ -436,10 +422,8 @@ export class GridComponent implements OnInit {
           }
         }
       }
-
     }, (error) => {
       this.error = true;
     });
-
   }
 }

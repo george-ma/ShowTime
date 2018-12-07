@@ -4,7 +4,17 @@ const { ObjectID } = require('mongodb')
 
 module.exports = {
 
-    //create a new user
+    /// Route for creating a new user
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the newly created user document
+    // POST /users
     create(req, res) {
         console.log(req.body)
 
@@ -28,7 +38,17 @@ module.exports = {
             })
     },
 
-    // create a new admin
+    /// Route for creating a new admin
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the newly created user document
+    // POST /users/admin
     createAdmin(req, res) {
         console.log(req.body)
 
@@ -52,7 +72,10 @@ module.exports = {
             })
     },
 
-    // remove user by id
+    /// Route for deleting a user
+    // :id refers to user's ID
+    // Returned JSON is the removed user document
+    // GET /users/:id/delete
     remove(req, res) {
         const id = req.params.id
 
@@ -68,7 +91,22 @@ module.exports = {
         })
     },
 
-    // update user by id
+    /// Route for updating user information
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "bio": <bio>,
+      "img": <img>,
+      "password": <password>,
+      "is_banned": <is_banned>,
+      "is_admin": <is_admin>
+    }
+    */
+    // :id refers to user's ID
+    // Returned JSON is the updated user document
+    // POST /users/:id/update
     update(req, res) {
         const id = req.params.id
 
@@ -105,7 +143,10 @@ module.exports = {
         })
     },
 
-    //get a user
+    /// Route for getting user with id
+    // :id refers to user's ID
+    // Returned JSON is the user document
+    // GET /users/:id
     getUser(req, res) {
 
         const id = req.params.id
@@ -128,7 +169,9 @@ module.exports = {
         })
     },
 
-    //get a user
+    /// Route for getting the current logged in user
+    // Returned JSON is the user document
+    // GET /getsessionuser
     getSessionUser(req, res) {
 
         const id = req.session.user
@@ -152,7 +195,16 @@ module.exports = {
         })
     },
 
-    //login a user
+    /// Route for logging in user
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the logged in user document
+    // POST /users/login
     loginUser(req, res) {
 
         const username = req.body.username
@@ -177,7 +229,9 @@ module.exports = {
         })
     },
 
-    //login a user
+    /// Route for logging out a user
+    // Returned JSON is "success" if logout successful
+    // GET /logout
     logoutUser(req, res) {
       req.session.destroy((error) => {
     		if (error) {
@@ -188,7 +242,9 @@ module.exports = {
     	})
     },
 
-    //get all users
+    /// Route for getting all users
+    // Returned JSON list of user documents
+    // GET /getAllUsers
     getAllUsers(req, res) {
 
         User.find().then((users) => {
@@ -199,7 +255,16 @@ module.exports = {
 
     },
 
-    // add new show to user
+    /// Route for adding a show to a user's list of shows
+    /*
+    Request body expects:
+    {
+    	"showID": <show's ID>,
+    }
+    */
+    // :id refers to user's ID
+    // Returned JSON is the user document, including the new added show
+    // POST /users/:id/addshow
     addShow(req, res) {
 
       const id = req.params.id
@@ -223,7 +288,16 @@ module.exports = {
 
     },
 
-    // removes show from user's list
+    /// Route for removing a show from a user's list of shows
+    /*
+    Request body expects:
+    {
+    	"showID": <show's ID>,
+    }
+    */
+    // :id refers to user's ID
+    // Returned JSON is the user document, with the show in question removed
+    // POST /users/:id/removeshow
     removeShow(req, res) {
 
       const id = req.params.id
@@ -247,7 +321,10 @@ module.exports = {
 
     },
 
-    // get shows that belong to user
+    /// Get user's list of shows
+    // :id refers to user's ID
+    // Returned JSON is a list of show IDs
+    // POST /users/:id/getMyShows
     getMyShows(req, res) {
 
       const id = req.params.id
@@ -264,7 +341,10 @@ module.exports = {
 
     },
 
-    // get shows that do not belong to this user
+    /// Get list of shows that are not in user's list of shows
+    // :id refers to user's ID
+    // Returned JSON is a list of show IDs
+    // POST /users/:id/notMyShows
     getNotMyShows(req, res) {
 
       const id = req.params.id
@@ -286,6 +366,11 @@ module.exports = {
 
     },
 
+    /// Checks if show is in user's list of shows
+    // :id refers to user's ID
+    // :show_id refers to show's ID
+    // Returns true if show is in user's list of shows, else return false
+    // GET /users/:id/show/:show_id
     isMyShow(req, res) {
 
       const id = req.params.id

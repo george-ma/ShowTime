@@ -362,5 +362,25 @@ export class ShowComponent implements OnInit {
 
   }
 
+  /**
+   * convert status
+   *
+   */
+   convertStatus(index){
+     if(index == 1){
+       return "Completed"
+     }
+     else if(index == 2){
+       return "Planning"
+     }
+     else if(index == 3){
+       return "Current"
+     }
+     else if(index == 4){
+       return "Dropped"
+     }
+     return "Paused"
+
+   }
 
 }

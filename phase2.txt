@@ -1,0 +1,331 @@
+# team17 phase2.txt
+
+Instructions for how to use the application are in README.md, like in the first
+deliverable.
+
+
+Overview of Routes
+==============================================================================
+
+/// Route for uploading an image
+/*
+Request body expects the image file
+*/
+// Returned JSON is "success: true" or "success: false" based on whether the
+// upload was successful
+// POST /upload
+
+
+/////////////////////////
+//// * User Routes * ////
+/////////////////////////
+
+
+/// Route for creating a new user
+/*
+Request body expects:
+{
+  "username": <username>,
+  "email": <email>,
+  "password": <password>
+}
+*/
+// Returned JSON is the newly created user document
+// POST /users
+
+
+/// Route for creating a new admin
+/*
+Request body expects:
+{
+  "username": <username>,
+  "email": <email>,
+  "password": <password>
+}
+*/
+// Returned JSON is the newly created user document
+// POST /users/admin
+
+
+/// Route for getting all users
+// Requires token for logged in admin
+// Returned JSON list of user documents
+// GET /getAllUsers
+
+
+/// Route for updating user information
+// :id refers to user's ID
+// Returned JSON is the user document with id
+// GET /users/:id
+
+
+/// Route for updating user information
+/*
+Request body expects:
+{
+  "username": <username>,
+  "email": <email>,
+  "bio": <bio>,
+  "img": <img>,
+  "password": <password>
+}
+*/
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is the updated user document
+// POST /users/:id/update
+
+
+/// Route for deleting a user
+// Returned JSON is the removed user document
+// GET /users/:id/delete
+
+
+/// Route for logging in user
+/*
+Request body expects:
+{
+  "username": <username>,
+  "password": <password>
+}
+*/
+// Returned JSON is the logged in user document
+// POST /users/login
+
+
+/// Route for logging out a user
+// Returned JSON is "success" if logout successful
+// GET /logout
+
+
+/// Route for adding a show to a user's list of shows
+/*
+Request body expects:
+{
+  "showID": <show's ID>,
+}
+*/
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is the user document, including the new added show
+// POST /users/:id/addshow
+
+
+/// Route for removing a show from a user's list of shows
+/*
+Request body expects:
+{
+  "showID": <show's ID>,
+}
+*/
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is the user document, with the show in question removed
+// POST /users/:id/removeshow
+
+
+/// Get user's list of shows
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is a list of show IDs
+// POST /users/:id/getMyShows
+
+
+/// Get list of shows that are not in user's list of shows
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is a list of show IDs
+// POST /users/:id/notMyShows
+
+
+/// Checks if show is in user's list of shows
+// :id refers to user's ID
+// :show_id refers to show's ID
+// Returns true if show is in user's list of shows, else return false
+// GET /users/:id/show/:show_id
+
+
+/// Route for updating user information for admin. Includes options for
+/// banning user and making the user an admin.
+/*
+Request body expects:
+{
+  "username": <username>,
+  "email": <email>,
+  "bio": <bio>,
+  "img": <img>,
+  "password": <password>,
+  "is_banned": <is_banned>,
+  "is_admin": <is_admin>
+}
+*/
+// :id refers to user's ID
+// Requires token for logged in admin
+// Returned JSON is the updated user document
+// POST /users/:id/update/type
+
+
+/////////////////////////
+//// * Show Routes * ////
+/////////////////////////
+
+
+/// Route for creating a new show
+/*
+Request body expects:
+{
+  "title": <show title>,
+  "description": <show description>,
+  "airDate": <show's air date>,
+  "img": <display image for show>,
+  "link": <link to show online>,
+  "airInterval": <number of days between new episode release>,
+  "approved": <if show is approved>,
+  "updating": <id of show it will replace once approved>
+}
+*/
+// Requires token for logged in user
+// Returned JSON is the newly created show document
+// POST /shows
+
+
+/// Route for getting all approved shows
+// Returned JSON is an array of approved shows
+// GET /shows/approved
+
+
+/// Route for getting all unapproved shows
+// Requires token for logged in admin
+// Returned JSON is an array of unapproved shows
+// GET /shows/unapproved
+
+
+/// Route for removing a show
+/*
+Request body expects:
+{
+  "showId": <show ID>
+}
+*/
+// Requires token for logged in admin
+// Returned JSON is removed show document
+// POST /shows/remove
+
+
+/// Route for changing a show's status to approved (show.approved = true)
+/*
+Request body expects:
+{
+  "showId": <show ID>
+}
+*/
+// Requires token for logged in admin
+// Returned JSON is approved show document
+// POST /shows/approve
+
+
+/// Route for approving a show and deleting the copy holding information
+/// to be copied into the approved show. The show ID here refers to the
+/// show whose information we want to copy into the approved show, which is
+/// also the unapproved copy that we want to delete.
+/*
+Request body expects:
+{
+  "showId": <show ID>
+}
+*/
+// Requires token for logged in admin
+// Returned JSON is approved show document
+// POST /shows/approveAndDelete
+
+
+/// Route for getting a single show based on the show's ID
+// :id refers to user's ID
+// Returned JSON is the show document
+// GET /shows/:id
+
+
+/// Route for editing an existing show
+/*
+Request body expects:
+{
+  "title": <show title>,
+  "description": <show description>,
+  "airDate": <show's air date>,
+  "img": <display image for show>,
+  "link": <link to show online>,
+  "airInterval": <number of days between new episode release>,
+  "approved": <if show is approved>,
+}
+*/
+// :id refers to user's ID
+// Requires token for logged in user
+// Returned JSON is the updated show document
+// POST /shows/:id/edit
+
+
+///////////////////////////
+//// * Rating Routes * ////
+///////////////////////////
+
+
+/// Route for creating a new rating
+/*
+Request body expects:
+{
+  "show_id": <ID of reviewed show>,
+  "user_id": <ID of user making review>,
+  "rating": <user rating>,
+  "status": <user status>,
+  "review": <review>
+}
+*/
+// Returned JSON is the newly created rating document
+// POST /rating
+
+
+/// Route for getting all ratings
+// Returned JSON is an array of all ratings
+// GET /rating
+
+
+/// Route for getting average rating for show
+// :show_id refers to show's ID
+// Returned is a number representing average show rating
+// GET /rating/avg/:show_id
+
+
+/// Route for getting number of ratings for a show
+// :show_id refers to show's ID
+// Returned is a number representing total number of ratings for a show
+// GET /rating/status/:show_id
+
+
+/// Route for getting all reviews for a show
+// :show_id refers to show's ID
+// Returned JSON is an array of reviews for a show
+// GET /rating/status/:show_id
+
+
+/// Route for getting user's rating for show
+// :user_id refers to user's ID
+// :show_id refers to show's ID
+// Returned JSON is the rating document
+// GET /rating/status/:user_id/:show_id
+
+
+///////////////////////////////
+//// * User Check Routes * ////
+///////////////////////////////
+
+
+/// Route for getting the current logged in user
+// Requires token for logged in user
+// Returned JSON is the user document
+// GET /getsessionuser
+
+
+/// Route for checking if the current logged in user is an admin
+// Requires token for logged in admin
+// Returned JSON is true if current logged in user is an admin
+// GET /sessioncheckeradmin

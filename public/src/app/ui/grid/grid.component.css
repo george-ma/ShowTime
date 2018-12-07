@@ -7,3 +7,7 @@
 .nav-link {
   cursor: pointer;
 }
+
+.show-card {
+  padding-bottom: 30px;
+}

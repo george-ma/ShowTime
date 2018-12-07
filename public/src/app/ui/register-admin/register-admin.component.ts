@@ -25,7 +25,11 @@ export class RegisterAdminComponent implements OnInit {
 
     constructor(public router: Router, private registerService: RegisterAdminService) { }
 
-    ngOnInit() {  }
+    ngOnInit() { 
+      if(sessionStorage.getItem('currentUser') != null) {
+        this.router.navigate(['/grid'])
+      }
+    }
 
 
     /**

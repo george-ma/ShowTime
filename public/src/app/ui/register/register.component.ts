@@ -24,8 +24,11 @@ export class RegisterComponent implements OnInit {
 
   constructor(public router: Router, private registerService: RegisterService) { }
 
-  ngOnInit() {  }
-
+  ngOnInit() { 
+    if(sessionStorage.getItem('currentUser') != null) {
+      this.router.navigate(['/grid'])
+    }
+  }
 
   /**
    * registers a new user based on the given user credtentials bound to

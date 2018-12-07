@@ -20,8 +20,8 @@
 </ul>
 <br>
 
-<div class="row justify-content-md-center card-deck" *ngIf="all">
-  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of shows; ">
+<div class="row justify-content-md-left card-deck" *ngIf="all">
+  <div class="show-card col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let show of shows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show._id}}">
@@ -41,7 +41,7 @@
     </div> <!-- //end card -->
   </div> <!-- //end col -->
 
-  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
+  <div class="show-card col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let show of myShows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show._id}}">
@@ -63,7 +63,7 @@
 </div>
 
 <div class="row justify-content-md-center card-deck" *ngIf="my_shows">
-  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of myShows; ">
+  <div class="show-card col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let show of myShows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <a routerLink="show/{{show._id}}">
@@ -85,7 +85,7 @@
 </div> <!-- end row -->
 
 <div class="row justify-content-md-center card-deck " *ngIf="unapproved_shows">
-  <div class="col-sm-12 col-md-3 col-lg-3" *ngFor="let show of unapprovedShows; ">
+  <div class="show-card col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let show of unapprovedShows; ">
     <div class="card">
       <div class="card-header bg-primary text-light rounded"> {{show.title}} </div>
       <img class="card-img-top" src="{{show.img}}" alt="Card image cap">

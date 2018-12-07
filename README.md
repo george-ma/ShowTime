@@ -15,7 +15,7 @@ Open the following two Heroku Sites in the **following order**:
 
 ## Creating an admin user
 
-If you wish to create/register an `admin user` directly, use the following endpoint:
+If you wish to create/register an `admin user` directly for yourself, use the following endpoint:
 
 - https://show-time-front.herokuapp.com/register/admin
 
@@ -75,7 +75,7 @@ If you wish to create/register an `admin user` directly, use the following endpo
 
 1. You can edit a show by hitting `edit`, and likewise, `add a show` by hitting the button next to the search bar.
    - As a **regular user**, any submitted edits or new shows will place the show in an **Unapproved Show tab**, only viewable by **admins**
-2. Log out of `justin` and access an **admin account** such as:
+2. Log out of `justin` and access any **admin account**: ie.
    - Username: `superbob`
    - Password: `hellobob`
 3. As an **admin**, you can view the **Unapproved Shows tab** and approve or reject any shows (2 dummy shows, and any additional shows created from any **regular** accounts)

@@ -215,7 +215,7 @@ export class ShowComponent implements OnInit {
     this.showService.getShowAvg(id).subscribe((response: Array<any>)=>{
         this.error = false;
         if(response.length != 0){
-          this.rating = response[0].avg;
+          this.rating = Math.round(response[0].avg*10)/10;
           this.numberOfRatings = response[0].count
         }
       },

@@ -2,65 +2,66 @@
 
 A sample workflow that will take you through the major features of our application is located at the bottom.
 
-## Get started
-
-`Note:` There exists a node folder in the project root that is not being used for this deliverable
-
 `Note:` The typescript files for each component have been documented.
 
-### Platform & tools
+## Get started
 
-You need to install Node.js and then the development tools. Node.js comes with a package manager called npm for installing NodeJS applications and libraries.
+Open the following two Heroku Sites in the **following order**:
 
+`Note`: Since we were usually angular, we were having some issues running both angular/express on the same server. We had to use two Heroku servers as a result.
 
-### Install Angular Globally
+(You need to open the backend because Heroku snoozes the server if they have been inactive for some time; leave both servers open)
 
-```shell
-npm install -g @angular/cli
+1. https://show-time-309.herokuapp.com [backend]
+2. https://show-time-front.herokuapp.com [backend]
 
-```
+## Creating an admin user
 
-### Clone the repo
+If you wish to create/register an `admin user` directly, use the following endpoint:
 
-```shell
-git clone https://github.com/csc309-fall-2018/team17.git
+- https://show-time-front.herokuapp.com/register/admin
 
-```
+## List of Users in DB
 
-## Build project (automatically opens)
+### Admins:
 
-Install the `npm` packages described in the `package.json`:
+1) username: `superadam`
+​    password: `helloadam`
 
-```shell
-cd public
+2) username: `superbob`
+​    password: `hellobob`
 
-npm install
+### Regular Users:
 
-```
+1) username: `karlcui`
+​    password: `hellokarlcui`
 
-Build and open the project
+2) username: `justin`
+​    password: `hellojustin`
 
-```shell
-ng serve --open
-```
+3) username: `george`
+​    password: `hellogeorge`
+
+4) username: `sohail`
+​    password: `hellosohail`
 
 ## Sample Workflow:
 
 ### Home Page Interactions:
 
-1. Login as a **regular** user: ie.
+1. Login as any of the **regular** users: ie.
 
-   - Username: `nick`
-   - Password: `hellonick`
+   - Username: `justin`
+   - Password: `hellojustin`
 
-2. Hit the profile page (`nick`) in the top right corner, to the left of the `Log out` button
+2. Hit the profile page (`justin`) in the top right corner, to the left of the `Log out` button
 
    - Can change any info you’d like and then hit `Confirm changes`
    - **note**: currently we cannot change the display picture as we are unable to save the images in a backend server
 
 3. Head back to the `Home` page
 
-   a) You can click the `edit` button on a show to change its title, description, URL link, or its airing date
+   a) You can click the `edit` button on a show to change its title, show image, description, URL link, or its airing date
 
    b) You can click on the show’s poster image and view a detailed description of each show
 
@@ -76,17 +77,14 @@ ng serve --open
 
 1. You can edit a show by hitting `edit`, and likewise, `add a show` by hitting the button next to the search bar.
    - As a **regular user**, any submitted edits or new shows will place the show in an **Unapproved Show tab**, only viewable by **admins**
-2. Log out of `nick` and access an **admin account** such as:
-   - Username: `bob`
+2. Log out of `justin` and access an **admin account** such as:
+   - Username: `superbob`
    - Password: `hellobob`
-
-1. As an **admin**, you can view the **Unapproved Shows tab** and approve or reject any shows (2 dummy shows, and any additional shows created from any **regular** accounts)
+3. As an **admin**, you can view the **Unapproved Shows tab** and approve or reject any shows (2 dummy shows, and any additional shows created from any **regular** accounts)
    - Note: admins can directly `edit` or `add` shows without needing an approval
 
 ### User List: (as an admin)
 
 1. As an `admin`, you can:
-
    - View the list of all users and promote **regular users** to **admins**
-
    - Ban users, that will not allow them to login

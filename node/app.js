@@ -62,8 +62,13 @@ app.get('*', (req, res) => res.status(200).send({
 }));
 
 
-
-//upload route
+/// Route for uploading an image
+/*
+Request body expects the image file
+*/
+// Returned JSON is "success: true" or "success: false" based on whether the
+// upload was successful
+// POST /upload
 app.post('/upload',upload.single('photo'), function (req, res) {
     if (!req.file) {
         return res.status(400).send({

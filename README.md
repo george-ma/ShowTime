@@ -8,9 +8,7 @@ A sample workflow that will take you through the major features of our applicati
 
 Open the following two Heroku Sites in the **following order**:
 
-`Note`: Since we were usually angular, we were having some issues running both angular/express on the same server. We had to use two Heroku servers as a result.
-
-(You need to open the backend because Heroku snoozes the server if they have been inactive for some time; leave both servers open)
+`Note`: Since we were usually angular, we were having some issues running both angular/express on the same server. We had to use two Heroku servers as a result. (You need to open the backend first, because Heroku snoozes the server if it has been inactive for some time)
 
 1. https://show-time-309.herokuapp.com [backend]
 2. https://show-time-front.herokuapp.com [backend]

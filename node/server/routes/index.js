@@ -54,37 +54,159 @@ module.exports = (app) => {
         message: 'Welcome to the Project Collab API!',
     }));
 
-    // * user routes *
-    // create new users
+
+		/////////////////////////
+    //// * User Routes * ////
+		/////////////////////////
+
+
+		/// Route for creating a new user
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the newly created user document
+    // POST /users
     app.post('/users', usersController.create);
-    // create new admins
+
+
+		/// Route for creating a new admin
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the newly created user document
+    // POST /users/admin
     app.post('/users/admin', usersController.createAdmin);
-    // GET all users
+
+
+		/// Route for getting all users
+    // Returned JSON list of user documents
+    // GET /getAllUsers
     app.get('/users', authenticateAdmin, usersController.getAllUsers);
-    // get user by id
+
+
+		/// Route for updating user information
+    // Returned JSON is the user document with id
+    // GET /users/:id
     app.get('/users/:id', usersController.getUser);
-    // update user by id
+
+
+		/// Route for updating user information
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "bio": <bio>,
+      "img": <img>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the updated user document
+    // POST /users/:id/update
     app.post('/users/:id/update', authenticate, usersController.update);
-    // remove user by id
+
+
+		/// Route for deleting a user
+    // Returned JSON is the removed user document
+    // GET /users/:id/delete
     app.get('/users/:id/delete', usersController.remove);
-    // login a user
+
+
+		/// Route for logging in user
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+      "password": <password>
+    }
+    */
+    // Returned JSON is the logged in user document
+    // POST /users/login
     app.post('/users/login', usersController.loginUser);
-    // login out a user
+
+
+		/// Route for logging out a user
+    // Returned JSON is "success" if logout successful
+    // GET /logout
     app.get('/logout', usersController.logoutUser);
-    // add show to user's list of shows
+
+
+		/// Route for adding a show to a user's list of shows
+    /*
+    Request body expects:
+    {
+    	"showID": <show's ID>,
+    }
+    */
+    // Returned JSON is the user document, including the new added show
+    // POST /users/:id/addshow
     app.post('/users/:id/addshow', authenticate, usersController.addShow);
-    // removes show from user's list of shows
+
+
+		/// Route for removing a show from a user's list of shows
+    /*
+    Request body expects:
+    {
+    	"showID": <show's ID>,
+    }
+    */
+    // Returned JSON is the user document, with the show in question removed
+    // POST /users/:id/removeshow
     app.post('/users/:id/removeshow', authenticate, usersController.removeShow);
-    // get user's shows
+
+
+		/// Get user's list of shows
+    // Returned JSON is a list of show IDs
+    // POST /users/:id/getMyShows
     app.get('/users/:id/myshows', authenticate, usersController.getMyShows);
-    // get not user's shows
+
+
+		/// Get list of shows that are not in user's list of shows
+    // Returned JSON is a list of show IDs
+    // POST /users/:id/notMyShows
     app.get('/users/:id/notmyshows', authenticate, usersController.getNotMyShows);
-    // get user's shows
+
+
+		/// Checks if show is in user's list of shows
+    // Returns true if show is in user's list of shows, else return false
+    // GET /users/:id/show/:show_id
     app.get('/users/:id/show/:show_id', usersController.isMyShow);
-		// update user's type by id
+
+
+		/// Route for updating user information for admin. Includes options for
+		/// banning user and making the user an admin.
+    /*
+    Request body expects:
+    {
+    	"username": <username>,
+    	"email": <email>,
+      "bio": <bio>,
+      "img": <img>,
+      "password": <password>,
+      "is_banned": <is_banned>,
+      "is_admin": <is_admin>
+    }
+    */
+    // Returned JSON is the updated user document
+    // POST /users/:id/update/type
 		app.post('/users/:id/update/type', authenticateAdmin, usersController.update);
 
-    // * show routes *
+
+		/////////////////////////
+    //// * Show Routes * ////
+		/////////////////////////
+
+
     // create a new show
     app.post('/shows', authenticate, showsController.create);
     // get all shows
@@ -104,7 +226,11 @@ module.exports = (app) => {
     // edit show
     app.post('/shows/:id/edit', authenticate, showsController.editShow);
 
-    // * rating routes *
+
+		///////////////////////////
+    //// * Rating Routes * ////
+		///////////////////////////
+
     // create a new rating
     app.post('/rating', authenticate, ratingController.create);
     // get all ratings
@@ -118,8 +244,15 @@ module.exports = (app) => {
     // get my rating data for a show
     app.get('/rating/user/:user_id/:show_id', ratingController.getMyRating);
 
-    // User Check routes
-    //get current logged in user
+
+		///////////////////////////////
+    //// * User Check Routes * ////
+		///////////////////////////////
+
+
+		/// Route for getting the current logged in user
+    // Returned JSON is the user document
+    // GET /getsessionuser
     app.get('/getsessionuser', authenticate, usersController.getSessionUser);
     //check if admin is log in
     app.get('/sessioncheckeradmin', authenticateAdmin, (req, res) => {res.send(true)})

@@ -1,6 +1,7 @@
 # team17 phase2.txt
 
-Instructions for how to use the application are in README.md
+Instructions for how to use the application are in README.md, like in the first
+deliverable.
 
 
 Overview of Routes

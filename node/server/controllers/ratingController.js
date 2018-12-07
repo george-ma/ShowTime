@@ -5,7 +5,19 @@ const { ObjectID } = require('mongodb')
 
 module.exports = {
 
-    //create a new user
+    /// Route for creating a new rating
+    /*
+    Request body expects:
+    {
+      "show_id": <ID of reviewed show>,
+      "user_id": <ID of user making review>,
+      "rating": <user rating>,
+      "status": <user status>,
+      "review": <review>
+    }
+    */
+    // Returned JSON is the newly created rating document
+    // POST /rating
     create(req, res) {
         console.log(req.body)
         Rating.findOneAndUpdate({show_id:req.body.show_id, user_id: req.body.user_id},{$set:req.body}, {upsert: true}).then((result) => {
@@ -15,7 +27,9 @@ module.exports = {
         })
     },
 
-    //get all ratings
+    /// Route for getting all ratings
+    // Returned JSON is an array of all ratings
+    // GET /rating
     getAllRatings(req, res) {
 
         Rating.find().then((result) => {
@@ -26,6 +40,9 @@ module.exports = {
 
     },
 
+    /// Route for getting user's rating for show
+    // Returned JSON is the rating document
+    // GET /rating/status/:user_id/:show_id
     getMyRating(req, res) {
         Rating.find({show_id: req.params.show_id, user_id: req.params.user_id}).then((result) => {
                 res.send( result ) // put in object in case we want to add other properties
@@ -34,7 +51,9 @@ module.exports = {
             })
     },
 
-
+    /// Route for getting average rating for show
+    // Returned is a number representing averge show rating
+    // GET /rating/avg/:show_id
     getAvgRating(req, res) {
       Rating.aggregate([{$group:
         {_id:
@@ -50,6 +69,9 @@ module.exports = {
           })
     },
 
+    /// Route for getting number of ratings for a show
+    // Returned is a number representing total number of ratings for a show
+    // GET /rating/status/:show_id
     numberofStatus(req, res) {
       Rating.aggregate([{$group:
         {_id:
@@ -66,6 +88,9 @@ module.exports = {
 
     },
 
+    /// Route for getting all reviews for a show
+    // Returned JSON is an array of reviews for a show
+    // GET /rating/status/:show_id
     getReviews(req, res) {
       const showId = req.params.show_id
 
@@ -80,20 +105,5 @@ module.exports = {
           })
 
     },
-    /*
-    {$group: {_id: product._id, average: {$avg: '$Rating'}}}
-    {
-      $project:{
-        avgrating: { $avg: {$group:{rating:"$rating"}}}
-      }
-    }
-    // Group documents by created_at, sender and calculate number of documents.
-{$group:
-  {_id:
-    {created_at:"$created_at", sender:"$sender"},
-    count:{$sum: 1}
-  }
-}
-    */
 
 };

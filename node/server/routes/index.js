@@ -296,6 +296,7 @@ module.exports = (app) => {
       "approved": <if show is approved>,
     }
     */
+		// Requires token for logged in user
     // Returned JSON is the updated show document
     // POST /shows/:id/edit
     app.post('/shows/:id/edit', authenticate, showsController.editShow);
@@ -305,17 +306,49 @@ module.exports = (app) => {
     //// * Rating Routes * ////
 		///////////////////////////
 
-    // create a new rating
+
+		/// Route for creating a new rating
+    /*
+    Request body expects:
+    {
+      "show_id": <ID of reviewed show>,
+      "user_id": <ID of user making review>,
+      "rating": <user rating>,
+      "status": <user status>,
+      "review": <review>
+    }
+    */
+    // Returned JSON is the newly created rating document
+    // POST /rating
     app.post('/rating', authenticate, ratingController.create);
-    // get all ratings
+
+
+		/// Route for getting all ratings
+    // Returned JSON is an array of all ratings
+    // GET /rating
     app.get('/rating', ratingController.getAllRatings);
-    // get avrage rating for show
+
+
+		/// Route for getting average rating for show
+    // Returned is a number representing average show rating
+    // GET /rating/avg/:show_id
     app.get('/rating/avg/:show_id', ratingController.getAvgRating);
-    // get number of status for a show
+
+
+		/// Route for getting number of ratings for a show
+    // Returned is a number representing total number of ratings for a show
+    // GET /rating/status/:show_id
     app.get('/rating/status/:show_id', ratingController.numberofStatus);
-    // get reviews for this show
+
+		/// Route for getting all reviews for a show
+    // Returned JSON is an array of reviews for a show
+    // GET /rating/status/:show_id
     app.get('/rating/review/:show_id', ratingController.getReviews);
-    // get my rating data for a show
+
+
+		/// Route for getting user's rating for show
+    // Returned JSON is the rating document
+    // GET /rating/status/:user_id/:show_id
     app.get('/rating/user/:user_id/:show_id', ratingController.getMyRating);
 
 
@@ -328,7 +361,10 @@ module.exports = (app) => {
     // Returned JSON is the user document
     // GET /getsessionuser
     app.get('/getsessionuser', authenticate, usersController.getSessionUser);
-    //check if admin is log in
+
+		/// Route for checking if the current logged in user is an admin
+    // Returned JSON is true if current logged in user is an admin
+    // GET /sessioncheckeradmin
     app.get('/sessioncheckeradmin', authenticateAdmin, (req, res) => {res.send(true)})
 
 };

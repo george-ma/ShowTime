@@ -41,6 +41,8 @@ module.exports = {
     },
 
     /// Route for getting user's rating for show
+    // :user_id refers to user's ID
+    // :show_id refers to show's ID
     // Returned JSON is the rating document
     // GET /rating/status/:user_id/:show_id
     getMyRating(req, res) {
@@ -52,6 +54,7 @@ module.exports = {
     },
 
     /// Route for getting average rating for show
+    // :show_id refers to show's ID
     // Returned is a number representing averge show rating
     // GET /rating/avg/:show_id
     getAvgRating(req, res) {
@@ -70,6 +73,7 @@ module.exports = {
     },
 
     /// Route for getting number of ratings for a show
+    // :show_id refers to show's ID
     // Returned is a number representing total number of ratings for a show
     // GET /rating/status/:show_id
     numberofStatus(req, res) {
@@ -89,6 +93,7 @@ module.exports = {
     },
 
     /// Route for getting all reviews for a show
+    // :show_id refers to show's ID
     // Returned JSON is an array of reviews for a show
     // GET /rating/status/:show_id
     getReviews(req, res) {

@@ -158,6 +158,7 @@ module.exports = {
     },
 
     /// Route for getting a single show based on the show's ID
+    // :id refers to user's ID
     // Returned JSON is the show document
     // GET /shows/:id
     getShow(req, res) {
@@ -193,6 +194,7 @@ module.exports = {
       "approved": <if show is approved>,
     }
     */
+    // :id refers to user's ID
     // Returned JSON is the updated show document
     // POST /shows/:id/edit
     editShow(req, res) {

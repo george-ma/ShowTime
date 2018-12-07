@@ -73,6 +73,7 @@ module.exports = {
     },
 
     /// Route for deleting a user
+    // :id refers to user's ID
     // Returned JSON is the removed user document
     // GET /users/:id/delete
     remove(req, res) {
@@ -103,6 +104,7 @@ module.exports = {
       "is_admin": <is_admin>
     }
     */
+    // :id refers to user's ID
     // Returned JSON is the updated user document
     // POST /users/:id/update
     update(req, res) {
@@ -142,6 +144,7 @@ module.exports = {
     },
 
     /// Route for getting user with id
+    // :id refers to user's ID
     // Returned JSON is the user document
     // GET /users/:id
     getUser(req, res) {
@@ -259,6 +262,7 @@ module.exports = {
     	"showID": <show's ID>,
     }
     */
+    // :id refers to user's ID
     // Returned JSON is the user document, including the new added show
     // POST /users/:id/addshow
     addShow(req, res) {
@@ -291,6 +295,7 @@ module.exports = {
     	"showID": <show's ID>,
     }
     */
+    // :id refers to user's ID
     // Returned JSON is the user document, with the show in question removed
     // POST /users/:id/removeshow
     removeShow(req, res) {
@@ -317,6 +322,7 @@ module.exports = {
     },
 
     /// Get user's list of shows
+    // :id refers to user's ID
     // Returned JSON is a list of show IDs
     // POST /users/:id/getMyShows
     getMyShows(req, res) {
@@ -336,6 +342,7 @@ module.exports = {
     },
 
     /// Get list of shows that are not in user's list of shows
+    // :id refers to user's ID
     // Returned JSON is a list of show IDs
     // POST /users/:id/notMyShows
     getNotMyShows(req, res) {
@@ -360,6 +367,8 @@ module.exports = {
     },
 
     /// Checks if show is in user's list of shows
+    // :id refers to user's ID
+    // :show_id refers to show's ID
     // Returns true if show is in user's list of shows, else return false
     // GET /users/:id/show/:show_id
     isMyShow(req, res) {

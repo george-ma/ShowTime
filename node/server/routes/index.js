@@ -207,23 +207,97 @@ module.exports = (app) => {
 		/////////////////////////
 
 
-    // create a new show
+		/// Route for creating a new show
+    /*
+    Request body expects:
+    {
+      "title": <show title>,
+      "description": <show description>,
+      "airDate": <show's air date>,
+      "img": <display image for show>,
+      "link": <link to show online>,
+      "airInterval": <number of days between new episode release>,
+      "approved": <if show is approved>,
+      "updating": <id of show it will replace once approved>
+    }
+    */
+    // Returned JSON is the newly created show document
+    // POST /shows
     app.post('/shows', authenticate, showsController.create);
-    // get all shows
+
+
+		/// Route for getting all approved shows
+    // Returned JSON is an array of approved shows
+    // GET /shows/approved
     app.get('/shows/approved', showsController.getApprovedShows);
-    // get unapproved shows
+
+
+		/// Route for getting all unapproved shows
+    // Returned JSON is an array of unapproved shows
+    // GET /shows/unapproved
     app.get('/shows/unapproved', authenticateAdmin, showsController.getUnapprovedShows);
-     // remove show
-    // change post request to delete request
+
+
+		/// Route for removing a show
+    /*
+    Request body expects:
+    {
+      "showId": <show ID>
+    }
+    */
+    // Returned JSON is removed show document
+    // POST /shows/remove
     app.post('/shows/remove', authenticateAdmin, showsController.removeShow);
-    // approve show
-    // TODO: change post request to put request
+
+
+		/// Route for changing a show's status to approved (show.approved = true)
+    /*
+    Request body expects:
+    {
+      "showId": <show ID>
+    }
+    */
+    // Returned JSON is approved show document
+    // POST /shows/approve
     app.post('/shows/approve', authenticateAdmin, showsController.approveShow);
-		// approve show and delete the template holding new show details
+
+
+		/// Route for approving a show and deleting the copy holding information
+		/// to be copied into the approved show. The show ID here refers to the
+		/// show whose information we want to copy into the approved show, which is
+		/// also the unapproved copy that we want to delete.
+    /*
+    Request body expects:
+    {
+      "showId": <show ID>
+    }
+    */
+    // Returned JSON is approved show document
+    // POST /shows/approveAndDelete
 		app.post('/shows/approveAndDelete', authenticateAdmin, showsController.approveAndDeleteShow);
-    // get single show based on show id
+
+
+		/// Route for getting a single show based on the show's ID
+    // Returned JSON is the show document
+    // GET /shows/:id
     app.get('/shows/:id', showsController.getShow);
-    // edit show
+
+
+		/// Route for editing an existing show
+    /*
+    Request body expects:
+    {
+      "title": <show title>,
+      "description": <show description>,
+      "airDate": <show's air date>,
+      "img": <display image for show>,
+      "link": <link to show online>,
+      "airInterval": <number of days between new episode release>,
+      "approved": <if show is approved>,
+    }
+    */
+    // Returned JSON is the updated show document
+    // POST /shows/:id/edit
     app.post('/shows/:id/edit', authenticate, showsController.editShow);
 
 

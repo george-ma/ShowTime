@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   //boolean for registration errors
   error: boolean = false;
-  success:boolean = false;
+  success: boolean = false;
   errorMsg: string;
 
 
@@ -33,7 +33,6 @@ export class RegisterComponent implements OnInit {
    */
   registerUser() {
     this.registerService.addUser(this.user).subscribe((response)=>{
-        sessionStorage.setItem('currentUser', JSON.stringify(response));
         this.error = false;
         this.success = true;
         setTimeout(() => {
@@ -52,10 +51,10 @@ export class RegisterComponent implements OnInit {
           else{errormsg += "& password is to short  \n"}
         }
         if(error.error.errors.email != undefined){
-          if (errormsg.length == 0){errormsg += "eamil is invalid or already taken  \n"}
-          else{errormsg += "& eamil is invalid or already taken  \n"}
+          if (errormsg.length == 0){errormsg += "email is invalid or already taken  \n"}
+          else{errormsg += "& email is invalid or already taken  \n"}
         }
-        if(errormsg.length == 0){errormsg += "sever error"}
+        if(errormsg.length == 0){errormsg += "server error"}
         this.errorMsg = errormsg;
       }
 

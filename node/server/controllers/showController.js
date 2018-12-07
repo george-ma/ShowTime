@@ -77,6 +77,40 @@ module.exports = {
 
     },
 
+    // given show with updating, update the correct show and delete this one
+    approveAndDeleteShow(req, res) {
+
+      Show.findByIdAndDelete(req.body.showId).then((show) => {
+          console.log(show);
+
+          Show.findById(show.updating).then((updatedShow) => {
+
+            // update show parameters
+            updatedShow.title = show.title;
+            updatedShow.description = show.description;
+            // do not update approved parameter -- should be true already in updatedShow
+            updatedShow.img = (show.img) ? show.img : show.img;
+            updatedShow.link = (show.link) ? show.link : show.link;
+            updatedShow.airDate = (show.airDate) ? show.airDate : show.airDate;
+            updatedShow.airInterval = (show.airInterval) ? show.airInterval : show.airInterval;
+            // do not update updating parameter -- should still be null
+
+            updatedShow.save().then((result) => {
+              res.send(result);
+            }, (error) => {
+              res.status(400).send(error);
+            });
+
+          }, (error) => {
+            res.status(400).send(error);
+          })
+
+        }, (error) => {
+          res.status(400).send(error);
+        })
+
+    },
+
     // get a show by ID
     getShow(req, res) {
 

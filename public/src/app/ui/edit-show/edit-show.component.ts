@@ -48,7 +48,7 @@ export class EditShowComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
     if(this.user == null){
-      this.router.navigate(['/grid']);
+      this.router.navigate(['/login']);
     }
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
@@ -150,6 +150,10 @@ export class EditShowComponent implements OnInit {
         //
       }, (error) => {
         this.error = true;
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       });
 
     // otherwise, add this.updateShow to shows (it will be unapproved)
@@ -158,6 +162,10 @@ export class EditShowComponent implements OnInit {
         //
       }, (error) => {
         this.error = true;
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       });
     }
 

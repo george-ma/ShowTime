@@ -60,6 +60,10 @@ export class GridService {
     return this.httpClient.post(`${this.API_URL}/shows/approve`, data);
   }
 
+  approveAndDeleteShow(data) {
+    return this.httpClient.post(`${this.API_URL}/shows/approveAndDelete`, data);
+  }
+
   getSessionUser(){
     return this.httpClient.get(`${this.API_URL}/getsessionuser`);
   }

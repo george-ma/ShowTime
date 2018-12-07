@@ -97,6 +97,8 @@ module.exports = (app) => {
     // approve show
     // TODO: change post request to put request
     app.post('/shows/approve', authenticateAdmin, showsController.approveShow);
+		// approve show and delete the template holding new show details
+		app.post('/shows/approveAndDelete', authenticateAdmin, showsController.approveAndDeleteShow);
     // get single show based on show id
     app.get('/shows/:id', showsController.getShow);
     // edit show

@@ -29,7 +29,6 @@ export class AdminUserListComponent implements OnInit {
           this.router.navigate(['grid']);
         }
     }, (error) => {
-        console.log(error)
         this.router.navigate(['grid']);
     })
 
@@ -52,9 +51,12 @@ export class AdminUserListComponent implements OnInit {
     console.log(`Promoting ${user.username} to admin`);
     user.is_admin = true;
     this.adminUserListService.updateUser(user).subscribe( (response: User) => {
-        console.log(response)
+      //
     }, (error) => {
-        console.log(error)
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
     })
   }
 
@@ -68,9 +70,12 @@ export class AdminUserListComponent implements OnInit {
       console.log(`Banning user ${user.username}`);
       user.is_banned = true;
       this.adminUserListService.updateUser(user).subscribe( (response: User) => {
-          console.log(response)
+          //
       }, (error) => {
-          console.log(error)
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       })
   }
 
@@ -84,8 +89,12 @@ export class AdminUserListComponent implements OnInit {
     console.log(`Un-banning user ${user.username}`);
     user.is_banned = false;
     this.adminUserListService.updateUser(user).subscribe( (response: User) => {
+      //
     }, (error) => {
-        console.log(error)
+      if (error.status == '401'){
+        alert("your session has expired")
+        this.router.navigate(['/login']);
+      }
     })
   }
 }

@@ -233,6 +233,10 @@ export class GridComponent implements OnInit {
         //
       }, (error) => {
         this.error = true;
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       });
     }
 
@@ -247,6 +251,10 @@ export class GridComponent implements OnInit {
         this.getShows();
       }, (error) => {
         this.error = true;
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       });
 
     } else {
@@ -256,6 +264,10 @@ export class GridComponent implements OnInit {
         this.getShows();
       }, (error) => {
         this.error = true;
+        if (error.status == '401'){
+          alert("your session has expired")
+          this.router.navigate(['/login']);
+        }
       });
     }
 
@@ -298,6 +310,10 @@ export class GridComponent implements OnInit {
       this.getShows();
     }, (error) => {
       this.error = true;
+      if (error.status == '401'){
+        alert("your session has expired")
+        this.router.navigate(['/login']);
+      }
     });
 
   }
@@ -323,6 +339,10 @@ export class GridComponent implements OnInit {
       this.getShows();
     }, (error) => {
       this.error = true;
+      if (error.status == '401'){
+        alert("your session has expired")
+        this.router.navigate(['/login']);
+      }
     });
 
   }
@@ -350,6 +370,10 @@ export class GridComponent implements OnInit {
       this.getShows();
     }, (error) => {
       this.error = true;
+      if (error.status == '401'){
+        alert("your session has expired")
+        this.router.navigate(['/login']);
+      }
     });
   }
 

@@ -1,8 +1,5 @@
-# 📺 ShowTime Community Driven TV Guide 📺
-
-A sample workflow that will take you through the major features of our application is located at the bottom.
-
-`Note:` The typescript files for each component have been documented.
+# 📺 ShowTime - A Community Driven TV Guide 📺
+![alt text](https://i.imgur.com/R8SHGSJ.png)
 
 ## Get started
 
